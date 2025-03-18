@@ -2,14 +2,20 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        DiarioCultural dc = new DiarioCultural();
+        Livro l1 = new Livro("Cristine", "Stephen King", "Objetiva",
+                "978-85-60280-87-2", 2013, "Terror", true, true);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        dc.cadastrarLivro(l1);
+
+        Filme f1 = new Filme("Inrestelar", "ficção cientifíca", 2013,
+                150, "Cristopher Nolan", "xxx",
+                "Anne Hateway", "Interestelar", "Netflix", false);
+
+        Serie s1 = new Serie("Stranger Things", "Ficção",
+                2016, 2025, "Sadie Sink", "Stranger Things", "Netflix");
+
+        dc.cadastrarFilme(f1);
+        dc.cadastrarSerie(s1);
     }
 }

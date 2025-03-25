@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"DiarioCultural"},{"p":"<Unnamed>","l":"Filme"},{"p":"<Unnamed>","l":"Livro"},{"p":"<Unnamed>","l":"Main"},{"p":"<Unnamed>","l":"Review"},{"p":"<Unnamed>","l":"Serie"},{"p":"<Unnamed>","l":"Temporada"}];updateSearchResults();

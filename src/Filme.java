@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class Filme {
+public class Filme implements Comparable<Filme>{
     private String titulo;
     private String genero;
     private int ano_lancamento;
@@ -23,6 +23,11 @@ public class Filme {
         this.titulo_original = titulo_original;
         this.onde_assistir = onde_assistir;
         this.assistido = assistido;
+    }
+
+    @Override
+    public int compareTo(Filme filme) {
+        return this.getTitulo().compareTo(filme.getTitulo());
     }
 
     public void avaliarFilme (Date data_review, String review, int avaliacao){

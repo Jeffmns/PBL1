@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class Livro {
+public class Livro implements Comparable<Livro> {
     private String titulo;
     private String autor;
     private String editora;
@@ -21,7 +21,10 @@ public class Livro {
         this.lido = lido;
     }
 
-
+    @Override
+    public int compareTo(Livro livro) {
+        return this.getTitulo().compareTo(livro.getTitulo());
+    }
 
     public void avaliarLivro (Date data_review, String review, int avaliacao){
 
@@ -59,11 +62,11 @@ public class Livro {
         this.ISBN = ISBN;
     }
 
-    public int getAno_lancamento() {
+    public int getAnoLancamento() {
         return ano_lancamento;
     }
 
-    public void setAno_lancamento(int ano_lancamento) {
+    public void setAnoLancamento(int ano_lancamento) {
         this.ano_lancamento = ano_lancamento;
     }
 
@@ -90,6 +93,7 @@ public class Livro {
     public void setLido(boolean lido) {
         this.lido = lido;
     }
+
 
 
 }

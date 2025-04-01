@@ -1,3 +1,5 @@
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -15,8 +17,14 @@ public class Main {
         dc.cadastrarLivro(l1);
         dc.cadastrarLivro(l2);
         dc.cadastrarLivro(l3);
+        dc.listarlivros();
+
 
         Filme f1 = new Filme("Interestelar", "Ficção Científica", 2013,
+                150, "Cristopher Nolan", "xxx", "Anne Hateway",
+                "Interestelar", "Netflix", false);
+
+        Filme f2 = new Filme("Gravidade", "Ficção Científica", 2013,
                 150, "Cristopher Nolan", "xxx", "Anne Hateway",
                 "Interestelar", "Netflix", false);
 
@@ -24,6 +32,8 @@ public class Main {
                 "Sadie Sink", "Stranger Things", "Netflix");
 
         dc.cadastrarFilme(f1);
+        dc.cadastrarFilme(f2);
+        dc.listarfilmes();
         dc.cadastrarSerie(s1);
 
         List<Livro> resultadoBusca = dc.buscarLivros(2013);

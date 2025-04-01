@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DiarioCultural {
@@ -21,7 +22,7 @@ public class DiarioCultural {
 
         List<Livro> todosLivros = this.getLivros();
         for(int i = 0; i < todosLivros.size(); i++) {
-            if (livros.get(i).getAno_lancamento() == ano) {
+            if (livros.get(i).getAnoLancamento() == ano) {
                 resultado.add(livros.get(i));
             }
         }
@@ -32,13 +33,31 @@ public class DiarioCultural {
         }
         return resultado;
     }
+    public List<Livro> listarlivros(){
+        List<Livro> todosLivros = this.getLivros();
+        System.out.println("Livros cadastrados: ");
+        for (Livro livro : todosLivros) {
+            System.out.println(livro.getTitulo());
+        }
 
+        return todosLivros;
+    }
+    public List<Filme> listarfilmes(){
+        List<Filme> todosFilmes = this.getFilmes();
+        System.out.println("Filmes cadastrados: ");
+        for (Filme filme : todosFilmes) {
+            System.out.println(filme.getTitulo());
+        }
+
+        return todosFilmes;
+    }
     /** Cadastra um livro no diario cultural
      *
      * @param livro - livro que será cadastrado
      */
     public void cadastrarLivro(Livro livro){
         livros.add(livro);
+        Collections.sort(this.livros);
         System.out.println("Livro cadastrado com sucesso: "+livro.getTitulo());
     }
 
@@ -48,6 +67,7 @@ public class DiarioCultural {
      */
     public void cadastrarFilme(Filme filme){
         filmes.add(filme);
+        Collections.sort(this.filmes);
         System.out.println("Filme cadastrado com sucesso: " +filme.getTitulo());
     }
 

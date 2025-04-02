@@ -1,10 +1,19 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.text.Normalizer;
+
 
 public class DiarioCultural {
     private List<Livro> livros;
     private List<Filme> filmes;
     private List<Serie> series;
+
+    // Método para remover acentos de uma string
+    private String removerAcentos(String str) {
+        if (str == null) return null;
+        String normalized = Normalizer.normalize(str, Normalizer.Form.NFD);
+        return normalized.replaceAll("\\p{M}", ""); // Remove os acentos
+    }
 
     public DiarioCultural() {
         this.livros = new ArrayList<Livro>();
@@ -16,7 +25,7 @@ public class DiarioCultural {
      * @param ano - ano dos livros que se quer buscar
      * @return lista de livros encontrados
      */
-    public List<Livro> buscarLivros(int ano) {
+    public List<Livro> buscarLivrosPorAno(int ano) {
         List<Livro> resultado = new ArrayList<Livro>();
 
         List<Livro> todosLivros = this.getLivros();
@@ -33,6 +42,50 @@ public class DiarioCultural {
         return resultado;
     }
 
+
+    /** Faz uma busca nos livros cadastrados
+     * @param titulo, autor, genero, ano, ISBN - ano dos livros que se quer buscar
+     * @return lista de livros encontrados
+     */
+    public List<Livro> buscarLivros(String titulo, String autor, String genero, Integer ano, String ISBN) {
+        List<Livro> resultado = new ArrayList<>();
+        for (Livro livro : livros) {
+            boolean matches = true;
+            if (titulo != null && !removerAcentos(livro.getTitulo()).equalsIgnoreCase(removerAcentos(titulo))) matches = false;
+            if (autor != null && !removerAcentos(livro.getAutor()).equalsIgnoreCase(removerAcentos(autor))) matches = false;
+            if (genero != null && !removerAcentos(livro.getGenero()).equalsIgnoreCase(removerAcentos(genero))) matches = false;
+            if (ano != null && livro.getAno_lancamento() != ano) matches = false;
+            if (ISBN != null && !livro.getISBN().equalsIgnoreCase(ISBN)) matches = false;
+            if (matches) resultado.add(livro);
+        }
+        return resultado;
+    }
+
+    public List<Filme> buscarFilmes(String titulo, String diretor, String ator, String genero, Integer ano) {
+        List<Filme> resultado = new ArrayList<>();
+        for (Filme filme : filmes) {
+            boolean matches = true;
+            if (titulo != null && !removerAcentos(filme.getTitulo()).equalsIgnoreCase(removerAcentos(titulo))) matches = false;
+            if (diretor != null && !removerAcentos(filme.getDirecao()).equalsIgnoreCase(removerAcentos(diretor))) matches = false;
+            if (ator != null && !removerAcentos(filme.getElenco()).contains(removerAcentos(ator))) matches = false;
+            if (genero != null && !removerAcentos(filme.getGenero()).equalsIgnoreCase(removerAcentos(genero))) matches = false;
+            if (ano != null && filme.getAno_lancamento() != ano) matches = false;
+            if (matches) resultado.add(filme);
+        }
+        return resultado;
+    }
+
+    public List<Serie> buscarSeries(String titulo, String genero, Integer ano) {
+        List<Serie> resultado = new ArrayList<>();
+        for (Serie serie : series) {
+            boolean matches = true;
+            if (titulo != null && !removerAcentos(serie.getTitulo()).equalsIgnoreCase(removerAcentos(titulo))) matches = false;
+            if (genero != null && !removerAcentos(serie.getGenero()).equalsIgnoreCase(removerAcentos(genero))) matches = false;
+            if (ano != null && serie.getAno_lancamento() != ano) matches = false;
+            if (matches) resultado.add(serie);
+        }
+        return resultado;
+    }
     /** Cadastra um livro no diario cultural
      *
      * @param livro - livro que será cadastrado
@@ -41,6 +94,7 @@ public class DiarioCultural {
         livros.add(livro);
         System.out.println("Livro cadastrado com sucesso: "+livro.getTitulo());
     }
+
 
     /** Cadastra filme no diario cultural
      *

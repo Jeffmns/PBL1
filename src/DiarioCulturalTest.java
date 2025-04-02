@@ -7,7 +7,7 @@ import java.util.List;
 class DiarioCulturalTest {
 
     @Test
-     void buscarLivros() {
+     void buscarLivrosPorAno() {
         DiarioCultural dc = new DiarioCultural();
         Livro l1 = new Livro("Christine", "Stephen King", "Objetiva",
                 "978-85-60280-87-2", 2013, "Terror", true, true);
@@ -21,6 +21,6 @@ class DiarioCulturalTest {
         dc.cadastrarLivro(l3);
 
         List<Livro> esperado = Arrays.asList(l1, l3);
-        Assertions.assertEquals(esperado, dc.buscarLivros(2013));
+        Assertions.assertEquals(esperado, dc.buscarLivrosPorAno(2013));
     }
 }

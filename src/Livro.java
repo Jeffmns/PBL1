@@ -1,4 +1,6 @@
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Livro {
     private String titulo;
@@ -9,6 +11,8 @@ public class Livro {
     private String genero;
     private boolean exemplar;
     private boolean lido;
+    private List<Review> avaliacoes = new ArrayList<>();
+
 
     public Livro(String titulo, String autor, String editora, String ISBN, int ano_lancamento, String genero, boolean exemplar, boolean lido) {
         this.titulo = titulo;
@@ -18,13 +22,25 @@ public class Livro {
         this.ano_lancamento = ano_lancamento;
         this.genero = genero;
         this.exemplar = exemplar;
-        this.lido = lido;
+        this.lido = false;
     }
 
+    public void adicionarAvaliacao(Review review) {
+        avaliacoes.add(review);
+        lido = true;
+    }
 
+    public double getMediaAvaliacoes() {
+        if (avaliacoes.isEmpty()) return 0;
+        int soma = 0;
+        for (Review review : avaliacoes) {
+            soma += review.getAvaliacao();
+        }
+        return (double) soma / avaliacoes.size();
+    }
 
-    public void avaliarLivro (Date data_review, String review, int avaliacao){
-
+    public List<Review> getAvaliacoes() {
+        return avaliacoes;
     }
 
     public String getTitulo() {

@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -17,64 +18,291 @@ public class Main {
         dc.cadastrarLivro(l3);
 
         Filme f1 = new Filme("Interestelar", "Ficção Científica", 2013,
-                150, "Cristopher Nolan", "xxx", "Anne Hateway",
-                "Interestelar", "Netflix", false);
+                150, "Cristopher Nolan", "xxx", "Netflix");
 
-        Serie s1 = new Serie("Stranger Things", "Ficção", 2016, 2025,
-                "Sadie Sink", "Stranger Things", "Netflix");
+        Serie s1 = new Serie("Stranger Things", "Ficção", 2016, "Sadie Sink",
+                "Netflix");
 
         dc.cadastrarFilme(f1);
         dc.cadastrarSerie(s1);
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("\nEscolha uma opção de busca:");
-            System.out.println("1 - Buscar Livros");
-            System.out.println("2 - Buscar Filmes");
-            System.out.println("3 - Buscar Séries");
+            System.out.println("\n=== Menu Principal ===");
+            System.out.println("1 - Cadastrar");
+            System.out.println("2 - Buscar");
+            System.out.println("3 - Avaliar");
             System.out.println("4 - Sair");
-            System.out.print("Opção: ");
+            System.out.print("Escolha uma opção: ");
             String opcao = scanner.nextLine().trim();
 
-            if (opcao.equals("4")) {
-                System.out.println("Saindo...");
-                break;
-            }
-
-            System.out.println("\nDigite os critérios de busca (pressione ENTER para pular):");
-            String titulo = getInput(scanner, "Título: ");
-
             switch (opcao) {
-                case "1" -> { // Livros
-                    String autor = getInput(scanner, "Autor: ");
-                    String genero = getInput(scanner, "Gênero: ");
-                    String ISBN = getInput(scanner, "ISBN: ");
-                    Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
-
-                    List<Livro> resultados = dc.buscarLivros(titulo, autor, genero, ano, ISBN);
-                    exibirResultadosLivros(resultados, titulo);
-                }
-                case "2" -> { // Filmes
-                    String diretor = getInput(scanner, "Diretor: ");
-                    String ator = getInput(scanner, "Ator no elenco: ");
-                    String genero = getInput(scanner, "Gênero: ");
-                    Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
-
-                    List<Filme> resultados = dc.buscarFilmes(titulo, diretor, ator, genero, ano);
-                    exibirResultadosFilmes(resultados, titulo);
-                }
-                case "3" -> { // Séries
-                    String genero = getInput(scanner, "Gênero: ");
-                    Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
-
-                    List<Serie> resultados = dc.buscarSeries(titulo, genero, ano);
-                    exibirResultadosSeries(resultados, titulo);
+                case "1" -> menuCadastro(scanner, dc);
+                case "2" -> menuBusca(scanner, dc);
+                case "3" -> menuAvaliacao(scanner, dc);
+                case "4" -> {
+                    System.out.println("Saindo...");
+                    scanner.close();
+                    return;
                 }
                 default -> System.out.println("Opção inválida! Tente novamente.");
             }
         }
+    }
 
-        scanner.close();
+    // Submenu de Cadastro
+    private static void menuCadastro(Scanner scanner, DiarioCultural dc) {
+        while (true) {
+            System.out.println("\n=== Menu Cadastro ===");
+            System.out.println("1 - Cadastrar Livro");
+            System.out.println("2 - Cadastrar Filme");
+            System.out.println("3 - Cadastrar Série");
+            System.out.println("4 - Voltar");
+            System.out.print("Escolha uma opção: ");
+            String opcao = scanner.nextLine().trim();
+
+            switch (opcao) {
+                case "1" -> cadastrarLivro(scanner, dc);
+                case "2" -> cadastrarFilme(scanner, dc);
+                case "3" -> cadastrarSerie(scanner, dc);
+                case "4" -> { return; }
+                default -> System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
+    }
+
+    // Submenu de Busca
+    private static void menuBusca(Scanner scanner, DiarioCultural dc) {
+        while (true) {
+            System.out.println("\n=== Menu Busca ===");
+            System.out.println("1 - Buscar Livros");
+            System.out.println("2 - Buscar Filmes");
+            System.out.println("3 - Buscar Séries");
+            System.out.println("4 - Voltar");
+            System.out.print("Escolha uma opção: ");
+            String opcao = scanner.nextLine().trim();
+
+            switch (opcao) {
+                case "1" -> buscarLivros(scanner, dc);
+                case "2" -> buscarFilmes(scanner, dc);
+                case "3" -> buscarSeries(scanner, dc);
+                case "4" -> { return; }
+                default -> System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
+    }
+
+    // Submenu de Avaliação
+    private static void menuAvaliacao(Scanner scanner, DiarioCultural dc) {
+        while (true) {
+            System.out.println("\n=== Menu Avaliação ===");
+            System.out.println("1 - Avaliar Livro");
+            System.out.println("2 - Avaliar Filme");
+            System.out.println("3 - Avaliar Série");
+            System.out.println("4 - Voltar");
+            System.out.print("Escolha uma opção: ");
+            String opcao = scanner.nextLine().trim();
+
+            switch (opcao) {
+                case "1" -> avaliarLivro(scanner, dc);
+                case "2" -> avaliarFilme(scanner, dc);
+                case "3" -> avaliarSerie(scanner, dc);
+                case "4" -> { return; }
+                default -> System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
+    }
+
+    // Métodos de Cadastro
+    private static void cadastrarLivro(Scanner scanner, DiarioCultural dc) {
+        System.out.println("\nCadastro de Livro:");
+        System.out.print("Título: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Autor: ");
+        String autor = scanner.nextLine();
+        System.out.print("Editora: ");
+        String editora = scanner.nextLine();
+        System.out.print("ISBN: ");
+        String isbn = scanner.nextLine();
+        System.out.print("Ano de lançamento: ");
+        int ano = Integer.parseInt(scanner.nextLine());
+        System.out.print("Gênero: ");
+        String genero = scanner.nextLine();
+        System.out.print("Lido? (true/false): ");
+        boolean lido = Boolean.parseBoolean(scanner.nextLine());
+        System.out.print("Favorito? (true/false): ");
+        boolean favorito = Boolean.parseBoolean(scanner.nextLine());
+
+        Livro livro = new Livro(titulo, autor, editora, isbn, ano, genero, lido, favorito);
+        dc.cadastrarLivro(livro);
+        System.out.println("Livro cadastrado com sucesso!");
+    }
+
+    private static void cadastrarFilme(Scanner scanner, DiarioCultural dc) {
+        System.out.println("\nCadastro de Filme:");
+        System.out.print("Título: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Gênero: ");
+        String genero = scanner.nextLine();
+        System.out.print("Ano de lançamento: ");
+        int ano = Integer.parseInt(scanner.nextLine());
+        System.out.print("Duração (minutos): ");
+        int duracao = Integer.parseInt(scanner.nextLine());
+        System.out.print("Diretor: ");
+        String diretor = scanner.nextLine();
+        System.out.print("Ator principal: ");
+        String ator = scanner.nextLine();
+        System.out.print("Onde asssitir: ");
+        String plataforma = scanner.nextLine();
+
+        Filme filme = new Filme(titulo, genero, ano, duracao, diretor, ator, plataforma);
+        dc.cadastrarFilme(filme);
+        System.out.println("Filme cadastrado com sucesso!");
+    }
+
+    private static void cadastrarSerie(Scanner scanner, DiarioCultural dc) {
+        System.out.print("Título da série: ");
+        String titulo = scanner.nextLine();
+
+        System.out.print("Gênero: ");
+        String genero = scanner.nextLine();
+
+        int ano;
+        while (true) {
+            try {
+                System.out.print("Ano de lançamento da série: ");
+                ano = Integer.parseInt(scanner.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, insira um ano válido (somente números).");
+            }
+        }
+
+        System.out.print("Elenco: ");
+        String elenco = scanner.nextLine();
+
+        System.out.print("Onde assistir: ");
+        String ondeAssistir = scanner.nextLine();
+
+        Serie serie = new Serie(titulo, genero, ano, elenco, ondeAssistir);
+
+        int numTemporadas;
+        while (true) {
+            try {
+                System.out.print("Quantas temporadas a série possui? ");
+                numTemporadas = Integer.parseInt(scanner.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, insira um número válido de temporadas.");
+            }
+        }
+
+        for (int i = 1; i <= numTemporadas; i++) {
+            System.out.println("\nCadastrando a " + i + "ª temporada:");
+
+            int anoTemporada;
+            while (true) {
+                try {
+                    System.out.print("Ano de lançamento da temporada: ");
+                    anoTemporada = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Por favor, insira um ano válido para a temporada.");
+                }
+            }
+
+            int qtdEpisodios;
+            while (true) {
+                try {
+                    System.out.print("Quantidade de episódios: ");
+                    qtdEpisodios = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Por favor, insira um número válido de episódios.");
+                }
+            }
+
+            Temporada temporada = new Temporada(i, anoTemporada, qtdEpisodios);
+            serie.adicionarTemporada(temporada);
+        }
+
+        dc.cadastrarSerie(serie);
+        System.out.println("\nSérie cadastrada com sucesso!");
+    }
+
+
+    // Métodos de Busca
+    private static void buscarLivros(Scanner scanner, DiarioCultural dc) {
+        System.out.println("\nDigite os critérios de busca (pressione ENTER para pular):");
+        String titulo = getInput(scanner, "Título: ");
+        String autor = getInput(scanner, "Autor: ");
+        String genero = getInput(scanner, "Gênero: ");
+        String ISBN = getInput(scanner, "ISBN: ");
+        Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
+
+        List<Livro> resultados = dc.buscarLivros(titulo, autor, genero, ano, ISBN);
+        exibirResultadosLivros(resultados, titulo);
+
+    }
+
+    private static void buscarFilmes(Scanner scanner, DiarioCultural dc) {
+        System.out.println("\nDigite os critérios de busca (pressione ENTER para pular):");
+        String titulo = getInput(scanner, "Título: ");
+        String diretor = getInput(scanner, "Diretor: ");
+        String ator = getInput(scanner, "Ator no elenco: ");
+        String genero = getInput(scanner, "Gênero: ");
+        Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
+
+        List<Filme> resultados = dc.buscarFilmes(titulo, diretor, ator, genero, ano);
+        exibirResultadosFilmes(resultados, titulo);
+
+    }
+
+    private static void buscarSeries(Scanner scanner, DiarioCultural dc) {
+        System.out.println("\nDigite os critérios de busca (pressione ENTER para pular):");
+        String titulo = getInput(scanner, "Título: ");
+        String genero = getInput(scanner, "Gênero: ");
+        Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
+        System.out.print("\nDigite o título da série que deseja buscar: ");
+        List<Serie> resultados = dc.buscarSeries(titulo, genero, ano);
+        exibirResultadosSeries(resultados, titulo);
+
+    }
+
+    // Métodos de Avaliação
+    private static void avaliarLivro(Scanner scanner, DiarioCultural dc) {
+        System.out.print("\nDigite o título do livro que deseja avaliar: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Digite a nota de avaliação (0 a 5): ");
+        int nota = Integer.parseInt(scanner.nextLine());
+        System.out.print("\nDigite um comentário: ");
+        String comentario = scanner.nextLine();
+        Date data = new Date();
+        dc.avaliarLivro(titulo, nota, comentario, data);
+    }
+
+    private static void avaliarFilme(Scanner scanner, DiarioCultural dc) {
+        System.out.print("\nDigite o título do filme que deseja avaliar: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Digite a nota de avaliação (0 a 5): ");
+        int nota = Integer.parseInt(scanner.nextLine());
+        System.out.print("\nDigite um comentário: ");
+        String comentario = scanner.nextLine();
+        Date data = new Date();
+        dc.avaliarFilme(titulo, nota, comentario, data);
+    }
+
+    private static void avaliarSerie(Scanner scanner, DiarioCultural dc) {
+        System.out.print("\nDigite o título da série que deseja avaliar: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Digite o número da temporada que deseja avaliar: ");
+        int temporada = Integer.parseInt(scanner.nextLine());
+        System.out.print("Digite a nota de avaliação (0 a 5): ");
+        int nota = Integer.parseInt(scanner.nextLine());
+        System.out.print("\nDigite um comentário: ");
+        String comentario = scanner.nextLine();
+        Date data = new Date();
+        dc.avaliarTemporadaSerie(titulo, temporada, nota, comentario, data);
     }
 
     private static String getInput(Scanner scanner, String prompt) {
@@ -92,7 +320,6 @@ public class Main {
             return null;
         }
     }
-
     private static void exibirResultadosLivros(List<Livro> livros, String criterio) {
         System.out.println("\nResultados encontrados para \"" + (criterio != null ? criterio : "Pesquisa") + "\":\n");
         if (livros.isEmpty()) {
@@ -135,4 +362,7 @@ public class Main {
         }
     }
 }
+
+
+
 

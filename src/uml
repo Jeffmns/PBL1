@@ -1,0 +1,90 @@
+@startuml
+title Diagrama de Classes - Diário Cultural
+class Review {
+    - int avaliacao
+    - Date data
+    - String comentario
+    + Review(int avaliacao, Date data, String comentario)
+
+}
+
+class Temporada {
+    - int numero
+    - int ano_lancamento
+    - int qtd_episodios
+    - boolean assistido
+    - List~Review~ avaliacoes
+    + Temporada(int numero, int ano_lancamento, int qtd_episodios)
+    + void avaliarTemporada(int avaliacao, Date data_review, String comentario)
+    + double getMediaAvaliacoes()
+    + List~Review~ getAvaliacao()
+
+}
+class Serie {
+    - String titulo
+    - String genero
+    - int ano_lancamento
+    - String elenco
+    - String onde_assistir
+    - List~Temporada~ temporadas
+    - List~Review~ avaliacoes
+    + Serie(String titulo, String genero, int ano_lancamento, String elenco, String onde_assistir)
+    + void adicionarTemporada(Temporada temporada)
+    + double getMediaAvaliacoes()
+
+}
+
+class Livro {
+    - String titulo
+    - String autor
+    - int ano_publicacao
+    - String genero
+    - String editora
+    - List~Review~ avaliacoes
+    + Livro(String titulo, String autor, int ano_publicacao, String genero, String editora)
+    + double getMediaAvaliacoes()
+    + void adicionarReview(Review review)
+
+}
+class Filme {
+    - String titulo
+    - String diretor
+    - int ano_lancamento
+    - String genero
+    - String elenco
+    - String duracao
+    - String direcao
+    - String onde_assistir
+    - boolean assistido
+    - List~Review~ avaliacoes
+    + Filme(String titulo, String diretor, int ano_lancamento, String genero, String elenco, String onde_assistir)
+    + double getMediaAvaliacoes()
+    + void adicionarReview(Review review)
+
+}
+class DiarioCultural {
+    - List~Livro~ livros
+    - List~Filme~ filmes
+    - List~Serie~ series
+    + String removerAcentos(String str)
+    + void cadastrarLivro(Livro livro)
+    + void cadastrarFilme(Filme filme)
+    + void cadastrarSerie(Serie serie)
+    + List<Livro> buscarLivros()
+    + List<Filme> buscarFilmes()
+    + List<Serie> buscarSeries()
+    + void avaliarLivro()
+    + void avaliarFilme()
+    + void avaliarTemporadaSerie()
+
+}
+
+Serie "1" o-- "*" Temporada
+Temporada "1" o-- "*" Review
+Serie "1" o-- "*" Review
+Livro "1" o-- "*" Review
+Filme "1" o-- "*" Review
+DiarioCultural ..> Livro : usa
+DiarioCultural ..> Filme : usa
+DiarioCultural ..> Serie : usa
+@enduml

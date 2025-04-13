@@ -43,6 +43,25 @@ public class DiarioCultural {
         return resultado;
     }
 
+    public List<Livro> listarlivros(){
+        List<Livro> todosLivros = this.getLivros();
+        System.out.println("Livros cadastrados: ");
+        for (Livro livro : todosLivros) {
+            System.out.println(livro.getTitulo());
+        }
+
+        return todosLivros;
+    }
+    public List<Filme> listarfilmes(){
+        List<Filme> todosFilmes = this.getFilmes();
+        System.out.println("Filmes cadastrados: ");
+        for (Filme filme : todosFilmes) {
+            System.out.println(filme.getTitulo());
+        }
+
+        return todosFilmes;
+    }
+
 
     /** Faz uma busca nos livros cadastrados
      * @param titulo, autor, genero, ano, ISBN - ano dos livros que se quer buscar

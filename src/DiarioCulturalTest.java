@@ -21,7 +21,7 @@ class DiarioCulturalTest {
         dc.cadastrarLivro(l3);
 
         List<Livro> esperado = Arrays.asList(l3, l1);
-        Assertions.assertEquals(esperado, dc.buscarLivros(2013));
+        Assertions.assertEquals(esperado, dc.buscarLivros("", "", "", 2013, ""));
     }
     @Test
     void listarlivros(){

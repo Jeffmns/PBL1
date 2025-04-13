@@ -1,37 +1,46 @@
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Filme implements Comparable<Filme>{
+public class Filme {
     private String titulo;
     private String genero;
     private int ano_lancamento;
     private int duracao;
     private String direcao;
-    private String roteiro;
     private String elenco;
-    private String titulo_original;
     private String onde_assistir;
     private boolean assistido;
+    private List<Review> avaliacoes = new ArrayList<>();
 
-    public Filme(String titulo, String genero, int ano_lancamento, int duracao, String direcao, String roteiro, String elenco, String titulo_original, String onde_assistir, boolean assistido) {
+
+    public Filme(String titulo, String genero, int ano_lancamento, int duracao, String direcao, String elenco, String onde_assistir) {
         this.titulo = titulo;
         this.genero = genero;
         this.ano_lancamento = ano_lancamento;
         this.duracao = duracao;
         this.direcao = direcao;
-        this.roteiro = roteiro;
         this.elenco = elenco;
-        this.titulo_original = titulo_original;
         this.onde_assistir = onde_assistir;
-        this.assistido = assistido;
+        this.assistido = false;
     }
 
-    @Override
-    public int compareTo(Filme filme) {
-        return this.getTitulo().compareTo(filme.getTitulo());
+    public void adicionarAvaliacao(Review review) {
+        avaliacoes.add(review);
+        assistido = true;
     }
 
-    public void avaliarFilme (Date data_review, String review, int avaliacao){
-        System.out.println("Teste");
+    public double getMediaAvaliacoes() {
+        if (avaliacoes.isEmpty()) return 0;
+        int soma = 0;
+        for (Review review : avaliacoes) {
+            soma += review.getAvaliacao();
+        }
+        return (double) soma / avaliacoes.size();
+    }
+
+    public List<Review> getAvaliacoes() {
+        return avaliacoes;
     }
 
     public String getTitulo() {
@@ -58,13 +67,6 @@ public class Filme implements Comparable<Filme>{
         this.onde_assistir = onde_assistir;
     }
 
-    public String getTitulo_original() {
-        return titulo_original;
-    }
-
-    public void setTitulo_original(String titulo_original) {
-        this.titulo_original = titulo_original;
-    }
 
     public String getElenco() {
         return elenco;
@@ -74,13 +76,6 @@ public class Filme implements Comparable<Filme>{
         this.elenco = elenco;
     }
 
-    public String getRoteiro() {
-        return roteiro;
-    }
-
-    public void setRoteiro(String roteiro) {
-        this.roteiro = roteiro;
-    }
 
     public String getDirecao() {
         return direcao;

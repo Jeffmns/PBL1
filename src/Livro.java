@@ -1,6 +1,8 @@
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Livro implements Comparable<Livro> {
+public class Livro {
     private String titulo;
     private String autor;
     private String editora;
@@ -9,6 +11,8 @@ public class Livro implements Comparable<Livro> {
     private String genero;
     private boolean exemplar;
     private boolean lido;
+    private List<Review> avaliacoes = new ArrayList<>();
+
 
     public Livro(String titulo, String autor, String editora, String ISBN, int ano_lancamento, String genero, boolean exemplar, boolean lido) {
         this.titulo = titulo;
@@ -18,16 +22,25 @@ public class Livro implements Comparable<Livro> {
         this.ano_lancamento = ano_lancamento;
         this.genero = genero;
         this.exemplar = exemplar;
-        this.lido = lido;
+        this.lido = false;
     }
 
-    @Override
-    public int compareTo(Livro livro) {
-        return this.getTitulo().compareTo(livro.getTitulo());
+    public void adicionarAvaliacao(Review review) {
+        avaliacoes.add(review);
+        lido = true;
     }
 
-    public void avaliarLivro (Date data_review, String review, int avaliacao){
+    public double getMediaAvaliacoes() {
+        if (avaliacoes.isEmpty()) return 0;
+        int soma = 0;
+        for (Review review : avaliacoes) {
+            soma += review.getAvaliacao();
+        }
+        return (double) soma / avaliacoes.size();
+    }
 
+    public List<Review> getAvaliacoes() {
+        return avaliacoes;
     }
 
     public String getTitulo() {
@@ -62,11 +75,11 @@ public class Livro implements Comparable<Livro> {
         this.ISBN = ISBN;
     }
 
-    public int getAnoLancamento() {
+    public int getAno_lancamento() {
         return ano_lancamento;
     }
 
-    public void setAnoLancamento(int ano_lancamento) {
+    public void setAno_lancamento(int ano_lancamento) {
         this.ano_lancamento = ano_lancamento;
     }
 
@@ -93,7 +106,6 @@ public class Livro implements Comparable<Livro> {
     public void setLido(boolean lido) {
         this.lido = lido;
     }
-
 
 
 }

@@ -25,11 +25,12 @@ public class Temporada {
     public double getMediaAvaliacoes() {
         if (avaliacoes.isEmpty()) return 0.0;
 
-        int soma = 0;
+        double soma = 0;
         for (Review r : avaliacoes) {
             soma += r.getAvaliacao();
         }
-        return (double) soma / avaliacoes.size();
+
+        return (double) Math.round((soma / avaliacoes.size()) * 100.0) / 100.0;
     }
 
     public List<Review> getAvaliacao() {

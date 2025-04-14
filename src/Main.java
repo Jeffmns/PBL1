@@ -32,7 +32,8 @@ public class Main {
             System.out.println("1 - Cadastrar");
             System.out.println("2 - Buscar");
             System.out.println("3 - Avaliar");
-            System.out.println("4 - Sair");
+            System.out.println("4 - Listar");
+            System.out.println("5 - Sair");
             System.out.print("Escolha uma opção: ");
             String opcao = scanner.nextLine().trim();
 
@@ -40,7 +41,8 @@ public class Main {
                 case "1" -> menuCadastro(scanner, dc);
                 case "2" -> menuBusca(scanner, dc);
                 case "3" -> menuAvaliacao(scanner, dc);
-                case "4" -> {
+                case "4" -> menuListagem(scanner, dc);
+                case "5" -> {
                     System.out.println("Saindo...");
                     scanner.close();
                     return;
@@ -107,6 +109,27 @@ public class Main {
                 case "1" -> avaliarLivro(scanner, dc);
                 case "2" -> avaliarFilme(scanner, dc);
                 case "3" -> avaliarSerie(scanner, dc);
+                case "4" -> { return; }
+                default -> System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
+    }
+
+    // Submenu de Listagem
+    private static void menuListagem(Scanner scanner, DiarioCultural dc) {
+        while (true) {
+            System.out.println("\n=== Menu Listagem ===");
+            System.out.println("1 - Listar Livros");
+            System.out.println("2 - Listar Filmes");
+            System.out.println("3 - Listar Séries");
+            System.out.println("4 - Voltar");
+            System.out.print("Escolha uma opção: ");
+            String opcao = scanner.nextLine().trim();
+
+            switch (opcao) {
+                case "1" -> listarLivros(scanner, dc);
+                case "2" -> listarFilmes(scanner, dc);
+                case "3" -> listarSeries(scanner, dc);
                 case "4" -> { return; }
                 default -> System.out.println("Opção inválida! Tente novamente.");
             }
@@ -255,7 +278,6 @@ public class Main {
 
         List<Filme> resultados = dc.buscarFilmes(titulo, diretor, ator, genero, ano);
         exibirResultadosFilmes(resultados, titulo);
-
     }
 
     private static void buscarSeries(Scanner scanner, DiarioCultural dc) {
@@ -266,7 +288,6 @@ public class Main {
         System.out.print("\nDigite o título da série que deseja buscar: ");
         List<Serie> resultados = dc.buscarSeries(titulo, genero, ano);
         exibirResultadosSeries(resultados, titulo);
-
     }
 
     // Métodos de Avaliação
@@ -305,6 +326,40 @@ public class Main {
         dc.avaliarTemporadaSerie(titulo, temporada, nota, comentario, data);
     }
 
+    // Métodos de Listagem
+    private static void listarLivros(Scanner scanner, DiarioCultural dc) {
+        System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+
+        Integer order = getIntegerInput(scanner, "Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação");
+        String genero = getInput(scanner, "Gênero: ");
+        Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
+
+        List<Livro> resultados = dc.ordenarLivrosPorAvaliacao(order, genero, ano);
+        exibirLivros(resultados);
+    }
+
+    private static void listarFilmes(Scanner scanner, DiarioCultural dc) {
+        System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+
+        Integer order = getIntegerInput(scanner, "Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação");
+        String genero = getInput(scanner, "Gênero: ");
+        Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
+
+        List<Filme> resultados = dc.ordenarFilmesPorAvaliacao(order, genero, ano);
+        exibirFilmes(resultados);
+    }
+
+    private static void listarSeries(Scanner scanner, DiarioCultural dc) {
+        System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+
+        Integer order = getIntegerInput(scanner, "Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação");
+        String genero = getInput(scanner, "Gênero: ");
+        Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
+
+        List<Serie> resultados = dc.ordenarSeriesPorAvaliacao(order, genero, ano);
+        exibirSeries(resultados);
+    }
+
     private static String getInput(Scanner scanner, String prompt) {
         System.out.print(prompt);
         String input = scanner.nextLine().trim();
@@ -335,6 +390,17 @@ public class Main {
         }
     }
 
+    private static void exibirLivros(List<Livro> livros) {
+        for (Livro livro : livros) {
+            System.out.println("[Livro] \"" + livro.getTitulo() + "\" (" + livro.getAno_lancamento() + ")");
+            System.out.println("  Autor: " + livro.getAutor());
+            System.out.println("  Gênero: " + livro.getGenero());
+            System.out.println("  ISBN: " + livro.getISBN());
+            System.out.println("  Avaliação: " + livro.getMediaAvaliacoes());
+            System.out.println();
+        }
+    }
+
     private static void exibirResultadosFilmes(List<Filme> filmes, String criterio) {
         System.out.println("\nResultados encontrados para \"" + (criterio != null ? criterio : "Pesquisa") + "\":\n");
         if (filmes.isEmpty()) {
@@ -349,16 +415,35 @@ public class Main {
         }
     }
 
+    private static void exibirFilmes(List<Filme> filmes) {
+        for (Filme filme : filmes) {
+            System.out.println("[Filme] \"" + filme.getTitulo() + "\" (" + filme.getAno_lancamento() + ")");
+            System.out.println("  Diretor: " + filme.getDirecao());
+            System.out.println("  Gênero: " + filme.getGenero());
+            System.out.println("  Avaliação: " + filme.getMediaAvaliacoes());
+            System.out.println();
+        }
+    }
+
     private static void exibirResultadosSeries(List<Serie> series, String criterio) {
         System.out.println("\nResultados encontrados para \"" + (criterio != null ? criterio : "Pesquisa") + "\":\n");
         if (series.isEmpty()) {
             System.out.println("Nenhuma série correspondente foi encontrada.");
         } else {
             for (Serie serie : series) {
-                System.out.println("[Série] \"" + serie.getTitulo() + "\" (" + serie.getAno_lancamento() + ")");
+                System.out.println("[Série] \"" + serie.getTitulo() + "\" (" + serie.getAnoLancamento() + ")");
                 System.out.println("  Gênero: " + serie.getGenero());
                 System.out.println();
             }
+        }
+    }
+
+    private static void exibirSeries(List<Serie> series) {
+        for (Serie serie : series) {
+            System.out.println("[Série] \"" + serie.getTitulo() + "\" (" + serie.getAnoLancamento() + ")");
+            System.out.println("  Gênero: " + serie.getGenero());
+            System.out.println("  Avaliação: " + serie.getMediaAvaliacoes());
+            System.out.println();
         }
     }
 }

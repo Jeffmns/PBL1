@@ -2,7 +2,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Livro {
+public class Livro implements Comparable<Livro> {
     private String titulo;
     private String autor;
     private String editora;
@@ -36,7 +36,8 @@ public class Livro {
         for (Review review : avaliacoes) {
             soma += review.getAvaliacao();
         }
-        return (double) soma / avaliacoes.size();
+
+        return (double) Math.round((soma / avaliacoes.size()) * 100.0) / 100.0;
     }
 
     public List<Review> getAvaliacoes() {
@@ -107,7 +108,10 @@ public class Livro {
         this.lido = lido;
     }
 
-
+    @Override
+    public int compareTo(Livro livro) {
+        return this.getTitulo().compareTo(livro.getTitulo());
+    }
 }
 
 

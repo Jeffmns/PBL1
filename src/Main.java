@@ -141,13 +141,9 @@ public class Main {
         String genero = scanner.nextLine();
         System.out.print("Lido? (true/false): ");
         boolean lido = Boolean.parseBoolean(scanner.nextLine());
-        System.out.print("Favorito? (true/false): ");
-        boolean favorito = Boolean.parseBoolean(scanner.nextLine());
 
-        Livro livro = new Livro(titulo, autor, editora, isbn, ano, genero, lido, favorito);
+        Livro livro = new Livro(titulo, autor, editora, isbn, ano, genero, lido);
         dc.cadastrarLivro(livro);
-        PersistenciaJson.salvar(dc);
-        System.out.println("Livro cadastrado com sucesso!");
     }
 
     private static void cadastrarFilme(Scanner scanner, DiarioCultural dc) {
@@ -169,8 +165,6 @@ public class Main {
 
         Filme filme = new Filme(titulo, genero, ano, duracao, diretor, ator, plataforma);
         dc.cadastrarFilme(filme);
-        PersistenciaJson.salvar(dc);
-        System.out.println("Filme cadastrado com sucesso!");
     }
 
     private static void cadastrarSerie(Scanner scanner, DiarioCultural dc) {
@@ -240,8 +234,6 @@ public class Main {
         }
 
         dc.cadastrarSerie(serie);
-        PersistenciaJson.salvar(dc);
-        System.out.println("\nSérie cadastrada com sucesso!");
     }
 
 

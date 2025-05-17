@@ -15,11 +15,11 @@ class DiarioCulturalTest {
      void buscarLivros() {
         DiarioCultural dc = new DiarioCultural();
         Livro l1 = new Livro("Christine", "Stephen King", "Objetiva",
-                "978-85-60280-87-2", 2013, "Terror", true, true);
+                "978-85-60280-87-2", 2013, "Terror", true);
         Livro l2 = new Livro("Joyland", "Stephen King", "Objetiva",
-                "978-85-60280-87-2", 2012, "Terror", true, true);
+                "978-85-60280-87-2", 2012, "Terror", true);
         Livro l3 = new Livro("A culpa é das estrelas", "John Green", "Objetiva",
-                "978-85-60280-87-2", 2013, "Romance", true, true);
+                "978-85-60280-87-2", 2013, "Romance", true);
 
         dc.cadastrarLivro(l1);
         dc.cadastrarLivro(l2);
@@ -32,11 +32,11 @@ class DiarioCulturalTest {
     void listarlivros(){
         DiarioCultural dc = new DiarioCultural();
         Livro l1 = new Livro("Christine", "Stephen King", "Objetiva",
-                "978-85-60280-87-2", 2013, "Terror", true, true);
+                "978-85-60280-87-2", 2013, "Terror", true);
         Livro l2 = new Livro("Joyland", "Stephen King", "Objetiva",
-                "978-85-60280-87-2", 2012, "Terror", true, true);
+                "978-85-60280-87-2", 2012, "Terror", true);
         Livro l3 = new Livro("A culpa é das estrelas", "John Green", "Objetiva",
-                "978-85-60280-87-2", 2013, "Romance", true, true);
+                "978-85-60280-87-2", 2013, "Romance", true);
 
         dc.cadastrarLivro(l1);
         dc.cadastrarLivro(l2);
@@ -108,11 +108,11 @@ class DiarioCulturalTest {
     void ordenarLivrosPorAvaliacao() {
         DiarioCultural dc = new DiarioCultural();
         Livro l1 = new Livro("Christine", "Stephen King", "Objetiva",
-                "978-85-60280-87-2", 2013, "Terror", true, true);
+                "978-85-60280-87-2", 2013, "Terror", true);
         Livro l2 = new Livro("Joyland", "Stephen King", "Objetiva",
-                "978-85-60280-87-2", 2012, "Terror", true, true);
+                "978-85-60280-87-2", 2012, "Terror", true);
         Livro l3 = new Livro("A culpa é das estrelas", "John Green", "Objetiva",
-                "978-85-60280-87-2", 2013, "Romance", true, true);
+                "978-85-60280-87-2", 2013, "Romance", true);
 
 
         dc.cadastrarLivro(l1);

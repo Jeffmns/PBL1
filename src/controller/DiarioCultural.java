@@ -126,8 +126,13 @@ public class DiarioCultural {
      * @param livro - livro que será cadastrado
      */
     public void cadastrarLivro(Livro livro){
-        livros.add(livro);
-        System.out.println("Livro cadastrado com sucesso: "+livro.getTitulo());
+        if (!livros.contains(livro)) {
+            livros.add(livro);
+            PersistenciaJson.salvar(this);
+            System.out.println("Livro cadastrado com sucesso: " + livro.getTitulo());
+        } else {
+            System.out.println("Livro já cadastrado.");
+        }
     }
 
 
@@ -136,18 +141,27 @@ public class DiarioCultural {
      * @param filme - filme que será cadastrado
      */
     public void cadastrarFilme(Filme filme){
-        filmes.add(filme);
-        System.out.println("Filme cadastrado com sucesso: " +filme.getTitulo());
+        if (!filmes.contains(filme)) {
+            filmes.add(filme);
+            PersistenciaJson.salvar(this);
+            System.out.println("Filme cadastrado com sucesso: " + filme.getTitulo());
+        } else {
+            System.out.println("Filme já cadastrado.");
+        }
     }
 
     /** cadastra serie no diario cultural
      *
      * @param serie - serie que será cadastrada
      */
-    public void cadastrarSerie( Serie serie){
-        series.add(serie);
-        System.out.println("Serie cadastrada com sucesso: " +serie.getTitulo());
-
+    public void cadastrarSerie(Serie serie){
+        if (!series.contains(serie)) {
+            series.add(serie);
+            PersistenciaJson.salvar(this);
+            System.out.println("Série cadastrada com sucesso: " + serie.getTitulo());
+        } else {
+            System.out.println("Série já cadastrada.");
+        }
     }
 
 

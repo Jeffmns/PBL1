@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Livro implements Comparable<Livro> {
     private String titulo;
@@ -10,19 +11,17 @@ public class Livro implements Comparable<Livro> {
     private String ISBN;
     private int ano_lancamento;
     private String genero;
-    private boolean exemplar;
     private boolean lido;
     private List<Review> avaliacoes = new ArrayList<>();
 
 
-    public Livro(String titulo, String autor, String editora, String ISBN, int ano_lancamento, String genero, boolean exemplar, boolean lido) {
+    public Livro(String titulo, String autor, String editora, String ISBN, int ano_lancamento, String genero,  boolean lido) {
         this.titulo = titulo;
         this.autor = autor;
         this.editora = editora;
         this.ISBN = ISBN;
         this.ano_lancamento = ano_lancamento;
         this.genero = genero;
-        this.exemplar = exemplar;
         this.lido = false;
     }
 
@@ -93,14 +92,6 @@ public class Livro implements Comparable<Livro> {
         this.genero = genero;
     }
 
-    public boolean isExemplar() {
-        return exemplar;
-    }
-
-    public void setExemplar(boolean exemplar) {
-        this.exemplar = exemplar;
-    }
-
     public boolean isLido() {
         return lido;
     }
@@ -113,6 +104,22 @@ public class Livro implements Comparable<Livro> {
     public int compareTo(Livro livro) {
         return this.getTitulo().compareTo(livro.getTitulo());
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Livro livro = (Livro) obj;
+        return ano_lancamento == livro.ano_lancamento &&
+                titulo.equalsIgnoreCase(livro.titulo) &&
+                autor.equalsIgnoreCase(livro.autor) &&
+                editora.equalsIgnoreCase(livro.editora) &&
+                ISBN.equalsIgnoreCase(livro.ISBN) &&
+                genero.equalsIgnoreCase(livro.genero);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo.toLowerCase(), autor.toLowerCase(), editora.toLowerCase(), ISBN.toLowerCase(), ano_lancamento, genero.toLowerCase());
+    }
 }
-
-

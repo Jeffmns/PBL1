@@ -7,7 +7,6 @@
       "ISBN": "978-85-60280-87-2",
       "ano_lancamento": 2013,
       "genero": "Terror",
-      "exemplar": true,
       "lido": false,
       "avaliacoes": []
     },
@@ -18,7 +17,6 @@
       "ISBN": "978-85-60280-87-2",
       "ano_lancamento": 2012,
       "genero": "Terror",
-      "exemplar": true,
       "lido": false,
       "avaliacoes": []
     },
@@ -29,7 +27,6 @@
       "ISBN": "978-85-60280-87-2",
       "ano_lancamento": 2013,
       "genero": "Romance",
-      "exemplar": true,
       "lido": false,
       "avaliacoes": []
     }

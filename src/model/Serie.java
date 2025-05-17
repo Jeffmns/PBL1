@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Serie {
     private String titulo;
@@ -89,7 +90,23 @@ public class Serie {
         this.genero = genero;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
+        Serie serie = (Serie) obj;
+
+        return ano_lancamento == serie.ano_lancamento
+                && titulo.equalsIgnoreCase(serie.titulo)
+                && genero.equalsIgnoreCase(serie.genero)
+                && elenco.equalsIgnoreCase(serie.elenco)
+                && onde_assistir.equalsIgnoreCase(serie.onde_assistir);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo.toLowerCase(), genero.toLowerCase(), ano_lancamento,elenco.toLowerCase(), onde_assistir.toLowerCase());
+    }
 
 
 }

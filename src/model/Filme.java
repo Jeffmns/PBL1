@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Filme {
     private String titulo;
@@ -111,6 +112,23 @@ public class Filme {
         this.duracao = duracao;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Filme filme = (Filme) obj;
+        return ano_lancamento == filme.ano_lancamento &&
+                duracao == filme.duracao &&
+                titulo.equalsIgnoreCase(filme.titulo) &&
+                genero.equalsIgnoreCase(filme.genero) &&
+                direcao.equalsIgnoreCase(filme.direcao) &&
+                elenco.equalsIgnoreCase(filme.elenco) &&
+                onde_assistir.equalsIgnoreCase(filme.onde_assistir);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo.toLowerCase(), genero.toLowerCase(), ano_lancamento, duracao, direcao.toLowerCase(), elenco.toLowerCase(), onde_assistir.toLowerCase());
+    }
 
 }
 

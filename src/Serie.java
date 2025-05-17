@@ -34,7 +34,7 @@ public class Serie {
                 count++;
             }
         }
-        return count == 0 ? 0.0 : soma / count;
+        return count == 0 ? 0.0 : Math.round((soma / count) * 100.0) / 100.0;
     }
 
 
@@ -71,7 +71,7 @@ public class Serie {
         this.elenco = elenco;
     }
 
-    public int getAno_lancamento() {
+    public int getAnoLancamento() {
         return ano_lancamento;
     }
 

@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.text.Normalizer;
-import java.util.Date;
 
 
 public class DiarioCultural {
@@ -41,6 +39,25 @@ public class DiarioCultural {
             System.out.println(livro.getTitulo());
         }
         return resultado;
+    }
+
+    public List<Livro> listarlivros(){
+        List<Livro> todosLivros = this.getLivros();
+        System.out.println("Livros cadastrados: ");
+        for (Livro livro : todosLivros) {
+            System.out.println(livro.getTitulo());
+        }
+
+        return todosLivros;
+    }
+    public List<Filme> listarfilmes(){
+        List<Filme> todosFilmes = this.getFilmes();
+        System.out.println("Filmes cadastrados: ");
+        for (Filme filme : todosFilmes) {
+            System.out.println(filme.getTitulo());
+        }
+
+        return todosFilmes;
     }
 
 
@@ -91,7 +108,7 @@ public class DiarioCultural {
 
             if (titulo != null && !removerAcentos(serie.getTitulo()).toLowerCase().contains(removerAcentos(titulo).toLowerCase())) matches = false;
             if (genero != null && !removerAcentos(serie.getGenero()).toLowerCase().contains(removerAcentos(genero).toLowerCase())) matches = false;
-            if (ano != null && serie.getAno_lancamento() != ano) matches = false;
+            if (ano != null && serie.getAnoLancamento() != ano) matches = false;
             if (matches) resultado.add(serie);
         }
         return resultado;
@@ -172,6 +189,77 @@ public class DiarioCultural {
             }
         }
         System.out.println("Série não encontrada.");
+    }
+
+    public List<Livro> ordenarLivrosPorAvaliacao(int order, String genero, Integer ano) {
+        int desc = 2;
+
+        List<Livro> todosLivros = this.getLivros();
+        List<Livro> resultado = new ArrayList<>();
+
+        for (Livro livro : todosLivros) {
+            boolean matches = true;
+
+            if (genero != null && !removerAcentos(livro.getGenero()).toLowerCase().contains(removerAcentos(genero).toLowerCase())) matches = false;
+            if (ano != null && livro.getAno_lancamento() != ano) matches = false;
+
+            if (matches) resultado.add(livro);
+        }
+
+        if (order == desc) {
+            resultado.sort(Comparator.comparingDouble(Livro::getMediaAvaliacoes));
+        } else {
+            resultado.sort(Comparator.comparingDouble(Livro::getMediaAvaliacoes).reversed());
+        }
+
+        return resultado;
+    }
+
+    public List<Filme> ordenarFilmesPorAvaliacao(int order, String genero, Integer ano) {
+        int desc = 2;
+
+        List<Filme> todosFilmes = this.getFilmes();
+        List<Filme> resultado = new ArrayList<>();
+        for (Filme filme : todosFilmes) {
+            boolean matches = true;
+
+            if (genero != null && !removerAcentos(filme.getGenero()).toLowerCase().contains(removerAcentos(genero).toLowerCase()))
+                matches = false;
+            if (ano != null && filme.getAno_lancamento()!= ano)
+                matches = false;
+
+            if (matches) resultado.add(filme);
+        }
+
+        if (order == desc) {
+            resultado.sort(Comparator.comparingDouble(Filme::getMediaAvaliacoes));
+        } else {
+            resultado.sort(Comparator.comparingDouble(Filme::getMediaAvaliacoes).reversed());
+        }
+
+        return resultado;
+    }
+
+    public List<Serie> ordenarSeriesPorAvaliacao(int order, String genero, Integer ano) {
+        int desc = 2;
+
+        List<Serie> todasSeries = this.getSeries();
+        List<Serie> resultado = new ArrayList<>();
+        for (Serie serie : todasSeries) {
+            boolean matches = true;
+
+            if (genero != null && !removerAcentos(serie.getGenero()).toLowerCase().contains(removerAcentos(genero).toLowerCase())) matches = false;
+            if (ano != null && serie.getAnoLancamento() != ano) matches = false;
+            if (matches) resultado.add(serie);
+        }
+
+        if (order == desc) {
+            resultado.sort(Comparator.comparingDouble(Serie::getMediaAvaliacoes));
+        } else {
+            resultado.sort(Comparator.comparingDouble(Serie::getMediaAvaliacoes).reversed());
+        }
+
+        return resultado;
     }
 
     public List<Livro> getLivros() {

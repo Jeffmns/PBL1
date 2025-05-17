@@ -36,7 +36,8 @@ public class Filme {
         for (Review review : avaliacoes) {
             soma += review.getAvaliacao();
         }
-        return (double) soma / avaliacoes.size();
+
+        return (double) Math.round((soma / avaliacoes.size()) * 100.0) / 100.0;
     }
 
     public List<Review> getAvaliacoes() {

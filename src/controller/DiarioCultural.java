@@ -1,6 +1,13 @@
+package controller;
+
 import java.util.*;
 import java.text.Normalizer;
-
+import model.Filme;
+import model.Livro;
+import model.Serie;
+import model.Temporada;
+import model.Review;
+import persistence.PersistenciaJson;
 
 public class DiarioCultural {
     private List<Livro> livros;
@@ -151,6 +158,7 @@ public class DiarioCultural {
                 Review review = new Review(avaliacao, data, comentario);
                 livro.getAvaliacoes().add(review);
                 livro.setLido(true);
+                PersistenciaJson.salvar(this);
                 System.out.println("Livro avaliado com sucesso!");
                 return;
             }
@@ -165,6 +173,7 @@ public class DiarioCultural {
                 Review review = new Review(avaliacao, data, comentario);
                 filme.getAvaliacoes().add(review);
                 filme.setAssistido(true);
+                PersistenciaJson.salvar(this);
                 System.out.println("Filme avaliado com sucesso!");
                 return;
             }
@@ -180,6 +189,7 @@ public class DiarioCultural {
                     Temporada temporada = serie.getTemporadas().get(numeroTemporada - 1);
                     temporada.avaliarTemporada(avaliacao, data, comentario);
                     temporada.setAssistido(true);
+                    PersistenciaJson.salvar(this);
                     System.out.println("Temporada avaliada com sucesso!");
                     return;
                 } else {

@@ -1,52 +1,52 @@
 @startuml
 title Diagrama de Classes - Diário Cultural
-class Review {
+class model.Review {
     - int avaliacao
     - Date data
     - String comentario
-    + Review(int avaliacao, Date data, String comentario)
+    + model.Review(int avaliacao, Date data, String comentario)
 
 }
 
-class Temporada {
+class model.Temporada {
     - int numero
     - int ano_lancamento
     - int qtd_episodios
     - boolean assistido
-    - List~Review~ avaliacoes
-    + Temporada(int numero, int ano_lancamento, int qtd_episodios)
+    - List~model.Review~ avaliacoes
+    + model.Temporada(int numero, int ano_lancamento, int qtd_episodios)
     + void avaliarTemporada(int avaliacao, Date data_review, String comentario)
     + double getMediaAvaliacoes()
-    + List~Review~ getAvaliacao()
+    + List~model.Review~ getAvaliacao()
 
 }
-class Serie {
+class model.Serie {
     - String titulo
     - String genero
     - int ano_lancamento
     - String elenco
     - String onde_assistir
-    - List~Temporada~ temporadas
-    - List~Review~ avaliacoes
-    + Serie(String titulo, String genero, int ano_lancamento, String elenco, String onde_assistir)
-    + void adicionarTemporada(Temporada temporada)
+    - List~model.Temporada~ temporadas
+    - List~model.Review~ avaliacoes
+    + model.Serie(String titulo, String genero, int ano_lancamento, String elenco, String onde_assistir)
+    + void adicionarTemporada(model.Temporada temporada)
     + double getMediaAvaliacoes()
 
 }
 
-class Livro {
+class model.Livro {
     - String titulo
     - String autor
     - int ano_publicacao
     - String genero
     - String editora
-    - List~Review~ avaliacoes
-    + Livro(String titulo, String autor, int ano_publicacao, String genero, String editora)
+    - List~model.Review~ avaliacoes
+    + model.Livro(String titulo, String autor, int ano_publicacao, String genero, String editora)
     + double getMediaAvaliacoes()
-    + void adicionarReview(Review review)
+    + void adicionarReview(model.Review review)
 
 }
-class Filme {
+class model.Filme {
     - String titulo
     - String diretor
     - int ano_lancamento
@@ -56,35 +56,35 @@ class Filme {
     - String direcao
     - String onde_assistir
     - boolean assistido
-    - List~Review~ avaliacoes
-    + Filme(String titulo, String diretor, int ano_lancamento, String genero, String elenco, String onde_assistir)
+    - List~model.Review~ avaliacoes
+    + model.Filme(String titulo, String diretor, int ano_lancamento, String genero, String elenco, String onde_assistir)
     + double getMediaAvaliacoes()
-    + void adicionarReview(Review review)
+    + void adicionarReview(model.Review review)
 
 }
-class DiarioCultural {
-    - List~Livro~ livros
-    - List~Filme~ filmes
-    - List~Serie~ series
+class controller.DiarioCultural {
+    - List~model.Livro~ livros
+    - List~model.Filme~ filmes
+    - List~model.Serie~ series
     + String removerAcentos(String str)
-    + void cadastrarLivro(Livro livro)
-    + void cadastrarFilme(Filme filme)
-    + void cadastrarSerie(Serie serie)
-    + List<Livro> buscarLivros()
-    + List<Filme> buscarFilmes()
-    + List<Serie> buscarSeries()
+    + void cadastrarLivro(model.Livro livro)
+    + void cadastrarFilme(model.Filme filme)
+    + void cadastrarSerie(model.Serie serie)
+    + List<model.Livro> buscarLivros()
+    + List<model.Filme> buscarFilmes()
+    + List<model.Serie> buscarSeries()
     + void avaliarLivro()
     + void avaliarFilme()
     + void avaliarTemporadaSerie()
 
 }
 
-Serie "1" o-- "*" Temporada
-Temporada "1" o-- "*" Review
-Serie "1" o-- "*" Review
-Livro "1" o-- "*" Review
-Filme "1" o-- "*" Review
-DiarioCultural ..> Livro : usa
-DiarioCultural ..> Filme : usa
-DiarioCultural ..> Serie : usa
+model.Serie "1" o-- "*" model.Temporada
+model.Temporada "1" o-- "*" model.Review
+model.Serie "1" o-- "*" model.Review
+model.Livro "1" o-- "*" model.Review
+model.Filme "1" o-- "*" model.Review
+controller.DiarioCultural ..> model.Livro : usa
+controller.DiarioCultural ..> model.Filme : usa
+controller.DiarioCultural ..> model.Serie : usa
 @enduml

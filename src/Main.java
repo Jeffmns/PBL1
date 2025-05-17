@@ -1,3 +1,10 @@
+import controller.DiarioCultural;
+import model.Filme;
+import model.Livro;
+import model.Serie;
+import model.Temporada;
+import persistence.PersistenciaJson;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -5,27 +12,8 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        DiarioCultural dc = new DiarioCultural();
-        Livro l1 = new Livro("Christine", "Stephen King", "Objetiva",
-                "978-85-60280-87-2", 2013, "Terror", true, true);
-        Livro l2 = new Livro("Joyland", "Stephen King", "Objetiva",
-                "978-85-60280-87-2", 2012, "Terror", true, true);
-        Livro l3 = new Livro("A culpa é das estrelas", "John Green", "Objetiva",
-                "978-85-60280-87-2", 2013, "Romance", true, true);
-
-        dc.cadastrarLivro(l1);
-        dc.cadastrarLivro(l2);
-        dc.cadastrarLivro(l3);
-
-        Filme f1 = new Filme("Interestelar", "Ficção Científica", 2013,
-                150, "Cristopher Nolan", "xxx", "Netflix");
-
-        Serie s1 = new Serie("Stranger Things", "Ficção", 2016, "Sadie Sink",
-                "Netflix");
-
-        dc.cadastrarFilme(f1);
-        dc.cadastrarSerie(s1);
-
+        DiarioCultural dc = PersistenciaJson.carregar();
+        PersistenciaJson.salvar(dc);
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\n=== Menu Principal ===");
@@ -158,6 +146,7 @@ public class Main {
 
         Livro livro = new Livro(titulo, autor, editora, isbn, ano, genero, lido, favorito);
         dc.cadastrarLivro(livro);
+        PersistenciaJson.salvar(dc);
         System.out.println("Livro cadastrado com sucesso!");
     }
 
@@ -180,6 +169,7 @@ public class Main {
 
         Filme filme = new Filme(titulo, genero, ano, duracao, diretor, ator, plataforma);
         dc.cadastrarFilme(filme);
+        PersistenciaJson.salvar(dc);
         System.out.println("Filme cadastrado com sucesso!");
     }
 
@@ -250,6 +240,7 @@ public class Main {
         }
 
         dc.cadastrarSerie(serie);
+        PersistenciaJson.salvar(dc);
         System.out.println("\nSérie cadastrada com sucesso!");
     }
 

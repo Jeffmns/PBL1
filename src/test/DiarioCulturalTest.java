@@ -1,3 +1,7 @@
+package test;
+
+import controller.DiarioCultural;
+import model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

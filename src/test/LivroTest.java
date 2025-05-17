@@ -1,4 +1,7 @@
-import org.junit.Assert;
+package test;
+
+import model.Livro;
+import model.Review;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

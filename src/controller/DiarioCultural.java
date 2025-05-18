@@ -27,50 +27,16 @@ public class DiarioCultural {
         this.series = new ArrayList<Serie>();
     }
 
-    /** Faz uma busca nos livros cadastrados
-     * @param ano - ano dos livros que se quer buscar
-     * @return lista de livros encontrados
-     */
-    public List<Livro> buscarLivrosPorAno(int ano) {
-        List<Livro> resultado = new ArrayList<Livro>();
 
-        List<Livro> todosLivros = this.getLivros();
-        for (Livro livro : todosLivros) {
-            if (livro.getAno_lancamento() == ano) {
-                resultado.add(livro);
-            }
-        }
-
-        System.out.println("Livros encontrados do ano " + ano + ": ");
-        for (Livro livro : resultado) {
-            System.out.println(livro.getTitulo());
-        }
-        return resultado;
-    }
-
-    public List<Livro> listarlivros(){
-        List<Livro> todosLivros = this.getLivros();
-        System.out.println("Livros cadastrados: ");
-        for (Livro livro : todosLivros) {
-            System.out.println(livro.getTitulo());
-        }
-
-        return todosLivros;
-    }
-    public List<Filme> listarfilmes(){
-        List<Filme> todosFilmes = this.getFilmes();
-        System.out.println("Filmes cadastrados: ");
-        for (Filme filme : todosFilmes) {
-            System.out.println(filme.getTitulo());
-        }
-
-        return todosFilmes;
-    }
-
-
-    /** Faz uma busca nos livros cadastrados
-     * @param titulo, autor, genero, ano, ISBN - ano dos livros que se quer buscar
-     * @return lista de livros encontrados
+    /**
+     * Realiza uma busca na lista de livros cadastrados com base nos critérios informados.
+     *
+     * @param titulo Parte ou nome completo do título do livro.
+     * @param autor Nome do autor do livro.
+     * @param genero Gênero do livro.
+     * @param ano Ano de lançamento do livro.
+     * @param ISBN ISBN do livro.
+     * @return Lista de livros que correspondem aos critérios de busca.
      */
     public List<Livro> buscarLivros(String titulo, String autor, String genero, Integer ano, String ISBN) {
         List<Livro> resultado = new ArrayList<>();
@@ -86,6 +52,17 @@ public class DiarioCultural {
         }
         return resultado;
     }
+
+    /**
+     * Realiza uma busca na lista de filmes cadastrados com base nos critérios informados.
+     *
+     * @param titulo   Parte ou nome completo do título do filme.
+     * @param diretor  Nome do diretor do filme.
+     * @param ator     Nome de um ator do elenco.
+     * @param genero   Gênero do filme.
+     * @param ano      Ano de lançamento do filme.
+     * @return Lista de filmes que correspondem aos critérios de busca.
+     */
 
     public List<Filme> buscarFilmes(String titulo, String diretor, String ator, String genero, Integer ano) {
         List<Filme> resultado = new ArrayList<>();
@@ -108,6 +85,14 @@ public class DiarioCultural {
         return resultado;
     }
 
+    /**
+     * Realiza uma busca na lista de séries cadastradas com base nos critérios informados.
+     *
+     * @param titulo Parte ou nome completo do título da série.
+     * @param genero Gênero da série.
+     * @param ano Ano de lançamento da série.
+     * @return Lista de séries que correspondem aos critérios de busca.
+     */
     public List<Serie> buscarSeries(String titulo, String genero, Integer ano) {
         List<Serie> resultado = new ArrayList<>();
         for (Serie serie : series) {
@@ -123,7 +108,7 @@ public class DiarioCultural {
 
     /** Cadastra um livro no diario cultural
      *
-     * @param livro - livro que será cadastrado
+     * @param livro Livro que será cadastrado
      */
     public void cadastrarLivro(Livro livro){
         if (!livros.contains(livro)) {
@@ -138,7 +123,7 @@ public class DiarioCultural {
 
     /** Cadastra filme no diario cultural
      *
-     * @param filme - filme que será cadastrado
+     * @param filme Filme que será cadastrado
      */
     public void cadastrarFilme(Filme filme){
         if (!filmes.contains(filme)) {
@@ -150,9 +135,9 @@ public class DiarioCultural {
         }
     }
 
-    /** cadastra serie no diario cultural
+    /** Cadastra serie no diario cultural
      *
-     * @param serie - serie que será cadastrada
+     * @param serie  Série que será cadastrada.
      */
     public void cadastrarSerie(Serie serie){
         if (!series.contains(serie)) {
@@ -164,8 +149,14 @@ public class DiarioCultural {
         }
     }
 
-
-    // Avaliar Livro
+    /**
+     * Avalia um livro com base no título informado.
+     *
+     * @param titulo O título do livro a ser avaliado.
+     * @param avaliacao A nota da avaliação (0 a 5).
+     * @param comentario Comentário do usuário sobre o livro.
+     * @param data Data da avaliação.
+     */
     public void avaliarLivro(String titulo, int avaliacao, String comentario, Date data) {
         for (Livro livro : livros) {
             if (livro.getTitulo().equalsIgnoreCase(titulo)) {
@@ -180,7 +171,14 @@ public class DiarioCultural {
         System.out.println("Livro não encontrado.");
     }
 
-    // Avaliar Filme
+    /**
+     * Avalia um filme com base no título informado.
+     *
+     * @param titulo O título do filme a ser avaliado.
+     * @param avaliacao A nota da avaliação (0 a 5).
+     * @param comentario Comentário do usuário sobre o filme.
+     * @param data Data da avaliação.
+     */
     public void avaliarFilme(String titulo, int avaliacao, String comentario, Date data) {
         for (Filme filme : filmes) {
             if (filme.getTitulo().equalsIgnoreCase(titulo)) {
@@ -195,7 +193,15 @@ public class DiarioCultural {
         System.out.println("Filme não encontrado.");
     }
 
-    // Avaliar Temporada de Série
+    /**
+     * Avalia uma temporada de uma série com base no título informado e no número da temporada.
+     *
+     * @param tituloSerie O título da série a ser avaliado.
+     * @param numeroTemporada O número da temporada da série a ser avaliada.
+     * @param avaliacao A nota da avaliação (0 a 5).
+     * @param comentario Comentário do usuário sobre a série.
+     * @param data Data da avaliação.
+     */
     public void avaliarTemporadaSerie(String tituloSerie, int numeroTemporada, int avaliacao, String comentario, Date data) {
         for (Serie serie : series) {
             if (serie.getTitulo().equalsIgnoreCase(tituloSerie)) {
@@ -215,6 +221,14 @@ public class DiarioCultural {
         System.out.println("Série não encontrada.");
     }
 
+    /**
+     * Ordena uma lista de livros pela ordem de maior ou menor avaliado.
+     *
+     * @param order Ordem escolhida pelo usuário (Maior para menor ou Menor para maior)
+     * @param genero O gênero do livro para filtrar ainda mais a busca.
+     * @param ano O ano de lançamento do livro para filtrar ainda mais a busca.
+     * @return Lista de livros na ordem escolhida.
+     */
     public List<Livro> ordenarLivrosPorAvaliacao(int order, String genero, Integer ano) {
         int desc = 2;
 
@@ -239,6 +253,14 @@ public class DiarioCultural {
         return resultado;
     }
 
+    /**
+     * Ordena uma lista de filmes pela ordem de maior ou menor avaliado.
+     *
+     * @param order Ordem escolhida pelo usuário (Maior para menor ou Menor para maior)
+     * @param genero O gênero do filme para filtrar ainda mais a busca.
+     * @param ano O ano de lançamento do filme para filtrar ainda mais a busca.
+     * @return Lista de filmes na ordem escolhida.
+     */
     public List<Filme> ordenarFilmesPorAvaliacao(int order, String genero, Integer ano) {
         int desc = 2;
 
@@ -263,7 +285,14 @@ public class DiarioCultural {
 
         return resultado;
     }
-
+    /**
+     * Ordena uma lista de séries pela ordem de maior ou menor avaliado.
+     *
+     * @param order Ordem escolhida pelo usuário (Maior para menor ou Menor para maior)
+     * @param genero O gênero da série para filtrar ainda mais a busca.
+     * @param ano O ano de lançamento da série para filtrar ainda mais a busca.
+     * @return Lista de séries na ordem escolhida.
+     */
     public List<Serie> ordenarSeriesPorAvaliacao(int order, String genero, Integer ano) {
         int desc = 2;
 
@@ -284,6 +313,159 @@ public class DiarioCultural {
         }
 
         return resultado;
+    }
+
+    /**
+     * Remove um livro da lista de livros cadastrados com base no título informado.
+     * Se houver mais de um livro com o mesmo título, exibe as opções para o usuário
+     * escolher qual deseja remover.
+     *
+     * @param titulo Título do livro a ser removido.
+     */
+    public void removerLivro(String titulo, Scanner scanner) {
+        List<Livro> encontrados = new ArrayList<>();
+        for (Livro livro : livros) {
+            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+                encontrados.add(livro);
+            }
+        }
+
+        if (encontrados.isEmpty()) {
+            System.out.println("Nenhum livro encontrado com esse título.");
+            return;
+        }
+
+        if (encontrados.size() == 1) {
+            livros.remove(encontrados.get(0));
+            System.out.println("Livro removido com sucesso!");
+        } else {
+            System.out.println("\nLivros encontrados:");
+            for (int i = 0; i < encontrados.size(); i++) {
+                Livro l = encontrados.get(i);
+                System.out.println((i + 1) + " - " + l.getTitulo() + " (" +l.getAno_lancamento() + ") - Autor: " + l.getAutor() + " - Editora: " + l.getEditora() + " - ISBN: " + l.getISBN());
+            }
+
+            System.out.print("Digite o número do livro que deseja remover: ");
+            try {
+                int escolha = Integer.parseInt(scanner.nextLine());
+                if (escolha >= 1 && escolha <= encontrados.size()) {
+                    livros.remove(encontrados.get(escolha - 1));
+                    System.out.println("Livro removido com sucesso!");
+                } else {
+                    System.out.println("Número inválido.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida.");
+            }
+        }
+    }
+
+    /**
+     * Remove um filme da lista de filmes cadastrados com base no título informado.
+     * Se houver mais de um filme com o mesmo título, exibe as opções para o usuário
+     * escolher qual deseja remover.
+     *
+     * @param titulo Título do filme a ser removido.
+     */
+    public void removerFilme(String titulo, Scanner scanner) {
+        List<Filme> encontrados = new ArrayList<>();
+        for (Filme filme : filmes) {
+            if (filme.getTitulo().equalsIgnoreCase(titulo)) {
+                encontrados.add(filme);
+            }
+        }
+
+        if (encontrados.isEmpty()) {
+            System.out.println("Nenhum filme encontrado com esse título.");
+            return;
+        }
+
+        if (encontrados.size() == 1) {
+            filmes.remove(encontrados.get(0));
+            System.out.println("Filme removido com sucesso!");
+        } else {
+            System.out.println("\nFilmes encontrados:");
+            for (int i = 0; i < encontrados.size(); i++) {
+                Filme f = encontrados.get(i);
+                System.out.println((i + 1) + " - " + f.getTitulo() + " (" + f.getAno_lancamento() + ") - Direção: " + f.getDirecao() + " - Plataforma: " + f.getOnde_assistir());
+            }
+
+            System.out.print("Digite o número do filme que deseja remover: ");
+            try {
+                int escolha = Integer.parseInt(scanner.nextLine());
+                if (escolha >= 1 && escolha <= encontrados.size()) {
+                    filmes.remove(encontrados.get(escolha - 1));
+                    System.out.println("Filme removido com sucesso!");
+                } else {
+                    System.out.println("Número inválido.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida.");
+            }
+        }
+    }
+    /**
+     * Remove uma série da lista de séries cadastradas com base no título informado.
+     * Se houver mais de uma série com o mesmo título, exibe as opções para o usuário
+     * escolher qual deseja remover.
+     *
+     * @param titulo Título da série a ser removido.
+     */
+    public void removerSerie(String titulo, Scanner scanner) {
+        List<Serie> encontrados = new ArrayList<>();
+        for (Serie serie : series) {
+            if (serie.getTitulo().equalsIgnoreCase(titulo)) {
+                encontrados.add(serie);
+            }
+        }
+
+        if (encontrados.isEmpty()) {
+            System.out.println("Nenhuma série encontrada com esse título.");
+            return;
+        }
+
+        if (encontrados.size() == 1) {
+            series.remove(encontrados.get(0));
+            System.out.println("Série removida com sucesso!");
+        } else {
+            System.out.println("\nSéries encontradas:");
+            for (int i = 0; i < encontrados.size(); i++) {
+                Serie s = encontrados.get(i);
+                System.out.println((i + 1) + " - " + s.getTitulo() + " (" + s.getAnoLancamento() + ") - Elenco: " + s.getElenco() + " - Plataforma: " + s.getOnde_assistir());
+            }
+
+            System.out.print("Digite o número da série que deseja remover: ");
+            try {
+                int escolha = Integer.parseInt(scanner.nextLine());
+                if (escolha >= 1 && escolha <= encontrados.size()) {
+                    series.remove(encontrados.get(escolha - 1));
+                    System.out.println("Série removida com sucesso!");
+                } else {
+                    System.out.println("Número inválido.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida.");
+            }
+        }
+    }
+
+    public List<Livro> listarlivros(){
+        List<Livro> todosLivros = this.getLivros();
+        System.out.println("Livros cadastrados: ");
+        for (Livro livro : todosLivros) {
+            System.out.println(livro.getTitulo());
+        }
+
+        return todosLivros;
+    }
+    public List<Filme> listarfilmes(){
+        List<Filme> todosFilmes = this.getFilmes();
+        System.out.println("Filmes cadastrados: ");
+        for (Filme filme : todosFilmes) {
+            System.out.println(filme.getTitulo());
+        }
+
+        return todosFilmes;
     }
 
     public List<Livro> getLivros() {

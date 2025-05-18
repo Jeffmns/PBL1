@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.Scanner;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+/**
+ * Classe principal que inicia a execução do sistema Diário Cultural.
+ * Exibe o menu principal com opções para cadastro, busca, avaliação, listagem e exclusão de obras.
+ */
 public class Main {
     public static void main(String[] args) {
         DiarioCultural dc = PersistenciaJson.carregar();
@@ -21,7 +26,8 @@ public class Main {
             System.out.println("2 - Buscar");
             System.out.println("3 - Avaliar");
             System.out.println("4 - Listar");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Excluir");
+            System.out.println("6 - Sair");
             System.out.print("Escolha uma opção: ");
             String opcao = scanner.nextLine().trim();
 
@@ -30,7 +36,8 @@ public class Main {
                 case "2" -> menuBusca(scanner, dc);
                 case "3" -> menuAvaliacao(scanner, dc);
                 case "4" -> menuListagem(scanner, dc);
-                case "5" -> {
+                case "5" -> menuExcluir(scanner,dc);
+                case "6" -> {
                     System.out.println("Saindo...");
                     scanner.close();
                     return;
@@ -124,6 +131,44 @@ public class Main {
         }
     }
 
+    private static void menuExcluir(Scanner scanner, DiarioCultural dc) {
+        while (true) {
+            System.out.println("\n=== Menu Exclusão ===");
+            System.out.println("1 - Excluir Livro");
+            System.out.println("2 - Excluir Filme");
+            System.out.println("3 - Excluir Série");
+            System.out.println("4 - Voltar");
+            System.out.print("Escolha uma opção: ");
+            String opcao = scanner.nextLine().trim();
+
+            switch (opcao) {
+                case "1" -> {
+                    System.out.print("Digite o título do livro a ser removido: ");
+                    String titulo = scanner.nextLine();
+                    dc.removerLivro(titulo, scanner);
+                    PersistenciaJson.salvar(dc);
+                }
+                case "2" -> {
+                    System.out.print("Digite o título do filme a ser removido: ");
+                    String titulo = scanner.nextLine();
+                    dc.removerFilme(titulo, scanner);
+                    PersistenciaJson.salvar(dc);
+                }
+                case "3" -> {
+                    System.out.print("Digite o título da série a ser removida: ");
+                    String titulo = scanner.nextLine();
+                    dc.removerSerie(titulo, scanner);
+                    PersistenciaJson.salvar(dc);
+                }
+                case "4" -> {
+                    return;
+                }
+                default -> System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
+    }
+
+
     // Métodos de Cadastro
     private static void cadastrarLivro(Scanner scanner, DiarioCultural dc) {
         System.out.println("\nCadastro de Livro:");
@@ -154,8 +199,18 @@ public class Main {
         String genero = scanner.nextLine();
         System.out.print("Ano de lançamento: ");
         int ano = Integer.parseInt(scanner.nextLine());
-        System.out.print("Duração (minutos): ");
-        int duracao = Integer.parseInt(scanner.nextLine());
+        int duracao;
+        while (true) {
+            System.out.print("Duração (minutos): ");
+            String entrada = scanner.nextLine().trim();
+
+            try {
+                duracao = Integer.parseInt(entrada);
+                break; // saída do laço se deu certo
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, digite apenas números.");
+            }
+        }
         System.out.print("Diretor: ");
         String diretor = scanner.nextLine();
         System.out.print("Ator principal: ");
@@ -311,20 +366,50 @@ public class Main {
 
     // Métodos de Listagem
     private static void listarLivros(Scanner scanner, DiarioCultural dc) {
-        System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+        Integer order = null;
+        while (true) {
+            System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+            System.out.print("Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação\n> ");
+            String entrada = scanner.nextLine().trim();
 
-        Integer order = getIntegerInput(scanner, "Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação");
+            try {
+                int opcao = Integer.parseInt(entrada);
+                if (opcao == 1 || opcao == 2) {
+                    order = opcao;
+                    break;
+                } else {
+                    System.out.println("Opção inválida. Digite apenas 1, 2 ou pressione ENTER.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Digite apenas 1, 2 ou pressione ENTER.");
+            }
+        }
         String genero = getInput(scanner, "Gênero: ");
         Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
-
         List<Livro> resultados = dc.ordenarLivrosPorAvaliacao(order, genero, ano);
         exibirLivros(resultados);
     }
 
     private static void listarFilmes(Scanner scanner, DiarioCultural dc) {
-        System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+        Integer order = null;
+        while (true) {
+            System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+            System.out.print("Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação\n> ");
+            String entrada = scanner.nextLine().trim();
 
-        Integer order = getIntegerInput(scanner, "Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação");
+            try {
+                int opcao = Integer.parseInt(entrada);
+                if (opcao == 1 || opcao == 2) {
+                    order = opcao;
+                    break;
+                } else {
+                    System.out.println("Opção inválida. Digite apenas 1, 2 ou pressione ENTER.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Digite apenas 1, 2 ou pressione ENTER.");
+            }
+        }
+
         String genero = getInput(scanner, "Gênero: ");
         Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
 
@@ -333,9 +418,25 @@ public class Main {
     }
 
     private static void listarSeries(Scanner scanner, DiarioCultural dc) {
-        System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+        Integer order = null;
+        while (true) {
+            System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+            System.out.print("Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação\n> ");
+            String entrada = scanner.nextLine().trim();
 
-        Integer order = getIntegerInput(scanner, "Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação");
+            try {
+                int opcao = Integer.parseInt(entrada);
+                if (opcao == 1 || opcao == 2) {
+                    order = opcao;
+                    break;
+                } else {
+                    System.out.println("Opção inválida. Digite apenas 1, 2 ou pressione ENTER.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Digite apenas 1, 2 ou pressione ENTER.");
+            }
+        }
+
         String genero = getInput(scanner, "Gênero: ");
         Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
 

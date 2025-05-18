@@ -199,8 +199,18 @@ public class Main {
         String genero = scanner.nextLine();
         System.out.print("Ano de lançamento: ");
         int ano = Integer.parseInt(scanner.nextLine());
-        System.out.print("Duração (minutos): ");
-        int duracao = Integer.parseInt(scanner.nextLine());
+        int duracao;
+        while (true) {
+            System.out.print("Duração (minutos): ");
+            String entrada = scanner.nextLine().trim();
+
+            try {
+                duracao = Integer.parseInt(entrada);
+                break; // saída do laço se deu certo
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, digite apenas números.");
+            }
+        }
         System.out.print("Diretor: ");
         String diretor = scanner.nextLine();
         System.out.print("Ator principal: ");
@@ -356,20 +366,50 @@ public class Main {
 
     // Métodos de Listagem
     private static void listarLivros(Scanner scanner, DiarioCultural dc) {
-        System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+        Integer order = null;
+        while (true) {
+            System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+            System.out.print("Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação\n> ");
+            String entrada = scanner.nextLine().trim();
 
-        Integer order = getIntegerInput(scanner, "Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação");
+            try {
+                int opcao = Integer.parseInt(entrada);
+                if (opcao == 1 || opcao == 2) {
+                    order = opcao;
+                    break;
+                } else {
+                    System.out.println("Opção inválida. Digite apenas 1, 2 ou pressione ENTER.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Digite apenas 1, 2 ou pressione ENTER.");
+            }
+        }
         String genero = getInput(scanner, "Gênero: ");
         Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
-
         List<Livro> resultados = dc.ordenarLivrosPorAvaliacao(order, genero, ano);
         exibirLivros(resultados);
     }
 
     private static void listarFilmes(Scanner scanner, DiarioCultural dc) {
-        System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+        Integer order = null;
+        while (true) {
+            System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+            System.out.print("Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação\n> ");
+            String entrada = scanner.nextLine().trim();
 
-        Integer order = getIntegerInput(scanner, "Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação");
+            try {
+                int opcao = Integer.parseInt(entrada);
+                if (opcao == 1 || opcao == 2) {
+                    order = opcao;
+                    break;
+                } else {
+                    System.out.println("Opção inválida. Digite apenas 1, 2 ou pressione ENTER.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Digite apenas 1, 2 ou pressione ENTER.");
+            }
+        }
+
         String genero = getInput(scanner, "Gênero: ");
         Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
 
@@ -378,9 +418,25 @@ public class Main {
     }
 
     private static void listarSeries(Scanner scanner, DiarioCultural dc) {
-        System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+        Integer order = null;
+        while (true) {
+            System.out.println("\nDigite o tipo de ordenação (pressione ENTER para pular):");
+            System.out.print("Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação\n> ");
+            String entrada = scanner.nextLine().trim();
 
-        Integer order = getIntegerInput(scanner, "Ordenação: \n[1] Maior avaliação\n[2] Menor Avaliação");
+            try {
+                int opcao = Integer.parseInt(entrada);
+                if (opcao == 1 || opcao == 2) {
+                    order = opcao;
+                    break;
+                } else {
+                    System.out.println("Opção inválida. Digite apenas 1, 2 ou pressione ENTER.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Digite apenas 1, 2 ou pressione ENTER.");
+            }
+        }
+
         String genero = getInput(scanner, "Gênero: ");
         Integer ano = getIntegerInput(scanner, "Ano de lançamento: ");
 

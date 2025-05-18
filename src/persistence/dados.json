@@ -1,36 +1,5 @@
 {
-  "livros": [
-    {
-      "titulo": "Christine",
-      "autor": "Stephen King",
-      "editora": "Objetiva",
-      "ISBN": "978-85-60280-87-2",
-      "ano_lancamento": 2013,
-      "genero": "Terror",
-      "lido": false,
-      "avaliacoes": []
-    },
-    {
-      "titulo": "Joyland",
-      "autor": "Stephen King",
-      "editora": "Objetiva",
-      "ISBN": "978-85-60280-87-2",
-      "ano_lancamento": 2012,
-      "genero": "Terror",
-      "lido": false,
-      "avaliacoes": []
-    },
-    {
-      "titulo": "A culpa é das estrelas",
-      "autor": "John Green",
-      "editora": "Objetiva",
-      "ISBN": "978-85-60280-87-2",
-      "ano_lancamento": 2013,
-      "genero": "Romance",
-      "lido": false,
-      "avaliacoes": []
-    }
-  ],
+  "livros": [],
   "filmes": [
     {
       "titulo": "Interestelar",
@@ -44,99 +13,27 @@
       "avaliacoes": []
     },
     {
-      "titulo": "Meninas Malvadas",
-      "genero": "Comédia",
-      "ano_lancamento": 2004,
-      "duracao": 97,
-      "direcao": "Mark Waters",
-      "elenco": "Lindsay Lohan",
+      "titulo": "Kill Bill",
+      "genero": "Ação",
+      "ano_lancamento": 2003,
+      "duracao": 111,
+      "direcao": "Quentin Tarantino",
+      "elenco": "xxx",
       "onde_assistir": "Netflix",
       "assistido": false,
       "avaliacoes": []
     },
     {
-      "titulo": "Ainda estou aqui",
-      "genero": "Drama",
-      "ano_lancamento": 2024,
-      "duracao": 234,
-      "direcao": "Walter Salles",
-      "elenco": "Fernanda Torres",
-      "onde_assistir": "Globoplay",
+      "titulo": "Zathura",
+      "genero": "Ficção Científica",
+      "ano_lancamento": 2005,
+      "duracao": 101,
+      "direcao": "Jon Favreau",
+      "elenco": "xxx",
+      "onde_assistir": "Netflix",
       "assistido": false,
       "avaliacoes": []
     }
   ],
-  "series": [
-    {
-      "titulo": "Stranger Things",
-      "genero": "Ficção",
-      "ano_lancamento": 2016,
-      "elenco": "Sadie Sink",
-      "onde_assistir": "Netflix",
-      "temporadas": [],
-      "avaliacoes": []
-    },
-    {
-      "titulo": "The Boys",
-      "genero": "Drama",
-      "ano_lancamento": 2019,
-      "elenco": "Antony Starr, Karl Urban",
-      "onde_assistir": "Prime",
-      "temporadas": [
-        {
-          "numero": 1,
-          "ano_lancamento": 2019,
-          "qtd_episodios": 8,
-          "assistido": true,
-          "avaliacoes": [
-            {
-              "avaliacao": 5,
-              "data": "May 17, 2025, 6:40:08 PM",
-              "comentario": "Muito boa"
-            }
-          ]
-        },
-        {
-          "numero": 2,
-          "ano_lancamento": 2020,
-          "qtd_episodios": 8,
-          "assistido": true,
-          "avaliacoes": [
-            {
-              "avaliacao": 3,
-              "data": "May 17, 2025, 6:40:27 PM",
-              "comentario": "Mais ou menos"
-            }
-          ]
-        },
-        {
-          "numero": 3,
-          "ano_lancamento": 2022,
-          "qtd_episodios": 8,
-          "assistido": true,
-          "avaliacoes": [
-            {
-              "avaliacao": 5,
-              "data": "May 17, 2025, 6:40:41 PM",
-              "comentario": "Boa"
-            }
-          ]
-        },
-        {
-          "numero": 4,
-          "ano_lancamento": 2024,
-          "qtd_episodios": 8,
-          "assistido": true,
-          "avaliacoes": [
-            {
-              "avaliacao": 5,
-              "data": "May 17, 2025, 6:40:51 PM",
-              "comentario": "Boa"
-            }
-          ]
-        }
-      ],
-      "avaliacoes": []
-    }
-  ]
+  "series": []
 }

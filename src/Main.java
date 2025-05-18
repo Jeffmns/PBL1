@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.Scanner;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+/**
+ * Classe principal que inicia a execução do sistema Diário Cultural.
+ * Exibe o menu principal com opções para cadastro, busca, avaliação, listagem e exclusão de obras.
+ */
 public class Main {
     public static void main(String[] args) {
         DiarioCultural dc = PersistenciaJson.carregar();

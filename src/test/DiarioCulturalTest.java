@@ -355,7 +355,6 @@ class DiarioCulturalTest {
     }
 
 
-
     @Test
     void removerSerie(){
         DiarioCultural dc = new DiarioCultural();

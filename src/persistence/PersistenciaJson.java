@@ -20,6 +20,15 @@ public class PersistenciaJson {
         }
     }
 
+    // Método usado nos testes, permite escolher o caminho
+    public static void salvar(DiarioCultural diario, String caminhoArquivo) {
+        try (FileWriter writer = new FileWriter(caminhoArquivo)) {
+            gson.toJson(diario, writer);
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar dados: " + e.getMessage());
+        }
+    }
+
     // Carrega o objeto a partir do arquivo JSON
     public static DiarioCultural carregar() {
         try (FileReader reader = new FileReader(CAMINHO_ARQUIVO)) {
@@ -30,4 +39,15 @@ public class PersistenciaJson {
             return new DiarioCultural();
         }
     }
+    // Método usado nos testes, permite escolher o caminho    // Método usado nos testes, permite escolher o caminho
+    public static DiarioCultural carregar(String caminhoArquivo) {
+        try (FileReader reader = new FileReader(caminhoArquivo)) {
+            return gson.fromJson(reader, DiarioCultural.class);
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar dados: " + e.getMessage());
+            return new DiarioCultural();
+        }
+    }
+
+
 }

@@ -196,4 +196,21 @@ class DiarioCulturalTest {
         List<Serie> esperado = Arrays.asList(s1, s3);
         Assertions.assertEquals(esperado, dc.ordenarSeriesPorAvaliacao(1, "Ficção", null));
     }
+
+    @Test
+    void cadastrarFilme() {
+        DiarioCultural dc = new DiarioCultural();
+        Filme f1 = new Filme("Interestelar", "Ficção Científica", 2013,
+                150, "Cristopher Nolan", "xxx", "Netflix");
+        Filme f2 = new Filme("Kill Bill", "Ação", 2003,
+                111, "Quentin Tarantino", "xxx", "Netflix");
+
+        dc.cadastrarFilme(f1);
+        dc.cadastrarFilme(f2);
+
+        Filme f3 = new Filme("Interestelar", "Ficção Científica", 2013,
+                150, "Cristopher Nolan", "xxx", "Netflix");
+
+
+    }
 }

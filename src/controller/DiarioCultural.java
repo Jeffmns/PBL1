@@ -286,6 +286,123 @@ public class DiarioCultural {
         return resultado;
     }
 
+    //Remover livro
+    public void removerLivro(String titulo, Scanner scanner) {
+        List<Livro> encontrados = new ArrayList<>();
+        for (Livro livro : livros) {
+            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+                encontrados.add(livro);
+            }
+        }
+
+        if (encontrados.isEmpty()) {
+            System.out.println("Nenhum livro encontrado com esse título.");
+            return;
+        }
+
+        if (encontrados.size() == 1) {
+            livros.remove(encontrados.get(0));
+            System.out.println("Livro removido com sucesso!");
+        } else {
+            System.out.println("\nLivros encontrados:");
+            for (int i = 0; i < encontrados.size(); i++) {
+                Livro l = encontrados.get(i);
+                System.out.println((i + 1) + " - " + l.getTitulo() + " (" +l.getAno_lancamento() + ") - Autor: " + l.getAutor() + " - Editora: " + l.getEditora() + " - ISBN: " + l.getISBN());
+            }
+
+            System.out.print("Digite o número do livro que deseja remover: ");
+            try {
+                int escolha = Integer.parseInt(scanner.nextLine());
+                if (escolha >= 1 && escolha <= encontrados.size()) {
+                    livros.remove(encontrados.get(escolha - 1));
+                    System.out.println("Livro removido com sucesso!");
+                } else {
+                    System.out.println("Número inválido.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida.");
+            }
+        }
+    }
+
+    //Remover filme
+    public void removerFilme(String titulo, Scanner scanner) {
+        List<Filme> encontrados = new ArrayList<>();
+        for (Filme filme : filmes) {
+            if (filme.getTitulo().equalsIgnoreCase(titulo)) {
+                encontrados.add(filme);
+            }
+        }
+
+        if (encontrados.isEmpty()) {
+            System.out.println("Nenhum filme encontrado com esse título.");
+            return;
+        }
+
+        if (encontrados.size() == 1) {
+            filmes.remove(encontrados.get(0));
+            System.out.println("Filme removido com sucesso!");
+        } else {
+            System.out.println("\nFilmes encontrados:");
+            for (int i = 0; i < encontrados.size(); i++) {
+                Filme f = encontrados.get(i);
+                System.out.println((i + 1) + " - " + f.getTitulo() + " (" + f.getAno_lancamento() + ") - Direção: " + f.getDirecao() + " - Plataforma: " + f.getOnde_assistir());
+            }
+
+            System.out.print("Digite o número do filme que deseja remover: ");
+            try {
+                int escolha = Integer.parseInt(scanner.nextLine());
+                if (escolha >= 1 && escolha <= encontrados.size()) {
+                    filmes.remove(encontrados.get(escolha - 1));
+                    System.out.println("Filme removido com sucesso!");
+                } else {
+                    System.out.println("Número inválido.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida.");
+            }
+        }
+    }
+
+    public void removerSerie(String titulo, Scanner scanner) {
+        List<Serie> encontrados = new ArrayList<>();
+        for (Serie serie : series) {
+            if (serie.getTitulo().equalsIgnoreCase(titulo)) {
+                encontrados.add(serie);
+            }
+        }
+
+        if (encontrados.isEmpty()) {
+            System.out.println("Nenhuma série encontrada com esse título.");
+            return;
+        }
+
+        if (encontrados.size() == 1) {
+            series.remove(encontrados.get(0));
+            System.out.println("Série removida com sucesso!");
+        } else {
+            System.out.println("\nSéries encontradas:");
+            for (int i = 0; i < encontrados.size(); i++) {
+                Serie s = encontrados.get(i);
+                System.out.println((i + 1) + " - " + s.getTitulo() + " (" + s.getAnoLancamento() + ") - Elenco: " + s.getElenco() + " - Plataforma: " + s.getOnde_assistir());
+            }
+
+            System.out.print("Digite o número da série que deseja remover: ");
+            try {
+                int escolha = Integer.parseInt(scanner.nextLine());
+                if (escolha >= 1 && escolha <= encontrados.size()) {
+                    series.remove(encontrados.get(escolha - 1));
+                    System.out.println("Série removida com sucesso!");
+                } else {
+                    System.out.println("Número inválido.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida.");
+            }
+        }
+    }
+
+
     public List<Livro> getLivros() {
         return livros;
     }

@@ -21,7 +21,8 @@ public class Main {
             System.out.println("2 - Buscar");
             System.out.println("3 - Avaliar");
             System.out.println("4 - Listar");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Excluir");
+            System.out.println("6 - Sair");
             System.out.print("Escolha uma opção: ");
             String opcao = scanner.nextLine().trim();
 
@@ -30,7 +31,8 @@ public class Main {
                 case "2" -> menuBusca(scanner, dc);
                 case "3" -> menuAvaliacao(scanner, dc);
                 case "4" -> menuListagem(scanner, dc);
-                case "5" -> {
+                case "5" -> menuExcluir(scanner,dc);
+                case "6" -> {
                     System.out.println("Saindo...");
                     scanner.close();
                     return;
@@ -123,6 +125,44 @@ public class Main {
             }
         }
     }
+
+    private static void menuExcluir(Scanner scanner, DiarioCultural dc) {
+        while (true) {
+            System.out.println("\n=== Menu Exclusão ===");
+            System.out.println("1 - Excluir Livro");
+            System.out.println("2 - Excluir Filme");
+            System.out.println("3 - Excluir Série");
+            System.out.println("4 - Voltar");
+            System.out.print("Escolha uma opção: ");
+            String opcao = scanner.nextLine().trim();
+
+            switch (opcao) {
+                case "1" -> {
+                    System.out.print("Digite o título do livro a ser removido: ");
+                    String titulo = scanner.nextLine();
+                    dc.removerLivro(titulo, scanner);
+                    PersistenciaJson.salvar(dc);
+                }
+                case "2" -> {
+                    System.out.print("Digite o título do filme a ser removido: ");
+                    String titulo = scanner.nextLine();
+                    dc.removerFilme(titulo, scanner);
+                    PersistenciaJson.salvar(dc);
+                }
+                case "3" -> {
+                    System.out.print("Digite o título da série a ser removida: ");
+                    String titulo = scanner.nextLine();
+                    dc.removerSerie(titulo, scanner);
+                    PersistenciaJson.salvar(dc);
+                }
+                case "4" -> {
+                    return;
+                }
+                default -> System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
+    }
+
 
     // Métodos de Cadastro
     private static void cadastrarLivro(Scanner scanner, DiarioCultural dc) {

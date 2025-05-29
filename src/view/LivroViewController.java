@@ -4,6 +4,7 @@ import controller.DiarioCultural;
 import model.Livro;
 import persistence.PersistenciaJson;
 
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,6 +24,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import javafx.scene.control.TableCell;
+import javafx.scene.layout.HBox;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.geometry.Pos;
 
 public class LivroViewController {
 
@@ -74,41 +79,99 @@ public class LivroViewController {
     }
 
 
-    public void configurarColunasDaTabela() {
-        colunaTitulo.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("titulo"));
-        colunaAutor.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("autor"));
-        colunaGenero.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("genero"));
-        colunaAno.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("ano_lancamento"));
-        colunaIsbn.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("ISBN"));
-        colunaAvaliacao.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("mediaAvaliacoes"));
-        colunaLido.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("lido"));
+    // Não se esqueça dos imports necessários no topo do seu arquivo LivroViewController.java:
+// import javafx.scene.control.TableColumn;
+// import javafx.scene.control.TableView; // Se você referenciar a tabela aqui, mas não é o caso
+// import javafx.scene.control.cell.PropertyValueFactory;
+// import javafx.scene.control.TableCell;
+// import javafx.scene.control.Button;
+// import javafx.scene.layout.HBox;
+// import javafx.geometry.Pos;
+// import model.Livro; // E sua classe Livro
 
+    private void configurarColunasDaTabela() {
+        // 1. Configuração das colunas que exibem dados do Livro
+        // Estas chamadas DEVEM estar aqui, no corpo principal do método.
+        if (colunaTitulo != null) { // Boa prática verificar se a coluna foi injetada
+            colunaTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        }
+        if (colunaAutor != null) {
+            colunaAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
+        }
+        if (colunaGenero != null) {
+            colunaGenero.setCellValueFactory(new PropertyValueFactory<>("genero"));
+        }
+        if (colunaAno != null) {
+            colunaAno.setCellValueFactory(new PropertyValueFactory<>("ano_lancamento"));
+        }
+        if (colunaIsbn != null) {
+            colunaIsbn.setCellValueFactory(new PropertyValueFactory<>("ISBN")); // Ou "isbn" dependendo do getter em Livro.java
+        }
+        if (colunaAvaliacao != null) {
+            colunaAvaliacao.setCellValueFactory(new PropertyValueFactory<>("mediaAvaliacoes"));
+        }
+        // Assumindo que você tem uma TableColumn com fx:id="colunaLido" no FXML
+        // e o campo @FXML private TableColumn<Livro, Boolean> colunaLido; no controller
+        if (colunaLido != null) {
+            colunaLido.setCellValueFactory(new PropertyValueFactory<>("lido")); // Precisa de isLido() ou getLido() em Livro.java
+        }
+
+        // 2. Configuração da coluna de "Ações" (com os botões)
         if (colunaAcoes != null) {
-            colunaAcoes.setCellFactory(param -> new TableCell<>() {
+            colunaAcoes.setCellFactory(param -> new TableCell<Livro, Void>() { // Especificar os tipos <Entidade, TipoDaColuna>
+                // Criar os botões uma vez por instância de célula para performance
                 private final Button btnEditar = new Button("Editar");
+                private final Button btnAvaliar = new Button("Avaliar");
+                private final Button btnRemover = new Button("Remover");
+                // Agrupar os botões em um HBox
+                private final HBox paneBotoes = new HBox(5, btnEditar, btnAvaliar, btnRemover);
+
+                // Bloco de inicialização da instância da célula (executado uma vez quando a célula é criada)
                 {
+                    paneBotoes.setAlignment(Pos.CENTER); // Centraliza os botões dentro da HBox
+
+                    // Estilos dos botões (CSS inline)
+                    btnEditar.setStyle("-fx-background-color: #FFC107; -fx-font-size: 10px; -fx-text-fill: #333; -fx-background-radius: 4; -fx-padding: 3 6 3 6;");
+                    btnAvaliar.setStyle("-fx-background-color: #4CAF50; -fx-font-size: 10px; -fx-text-fill: white; -fx-background-radius: 4; -fx-padding: 3 6 3 6;");
+                    btnRemover.setStyle("-fx-background-color: #F44336; -fx-font-size: 10px; -fx-text-fill: white; -fx-background-radius: 4; -fx-padding: 3 6 3 6;");
+
+                    // Definir as ações dos botões
                     btnEditar.setOnAction(event -> {
-                        Livro livroParaEditar = getTableView().getItems().get(getIndex());
-                        if (livroParaEditar != null) {
-                            abrirDialogoEdicaoLivro(livroParaEditar);
+                        Livro livro = (Livro) getTableRow().getItem(); // Pega o objeto Livro da linha atual
+                        if (livro != null) {
+                            abrirDialogoEdicaoLivro(livro); // Método que você tem no LivroViewController
                         }
                     });
-                    btnEditar.setStyle("-fx-background-color: #FFC107; -fx-text-fill: #333; -fx-background-radius: 4; -fx-font-size: 11px;");
+
+                    btnAvaliar.setOnAction(event -> {
+                        Livro livro = (Livro) getTableRow().getItem();
+                        if (livro != null) {
+                            handleAvaliarLivro(livro); // Método que você tem no LivroViewController
+                        }
+                    });
+
+                    btnRemover.setOnAction(event -> {
+                        Livro livro = (Livro) getTableRow().getItem();
+                        if (livro != null) {
+                            handleRemoverLivro(livro); // Método que você tem no LivroViewController
+                        }
+                    });
                 }
 
+                // Método chamado para atualizar a célula quando necessário (rolagem, mudança de dados)
                 @Override
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
-                    if (empty) {
-                        setGraphic(null);
+                    if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                        setGraphic(null); // Não mostrar nada se a linha estiver vazia ou o item for nulo
+                        setText(null);
                     } else {
-                        setGraphic(btnEditar);
+                        setGraphic(paneBotoes); // Mostrar a HBox com os botões
                     }
                 }
             });
         }
     }
-
     public void carregarDiarioCultural() {
         dc = PersistenciaJson.carregar();
         if (dc == null) {
@@ -131,17 +194,7 @@ public class LivroViewController {
     }
 
     private void configurarListenersOuAcaoDoBotao() {
-        // A ação do botão buscarButton já está definida no FXML para chamar executarBuscaFiltragemOrdenacao.
-        // Você pode adicionar listeners aos TextFields para busca "ao vivo" se desejar,
-        // mas para múltiplos campos, um botão "Buscar" explícito é geralmente melhor.
-        // Exemplo de listener (opcional):
-        // tituloSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
-        // autorSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
-        // isbnSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
-        // generoSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
-        // anoSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
 
-        // O ComboBox de ordenação ainda pode ter um listener para reordenar automaticamente
         ordenarLivroComboBox.valueProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
     }
 
@@ -284,6 +337,46 @@ public class LivroViewController {
             e.printStackTrace();
             statusLabel.setText("Erro ao abrir formulário de edição.");
         }
+    }
+
+    private void handleAvaliarLivro(Livro livro) {
+        System.out.println("Avaliar: " + livro.getTitulo());
+        // Lógica para abrir um diálogo de avaliação
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Avaliar Livro");
+        alert.setHeaderText("Avaliação para: " + livro.getTitulo());
+        alert.setContentText("Funcionalidade de avaliação ainda não implementada neste diálogo.\nVocê chamaria dc.avaliarLivro(...) aqui após coletar os dados.");
+        alert.showAndWait();
+        // Após avaliar e salvar, chame:
+        // refreshViewData();
+    }
+    // Dentro de LivroViewController.java
+    private void handleRemoverLivro(Livro livro) {
+        System.out.println("Remover: " + livro.getTitulo());
+
+        Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacao.setTitle("Confirmar Exclusão");
+        confirmacao.setHeaderText("Excluir Livro: " + livro.getTitulo());
+        confirmacao.setContentText("Tem certeza que deseja remover este livro?");
+
+        confirmacao.showAndWait().ifPresent(resposta -> {
+            if (resposta == ButtonType.OK) {
+                if (dc != null && dc.getLivros() != null) {
+                    boolean removido = dc.getLivros().remove(livro);
+                    if (removido) {
+                        PersistenciaJson.salvar(dc);
+                        System.out.println("Livro removido com sucesso do DiarioCultural.");
+                        refreshViewData();
+                        statusLabel.setText("Livro '" + livro.getTitulo() + "' removido.");
+                    } else {
+                        statusLabel.setText("Erro: Livro não encontrado para remoção na lista interna.");
+                        System.err.println("Erro ao remover o livro da lista do DiarioCultural.");
+                    }
+                } else {
+                    statusLabel.setText("Erro: Sistema de dados não inicializado.");
+                }
+            }
+        });
     }
 
     public void refreshViewData() {

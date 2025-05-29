@@ -15,15 +15,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox spacing="15.0" style="-fx-background-color: #F9F9F9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LivroViewController">
+<VBox prefHeight="750.0" prefWidth="1006.0" spacing="15.0" style="-fx-background-color: #F9F9F9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LivroViewController">
     <padding>
         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-    </padding> <Button fx:id="adicionarLivroButton" onAction="#handleAdicionarNovoLivro" prefHeight="47.0" prefWidth="930.0" style="-fx-background-color: #009688; -fx-text-fill: white; -fx-background-radius: 4;" text="Adicionar Novo Livro">
-   </Button>
+    </padding> <Button fx:id="adicionarLivroButton" onAction="#handleAdicionarNovoLivro" prefHeight="47.0" prefWidth="930.0" style="-fx-background-color: #20385e; -fx-text-fill: white; -fx-background-radius: 4;" text="➕ Adicionar Livro">
+      <font>
+         <Font name="Arial Bold" size="14.0" />
+      </font></Button>
 
-    <GridPane hgap="10.0" vgap="8.0">
+    <GridPane hgap="10.0" prefHeight="155.0" prefWidth="888.0" vgap="8.0">
         <columnConstraints>
-            <ColumnConstraints halignment="RIGHT" minWidth="60.0" prefWidth="70.0" /> <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" /> <ColumnConstraints halignment="RIGHT" minWidth="60.0" prefWidth="70.0" /> <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" /> </columnConstraints>
+            <ColumnConstraints halignment="RIGHT" minWidth="60.0" prefWidth="70.0" /> <ColumnConstraints hgrow="SOMETIMES" maxWidth="476.2000122070312" minWidth="10.0" prefWidth="396.8" /> <ColumnConstraints halignment="RIGHT" maxWidth="414.39992675781247" minWidth="0.0" prefWidth="126.20000000000005" /> <ColumnConstraints hgrow="SOMETIMES" maxWidth="464.8" minWidth="10.0" prefWidth="307.200048828125" /> </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" /> <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" /> <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" /> <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" /> </rowConstraints>
         <children>
@@ -34,22 +36,22 @@
             <TextField fx:id="autorSearchField" promptText="Filtrar por autor" style="-fx-font-size: 13px;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
             <Label style="-fx-font-size: 13px; -fx-text-fill: #333333;" text="ISBN:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="isbnSearchField" promptText="Filtrar por ISBN" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="isbnSearchField" prefHeight="27.0" prefWidth="446.0" promptText="Filtrar por ISBN" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
             <Label style="-fx-font-size: 13px; -fx-text-fill: #333333;" text="Gênero:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <TextField fx:id="generoSearchField" promptText="Filtrar por gênero" style="-fx-font-size: 13px;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
             <Label style="-fx-font-size: 13px; -fx-text-fill: #333333;" text="Ano:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="anoSearchField" promptText="Filtrar por ano (ex: 2023)" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="anoSearchField" prefHeight="27.0" prefWidth="236.0" promptText="Filtrar por ano (ex: 2023)" style="-fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-            <Label style="-fx-font-size: 13px; -fx-text-fill: #333333;" text="Ordenar por:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <ComboBox fx:id="ordenarLivroComboBox" maxWidth="Infinity" promptText="Padrão" style="-fx-font-size: 13px;" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label prefHeight="19.0" prefWidth="82.0" style="-fx-font-size: 13px; -fx-text-fill: #333333;" text="Ordenar por:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <ComboBox fx:id="ordenarLivroComboBox" maxWidth="Infinity" prefHeight="27.0" prefWidth="254.0" promptText="Padrão" style="-fx-font-size: 13px;" GridPane.columnIndex="3" GridPane.rowIndex="2" />
 
             <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="3">
                 <children>
-                    <Button fx:id="buscarButton" onAction="#executarBuscaFiltragemOrdenacao" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 4;" text="Buscar/Filtrar" />
-                    <Button fx:id="limparFiltrosButton" onAction="#handleLimparFiltros" style="-fx-font-size: 13px; -fx-background-radius: 4;" text="Limpar Tudo" />
                     <Region HBox.hgrow="ALWAYS" />
+                    <Button fx:id="buscarButton" onAction="#executarBuscaFiltragemOrdenacao" style="-fx-background-color: #20385e; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 4;" text="Buscar/Filtrar" />
+                    <Button fx:id="limparFiltrosButton" onAction="#handleLimparFiltros" style="-fx-font-size: 13px; -fx-background-radius: 4;" text="Limpar Tudo" />
                 </children>
                 <GridPane.margin>
                     <Insets top="5.0" />
@@ -68,8 +70,8 @@
             <TableColumn fx:id="colunaAno" prefWidth="70.0" text="Ano" />
             <TableColumn fx:id="colunaIsbn" prefWidth="130.0" text="ISBN" />
             <TableColumn fx:id="colunaAvaliacao" prefWidth="90.0" style="-fx-alignment: CENTER;" text="Nota Média" />
-            <TableColumn fx:id="colunaLido" prefWidth="70.0" style="-fx-alignment: CENTER;" text="Lido?" />
-            <TableColumn fx:id="colunaAcoes" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Ações" />
+            <TableColumn fx:id="colunaLido" prefWidth="68.0001220703125" style="-fx-alignment: CENTER;" text="Lido?" />
+            <TableColumn fx:id="colunaAcoes" prefWidth="102.39997558593745" style="-fx-alignment: CENTER;" text="Ações" />
         </columns>
         <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

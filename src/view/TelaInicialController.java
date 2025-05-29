@@ -60,4 +60,5 @@ public class TelaInicialController {
             contentAreaPane.getChildren().setAll(new javafx.scene.control.Label("Ocorreu um erro ao carregar a página."));
         }
     }
+
 }

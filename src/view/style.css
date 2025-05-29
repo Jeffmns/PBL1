@@ -1,0 +1,67 @@
+/* estilos.css */
+
+/* estilos.css */
+
+/* Estilo base para os botões da sidebar */
+.sidebar-button {
+    -fx-background-color: F0F0F0; /* <-- MUITO IMPORTANTE: Fundo transparente */
+    -fx-text-fill:#20385e;            /* <-- Texto branco */
+
+    -fx-font-family: "Arial Bold";
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+
+    -fx-border-color: white;         /* <-- Borda branca */
+    -fx-border-width: 1px;           /* <-- Espessura da borda (1px é fino) */
+    -fx-border-style: solid;         /* Garante que a borda seja sólida */
+
+    -fx-background-radius: 6px;      /* Cantos arredondados para o fundo (mesmo transparente, é bom ter) */
+    -fx-border-radius: 6px;          /* Cantos arredondados para a borda */
+
+    -fx-padding: 6px 15px;
+    -fx-alignment: CENTER;
+
+}
+
+/* Estilo para o ícone dentro do botão (se você decidir usar FontIcon novamente) */
+.sidebar-button .font-icon {
+    -fx-fill: white;                 /* <-- Ícone branco */
+}
+
+/* Efeito ao passar o mouse por cima do botão (Hover) */
+.sidebar-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1); /* Um leve preenchimento branco translúcido */
+    -fx-border-color: #E0E0E0; /* Pode clarear um pouco mais a borda ou mantê-la branca */
+    -fx-text-fill: white; /* Mantém o texto branco */
+}
+
+.sidebar-button:hover .font-icon { /* Se usar FontIcon */
+    -fx-fill: white; /* Mantém o ícone branco */
+}
+
+/* Estilo para o botão ATIVO/SELECIONADO */
+.sidebar-button.active {
+    -fx-background-color: rgba(255, 255, 255, 0.2); /* Um preenchimento branco um pouco mais opaco que o hover */
+    /* OU um fundo sólido, como o azul que você gostou antes: */
+    /* -fx-background-color: #3F51B5; */
+
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+    -fx-border-color: white;
+    -fx-border-width: 1.5px; /* Borda um pouco mais grossa para o ativo, para destaque */
+    /* Se usar fundo sólido azul para o active: */
+    /* -fx-border-color: transparent; */
+}
+
+.sidebar-button.active .font-icon { /* Se usar FontIcon */
+    -fx-fill: white;
+    /* Se o fundo do active for #3F51B5, o ícone branco já funciona. */
+}
+
+/* Opcional: Estilo para quando o botão está pressionado */
+.sidebar-button:pressed, .sidebar-button.active:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.3); /* Mais opaco ainda ao pressionar */
+    /* Se o active for azul sólido, um azul mais escuro: */
+    /* -fx-background-color: #303F9F; */
+}

@@ -16,7 +16,7 @@ public class DiarioCultural {
 
     // Método para remover acentos de uma string
     private String removerAcentos(String str) {
-        if (str == null) return null;
+        if (str == null) return "";
         String normalized = Normalizer.normalize(str, Normalizer.Form.NFD);
         return normalized.replaceAll("\\p{M}", ""); // Remove os acentos
     }

@@ -15,7 +15,7 @@
       <children>
 
          <VBox layoutX="14.0" layoutY="14.0" spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-         <Button layoutX="11.0" layoutY="200.0" onAction="#handleShowCadastroView" prefWidth="216.0" styleClass="sidebar-button" text="🎬 Filmes" textAlignment="CENTER" textFill="WHITE">
+         <Button layoutX="11.0" layoutY="200.0" onAction="#handleFilmeView" prefWidth="216.0" styleClass="sidebar-button" text="🎬 Filmes" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="Arial Bold" size="14.0" />
             </font>

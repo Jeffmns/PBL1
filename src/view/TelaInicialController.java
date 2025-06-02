@@ -26,13 +26,13 @@ public class TelaInicialController {
     }
 
     @FXML
-    private void handleShowBuscarView() {
-        loadView("/view/TelaBusca.fxml");
+    private void handleFilmeView() {
+        loadView("/view/FilmeView.fxml");
     }
 
     @FXML
     private void handleShowLivroView() {
-        loadView("/view/LivroView.fxml");
+        loadView("/view/viewLivro/LivroView.fxml");
     }
     // Método utilitário para carregar as views no contentAreaPane
     private void loadView(String fxmlPath) {

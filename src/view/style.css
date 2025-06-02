@@ -65,3 +65,145 @@
     /* Se o active for azul sólido, um azul mais escuro: */
     /* -fx-background-color: #303F9F; */
 }
+.livro-button {
+    -fx-cursor: hand;
+}
+.table-view .table-row-cell:filled {
+    -fx-cursor: hand;
+}
+/* Em estilos.css */
+
+/* Fundo da ListView inteira (opcional, para contraste com as células) */
+.list-view {
+    -fx-background-color: #F4F6F8; /* Um cinza bem claro, quase branco azulado */
+}
+
+/* Célula individual do filme */
+.item-film-cell {
+    -fx-background-color: #FFFFFF; /* Fundo branco para cada "cartão" */
+    -fx-padding: 15px;             /* Bom espaçamento interno */
+
+    /* Borda sutil para dar um efeito de cartão levemente separado */
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1px;
+    -fx-background-radius: 4px; /* Cantos levemente arredondados para o fundo do cartão */
+    -fx-border-radius: 4px;   /* Cantos levemente arredondados para a borda do cartão */
+
+    /* Sombra para destacar o cartão (pode ajustar ou remover se não gostar) */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0.2, 0, 2);
+
+}
+
+/* Em estilos.css */
+
+.list-view {
+    -fx-background-color: #F0F4F8; /* Fundo da lista inteira */
+    -fx-padding: 8px;
+}
+
+/* --- CÉLULA PADRÃO (NÃO SELECIONADA) --- */
+.list-view .list-cell.item-film-cell { /* Aumentando especificidade */
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 12px 15px;
+
+    /* Borda esquerda com sua cor principal */
+    -fx-border-color: #20385e transparent transparent transparent;
+    -fx-border-width: 0 0 0 5px; /* Borda de 5px APENAS na esquerda */
+    -fx-border-style: solid;    /* Garante que a borda sólida seja aplicada */
+
+    /* Opcional: para um efeito de cartão mais pronunciado */
+    /* -fx-background-radius: 3px; */
+    /* -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 5, 0.1, 0, 1); */
+}
+
+.list-view .list-cell.item-film-cell:hover {
+    -fx-background-color: #E9EFF5;
+    -fx-border-color: #3F51B5 transparent transparent transparent; /* Borda esquerda azul mais claro no hover */
+}
+
+/* --- CÉLULA SELECIONADA --- */
+.list-view .list-cell.item-film-cell:filled:selected {
+    -fx-background-color: #20385e;  /* SUA COR PRINCIPAL para o fundo da seleção */
+    -fx-border-color: #FFBF00 transparent transparent transparent; /* Borda esquerda DOURADA/AMARELA na seleção para destaque */
+    -fx-border-width: 0 0 0 5px;
+    -fx-border-style: solid;
+}
+
+/* --- TEXTOS E CONTROLES DENTRO DA CÉLULA PADRÃO --- */
+.item-film-cell .item-title {
+    -fx-text-fill: #20385e; /* Sua cor principal */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.item-film-cell .item-detail {
+    -fx-text-fill: #4A5568; /* Cinza escuro azulado */
+    -fx-font-size: 12px;
+}
+.item-film-cell .item-rating {
+    -fx-text-fill: #D35400; /* Laranja para a nota */
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+.item-film-cell .item-action-link {
+    -fx-text-fill: #0066CC; /* Azul para links */
+    -fx-font-size: 13px;
+}
+.item-film-cell .item-action-checkbox .text {
+    -fx-fill: #333333; /* Texto do checkbox */
+    -fx-font-size: 13px;
+}
+.item-film-cell .item-action-button { /* Botão "Detalhes" */
+    -fx-font-size: 11px;
+    -fx-background-color: #607D8B;
+    -fx-text-fill: white;
+    -fx-background-radius: 3px;
+    -fx-padding: 4px 8px;
+}
+.item-film-cell .item-action-button:hover {
+    -fx-background-color: #455A64;
+}
+
+
+/* --- TEXTOS E CONTROLES DENTRO DA CÉLULA SELECIONADA (fundo #20385e) --- */
+.list-view .list-cell.item-film-cell:filled:selected .label,
+.list-view .list-cell.item-film-cell:filled:selected .item-title,
+.list-view .list-cell.item-film-cell:filled:selected .item-detail {
+    -fx-text-fill: white;
+    -fx-fill: white; /* Para casos onde .label é um nó interno */
+}
+
+.list-view .list-cell.item-film-cell:filled:selected .item-rating {
+    -fx-text-fill: #FFEB3B; /* Amarelo para a nota na seleção (contrasta bem com azul escuro) */
+    -fx-fill: #FFEB3B;
+}
+
+.list-view .list-cell.item-film-cell:filled:selected .item-action-link,
+.list-view .list-cell.item-film-cell:filled:selected .item-action-link .label {
+    -fx-text-fill: #ADD8E6; /* Azul bem claro para o link na seleção */
+    -fx-fill: #ADD8E6;
+}
+.list-view .list-cell.item-film-cell:filled:selected .item-action-link:hover {
+    -fx-text-fill: #FFFFFF;
+    -fx-fill: #FFFFFF;
+}
+
+.list-view .list-cell.item-film-cell:filled:selected .item-action-checkbox .text {
+    -fx-text-fill: white; /* Texto do CheckBox branco */
+    -fx-fill: white;
+}
+.list-view .list-cell.item-film-cell:filled:selected .item-action-checkbox .box {
+    -fx-border-color: white;
+    -fx-background-color: transparent; /* Fundo da caixinha */
+}
+.list-view .list-cell.item-film-cell:filled:selected .item-action-checkbox:selected .mark {
+    -fx-background-color: white; /* Cor do "check" (✓) */
+}
+
+.list-view .list-cell.item-film-cell:filled:selected .item-action-button {
+    -fx-background-color: rgba(255,255,255,0.25); /* Botão "Detalhes" semi-transparente branco */
+    -fx-text-fill: white;
+    -fx-border-color: rgba(255,255,255,0.6);
+}
+.list-view .list-cell.item-film-cell:filled:selected .item-action-button:hover {
+    -fx-background-color: rgba(255,255,255,0.35);
+}

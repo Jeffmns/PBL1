@@ -1,4 +1,4 @@
-package view;
+package view.viewLivro;
 
 import controller.DiarioCultural;
 import model.Livro;
@@ -37,8 +37,6 @@ public class LivroViewController {
     @FXML private TextField generoSearchField;
     @FXML private TextField anoSearchField;
 
-
-
     @FXML private ComboBox<String> ordenarLivroComboBox;
     @FXML private Button adicionarLivroButton;
     @FXML private Label statusLabel;
@@ -76,22 +74,21 @@ public class LivroViewController {
         livrosEmExibicao = FXCollections.observableArrayList(todosOsLivrosCache);
         tabelaLivros.setItems(livrosEmExibicao);
         atualizarStatusLabel();
+
+        // ADICIONE ESTA PARTE para reagir à seleção de linha:
+        tabelaLivros.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldSelection, newSelection) -> {
+                    if (newSelection != null) {
+                        // Um livro foi selecionado na tabela
+                        mostrarDetalhesDoLivro(newSelection); // newSelection é o objeto Livro selecionado
+                    }
+                });
+
     }
 
-
-    // Não se esqueça dos imports necessários no topo do seu arquivo LivroViewController.java:
-// import javafx.scene.control.TableColumn;
-// import javafx.scene.control.TableView; // Se você referenciar a tabela aqui, mas não é o caso
-// import javafx.scene.control.cell.PropertyValueFactory;
-// import javafx.scene.control.TableCell;
-// import javafx.scene.control.Button;
-// import javafx.scene.layout.HBox;
-// import javafx.geometry.Pos;
-// import model.Livro; // E sua classe Livro
-
     private void configurarColunasDaTabela() {
-        // 1. Configuração das colunas que exibem dados do Livro
-        // Estas chamadas DEVEM estar aqui, no corpo principal do método.
+        colunaIsbn.setVisible(false);
+        colunaLido.setVisible(false);
         if (colunaTitulo != null) { // Boa prática verificar se a coluna foi injetada
             colunaTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
         }
@@ -293,7 +290,7 @@ public class LivroViewController {
     private void handleAdicionarNovoLivro() {
         System.out.println("Abrindo formulário para adicionar novo livro...");
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/FormularioCadastroLivro.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/viewLivro/FormularioCadastroLivro.fxml"));
             Parent root = loader.load();
 
             FormularioLivroController formController = loader.getController();
@@ -316,7 +313,7 @@ public class LivroViewController {
 
     private void abrirDialogoEdicaoLivro(Livro livroParaEditar) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/FormularioCadastroLivro.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/viewLivro/FormularioCadastroLivro.fxml"));
             Parent root = loader.load();
 
             FormularioLivroController formController = loader.getController();
@@ -378,6 +375,39 @@ public class LivroViewController {
             }
         });
     }
+    // Dentro de LivroViewController.java
+
+    private void mostrarDetalhesDoLivro(Livro livro) {
+        if (livro == null) return;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/viewLivro/DetalhesLivro.fxml")); // Caminho para seu FXML de detalhes
+            Parent root = loader.load();
+
+            DetalhesLivroController controller = loader.getController();
+            controller.carregarLivro(livro); // Passa o livro selecionado para o controller do diálogo
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Detalhes do Livro");
+            dialogStage.initModality(Modality.WINDOW_MODAL); // Bloqueia interação com a janela principal
+            // Opcional: definir a janela "pai"
+            if (tabelaLivros.getScene() != null && tabelaLivros.getScene().getWindow() != null) {
+                dialogStage.initOwner(tabelaLivros.getScene().getWindow());
+            }
+            dialogStage.setScene(new Scene(root));
+
+            dialogStage.showAndWait(); // Mostra o diálogo e espera ele ser fechado
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Tratar erro ao carregar o FXML do diálogo
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Não foi possível abrir os detalhes do livro.");
+            alert.setContentText("Ocorreu um erro ao carregar a visualização de detalhes.");
+            alert.showAndWait();
+        }
+    }
 
     public void refreshViewData() {
         System.out.println("LivroViewController: Recarregando e atualizando dados.");
@@ -390,3 +420,5 @@ public class LivroViewController {
         executarBuscaFiltragemOrdenacao();
     }
 }
+
+

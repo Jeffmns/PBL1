@@ -21,13 +21,13 @@ public class TelaInicialController {
     }
 
     @FXML
-    private void handleShowCadastroView() {
-        loadView("/view/TelaCadastro.fxml");
+    private void handleSerieView() {
+        loadView("/view/viewSerie/SerieView.fxml");
     }
 
     @FXML
     private void handleFilmeView() {
-        loadView("/view/FilmeView.fxml");
+        loadView("/view/viewFilme/FilmeView.fxml");
     }
 
     @FXML

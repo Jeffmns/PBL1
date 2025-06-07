@@ -1,4 +1,5 @@
 package view.viewLivro;
+
 import controller.DiarioCultural;
 import model.Livro;
 import persistence.PersistenciaJson;
@@ -11,15 +12,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+
 public class FormularioLivroController {
 
     @FXML private Label tituloFormularioLabel;
     @FXML private TextField tituloField;
-    @FXML private TextField autorField;
-    @FXML private TextField editoraField;
-    @FXML private TextField isbnField;
     @FXML private TextField anoField;
+    @FXML private TextField editoraField;
+    @FXML private TextField autorField;
     @FXML private TextField generoField;
+    @FXML private TextField isbnField;
     @FXML private CheckBox lidoCheck;
     @FXML private Button salvarButton;
     @FXML private Button cancelarButton;
@@ -36,22 +38,18 @@ public class FormularioLivroController {
         this.dc = dc;
     }
 
-    /**
-     * Preenche o formulário com os dados de um livro existente para edição.
-     * @param livro O livro a ser editado.
-     */
     public void carregarDadosParaEdicao(Livro livro) {
         this.livroParaEditar = livro;
         this.modoEdicao = true;
-        this.tituloFormularioLabel.setText("Editar Livro"); // Muda o título do formulário
+        this.tituloFormularioLabel.setText("Editar livro");
 
         if (livro != null) {
             tituloField.setText(livro.getTitulo());
-            autorField.setText(livro.getAutor());
-            editoraField.setText(livro.getEditora());
-            isbnField.setText(livro.getISBN());
-            anoField.setText(livro.getAno_lancamento() > 0 ? String.valueOf(livro.getAno_lancamento()) : "");
             generoField.setText(livro.getGenero());
+            anoField.setText(livro.getAno_lancamento() > 0 ? String.valueOf(livro.getAno_lancamento()) : "");
+            autorField.setText(livro.getAutor());
+            isbnField.setText(livro.getISBN());
+            editoraField.setText(livro.getEditora());
             lidoCheck.setSelected(livro.isLido());
         }
     }
@@ -64,26 +62,25 @@ public class FormularioLivroController {
         }
 
         String titulo = tituloField.getText();
-        String autor = autorField.getText();
-        String editora = editoraField.getText();
-        String isbn = isbnField.getText();
-        String anoStr = anoField.getText();
         String genero = generoField.getText();
+        String anoStr = anoField.getText();
+        String editora = editoraField.getText();
+        String autor = autorField.getText();
+        String isbn = isbnField.getText();
         boolean lido = lidoCheck.isSelected();
 
-        // Validação básica (exemplo)
         if (titulo == null || titulo.trim().isEmpty()) {
             exibirAlerta("Campo Obrigatório", "O título do livro não pode estar vazio.", Alert.AlertType.WARNING);
             tituloField.requestFocus();
             return;
         }
 
-        Integer ano = null;
+        int anoLancamento = 0; // Valor padrão ou indicativo de não informado
         if (anoStr != null && !anoStr.trim().isEmpty()) {
             try {
-                ano = Integer.parseInt(anoStr.trim());
-                if (ano <= 0) {
-                    exibirAlerta("Dado Inválido", "O ano de lançamento deve ser um número positivo.", Alert.AlertType.WARNING);
+                anoLancamento = Integer.parseInt(anoStr.trim());
+                if (anoLancamento <= 1800 || anoLancamento > java.time.Year.now().getValue() + 5) { // Validação simples
+                    exibirAlerta("Ano Inválido", "O ano de lançamento parece inválido.", Alert.AlertType.WARNING);
                     anoField.requestFocus();
                     return;
                 }
@@ -94,31 +91,29 @@ public class FormularioLivroController {
             }
         }
 
+
         try {
             if (modoEdicao && livroParaEditar != null) {
-
                 livroParaEditar.setTitulo(titulo);
-                livroParaEditar.setAutor(autor);
-                livroParaEditar.setEditora(editora);
-                livroParaEditar.setISBN(isbn);
-                livroParaEditar.setAno_lancamento(ano);
                 livroParaEditar.setGenero(genero);
+                livroParaEditar.setAno_lancamento(anoLancamento);
+                livroParaEditar.setAutor(autor);
+                livroParaEditar.setISBN(isbn);
+                livroParaEditar.setEditora(editora);
                 livroParaEditar.setLido(lido);
 
-                PersistenciaJson.salvar(dc);
+
+                PersistenciaJson.salvar(dc); // Salva o DiarioCultural com o filme modificado
                 System.out.println("Livro atualizado: " + livroParaEditar.getTitulo());
                 exibirAlerta("Sucesso", "Livro '" + livroParaEditar.getTitulo() + "' atualizado com sucesso!", Alert.AlertType.INFORMATION);
 
             } else {
-
-                Livro novoLivro = new Livro(titulo, autor, editora, isbn, ano, genero, true);
+                Livro novoLivro = new Livro(titulo, autor, editora, isbn, anoLancamento, genero, lido);
                 dc.cadastrarLivro(novoLivro); // Este método em DiarioCultural já deve chamar PersistenciaJson.salvar(dc)
                 System.out.println("Novo livro cadastrado: " + novoLivro.getTitulo());
                 exibirAlerta("Sucesso", "Livro '" + novoLivro.getTitulo() + "' cadastrado com sucesso!", Alert.AlertType.INFORMATION);
             }
-
             fecharJanela();
-
         } catch (Exception e) {
             e.printStackTrace();
             exibirAlerta("Erro Inesperado", "Ocorreu um erro ao salvar o livro: " + e.getMessage(), Alert.AlertType.ERROR);
@@ -131,7 +126,7 @@ public class FormularioLivroController {
     }
 
     private void fecharJanela() {
-        Stage stage = (Stage) cancelarButton.getScene().getWindow();
+        Stage stage = (Stage) salvarButton.getScene().getWindow();
         stage.close();
     }
 

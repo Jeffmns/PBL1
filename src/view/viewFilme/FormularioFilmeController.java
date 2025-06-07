@@ -1,8 +1,7 @@
-package view;
+package view.viewFilme;
 
 import controller.DiarioCultural;
-import model.Filme; // Sua classe Filme
-import model.Review; // Importe se for usar, embora não diretamente neste formulário
+import model.Filme;
 import persistence.PersistenciaJson;
 
 import javafx.fxml.FXML;
@@ -12,7 +11,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.util.ArrayList; // Para inicializar a lista de avaliações se o construtor precisar
 
 
 public class FormularioFilmeController {
@@ -34,7 +32,7 @@ public class FormularioFilmeController {
     private boolean modoEdicao = false;
 
     public void initialize() {
-        // Configurações iniciais, se houver.
+
     }
 
     public void setDiarioCultural(DiarioCultural dc) {
@@ -44,7 +42,7 @@ public class FormularioFilmeController {
     public void carregarDadosParaEdicao(Filme filme) {
         this.filmeParaEditar = filme;
         this.modoEdicao = true;
-        this.tituloFormularioLabel.setText("Editar Filme");
+        this.tituloFormularioLabel.setText("Editar filme");
 
         if (filme != null) {
             tituloField.setText(filme.getTitulo());

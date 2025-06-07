@@ -11,11 +11,11 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <children>
-        <Label text="Bem-vindo à Outra Tela!">
+        <Label text="Bem-vindo ao Diário Cultural!">
             <font>
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
-        <Label text="Este é um exemplo de como carregar uma visualização diferente na área de conteúdo." wrapText="true" />
+        <Label text="Ainda tem que ver o que colocar aqui" wrapText="true" />
     </children>
 </VBox>

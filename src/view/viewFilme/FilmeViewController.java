@@ -1,4 +1,4 @@
-package view;
+package view.viewFilme;
 
 import controller.DiarioCultural;
 import model.Filme; // Importe Filme
@@ -78,7 +78,7 @@ public class FilmeViewController {
     private void popularComboBoxDeOrdenacao() {
         ordenarFilmeComboBox.setItems(FXCollections.observableArrayList(
                 "Padrão (Entrada)", "Título (A-Z)", "Título (Z-A)",
-                "Melhor Avaliados", "Pior Avaliados",
+                "Melhores Avaliados", "Piores Avaliados",
                 "Mais Recentes", "Mais Antigos" // (Ano de Lançamento)
         ));
         ordenarFilmeComboBox.setValue("Padrão (Entrada)");
@@ -183,11 +183,11 @@ public class FilmeViewController {
         System.out.println("Abrindo formulário para adicionar novo filme...");
         try {
             // Você precisará criar um FormularioCadastroFilme.fxml e seu controller
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/FormularioCadastroFilme.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/viewFilme/FormularioCadastroFilme.fxml"));
             Parent root = loader.load();
 
-            // FormularioFilmeController formController = loader.getController();
-            // formController.setDiarioCultural(this.dc);
+            FormularioFilmeController formController = loader.getController();
+            formController.setDiarioCultural(this.dc);
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Cadastrar Novo Filme");
@@ -269,17 +269,16 @@ public class FilmeViewController {
         return soma / filme.getAvaliacoes().size();
     }
 
-    // Dentro de FilmeViewController.java
+
 
     public void abrirDialogoEdicaoFilme(Filme filmeParaEditar) {
         if (filmeParaEditar == null) {
-            // ... (tratamento de erro) ...
             return;
         }
 
         System.out.println("Abrindo formulário para editar filme: " + filmeParaEditar.getTitulo());
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/FormularioCadastroFilme.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/viewFilme/FormularioCadastroFilme.fxml"));
             Parent root = loader.load();
 
             FormularioFilmeController formController = loader.getController();
@@ -320,12 +319,10 @@ public class FilmeViewController {
 
         System.out.println("Abrindo formulário para avaliar filme: " + filmeParaAvaliar.getTitulo());
         try {
-            // 1. Carrega o FXML do diálogo de avaliação
-            // Certifique-se de que o caminho para o FXML está correto.
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AvaliacaoFilme.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/viewFilme/AvaliacaoFilme.fxml"));
             Parent root = loader.load();
 
-            // 2. Obtém o controller do diálogo
             AvaliacaoFilmeController avaliacaoController = loader.getController();
             if (avaliacaoController == null) {
                 System.err.println("Erro crítico: Não foi possível obter o controller do diálogo de avaliação.");
@@ -333,15 +330,12 @@ public class FilmeViewController {
                 return;
             }
 
-            // 3. Passa o filme e a instância do DiarioCultural para o controller do diálogo
             avaliacaoController.setFilmeEContexto(filmeParaAvaliar, this.dc);
 
-            // 4. Cria e configura o novo Stage (janela/diálogo)
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Avaliar Filme: " + filmeParaAvaliar.getTitulo());
             dialogStage.initModality(Modality.APPLICATION_MODAL); // Bloqueia interação com outras janelas
 
-            // Define a janela "pai" (opcional, mas bom para comportamento modal)
             if (filmesListView != null && filmesListView.getScene() != null && filmesListView.getScene().getWindow() != null) {
                 dialogStage.initOwner(filmesListView.getScene().getWindow());
             } else if (adicionarFilmeButton != null && adicionarFilmeButton.getScene() != null && adicionarFilmeButton.getScene().getWindow() != null) {
@@ -351,11 +345,8 @@ public class FilmeViewController {
             dialogStage.setScene(new Scene(root));
             dialogStage.setResizable(false); // Opcional
 
-            // 5. Mostra o diálogo e espera até que ele seja fechado
             dialogStage.showAndWait();
 
-            // 6. Após o diálogo ser fechado, atualiza a lista de filmes na tela principal
-            // (para refletir a nova nota média, por exemplo)
             System.out.println("Diálogo de avaliação de filme fechado. Atualizando dados...");
             refreshViewData();
 

@@ -185,6 +185,22 @@
       "genero": "Romance",
       "lido": false,
       "avaliacoes": []
+    },
+    {
+      "titulo": "Extraordinário",
+      "autor": "R. J. Palacio",
+      "editora": "Intrínseca",
+      "ISBN": "978-8580573015",
+      "ano_lancamento": 2012,
+      "genero": "Romance",
+      "lido": true,
+      "avaliacoes": [
+        {
+          "avaliacao": 5,
+          "data": "Jun 6, 2025, 8:54:33 AM",
+          "comentario": "Ótimo!"
+        }
+      ]
     }
   ],
   "filmes": [
@@ -214,12 +230,18 @@
       "titulo": "Ainda estou aqui",
       "genero": "Drama",
       "ano_lancamento": 2024,
-      "duracao": 234,
+      "duracao": 135,
       "direcao": "Walter Salles",
       "elenco": "Fernanda Torres",
       "onde_assistir": "Globoplay",
       "assistido": false,
-      "avaliacoes": []
+      "avaliacoes": [
+        {
+          "avaliacao": 5,
+          "data": "May 18, 2025, 7:50:00 AM",
+          "comentario": "Filme brasileiro incrível!"
+        }
+      ]
     },
     {
       "titulo": "Blade Runner 2049",
@@ -333,6 +355,17 @@
       "genero": "Suspense",
       "ano_lancamento": 2016,
       "duracao": 0,
+      "assistido": false,
+      "avaliacoes": []
+    },
+    {
+      "titulo": "Nosferatu",
+      "genero": "Terror",
+      "ano_lancamento": 2024,
+      "duracao": 132,
+      "direcao": "Robert Egger",
+      "elenco": "Lily-Rose Depp",
+      "onde_assistir": "Amazon Prime",
       "assistido": false,
       "avaliacoes": []
     }

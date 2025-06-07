@@ -1,15 +1,11 @@
-/* estilos.css */
-
-/* estilos.css */
-
-/* Estilo base para os botões da sidebar */
+/* Base para os botões da sidebar */
 .sidebar-button {
-    -fx-background-color: F0F0F0; /* <-- MUITO IMPORTANTE: Fundo transparente */
-    -fx-text-fill:#20385e;            /* <-- Texto branco */
+    -fx-background-color: F0F0F0;
+    -fx-text-fill:#20385e;
 
-    -fx-font-family: "Arial Bold";
+
     -fx-font-size: 14px;
-    -fx-font-weight: normal;
+    -fx-font-weight: bold;
 
     -fx-border-color: white;         /* <-- Borda branca */
     -fx-border-width: 1px;           /* <-- Espessura da borda (1px é fino) */
@@ -23,11 +19,6 @@
 
 }
 
-/* Estilo para o ícone dentro do botão (se você decidir usar FontIcon novamente) */
-.sidebar-button .font-icon {
-    -fx-fill: white;                 /* <-- Ícone branco */
-}
-
 /* Efeito ao passar o mouse por cima do botão (Hover) */
 .sidebar-button:hover {
     -fx-background-color: rgba(255, 255, 255, 0.1); /* Um leve preenchimento branco translúcido */
@@ -35,35 +26,10 @@
     -fx-text-fill: white; /* Mantém o texto branco */
 }
 
-.sidebar-button:hover .font-icon { /* Se usar FontIcon */
-    -fx-fill: white; /* Mantém o ícone branco */
-}
-
-/* Estilo para o botão ATIVO/SELECIONADO */
-.sidebar-button.active {
-    -fx-background-color: rgba(255, 255, 255, 0.2); /* Um preenchimento branco um pouco mais opaco que o hover */
-    /* OU um fundo sólido, como o azul que você gostou antes: */
-    /* -fx-background-color: #3F51B5; */
-
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-
-    -fx-border-color: white;
-    -fx-border-width: 1.5px; /* Borda um pouco mais grossa para o ativo, para destaque */
-    /* Se usar fundo sólido azul para o active: */
-    /* -fx-border-color: transparent; */
-}
-
-.sidebar-button.active .font-icon { /* Se usar FontIcon */
-    -fx-fill: white;
-    /* Se o fundo do active for #3F51B5, o ícone branco já funciona. */
-}
-
-/* Opcional: Estilo para quando o botão está pressionado */
+/* Estilo para quando o botão está pressionado */
 .sidebar-button:pressed, .sidebar-button.active:pressed {
     -fx-background-color: rgba(255, 255, 255, 0.3); /* Mais opaco ainda ao pressionar */
-    /* Se o active for azul sólido, um azul mais escuro: */
-    /* -fx-background-color: #303F9F; */
+
 }
 .livro-button {
     -fx-cursor: hand;
@@ -73,7 +39,7 @@
 }
 /* Em estilos.css */
 
-/* Fundo da ListView inteira (opcional, para contraste com as células) */
+/* Fundo da ListView inteira */
 .list-view {
     -fx-background-color: #F4F6F8; /* Um cinza bem claro, quase branco azulado */
 }
@@ -93,27 +59,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0.2, 0, 2);
 
 }
-
-/* Em estilos.css */
-
-.list-view {
-    -fx-background-color: #F0F4F8; /* Fundo da lista inteira */
-    -fx-padding: 8px;
-}
-
-/* --- CÉLULA PADRÃO (NÃO SELECIONADA) --- */
-.list-view .list-cell.item-film-cell { /* Aumentando especificidade */
-    -fx-background-color: #FFFFFF;
-    -fx-padding: 12px 15px;
-
-    /* Borda esquerda com sua cor principal */
-    -fx-border-color: #20385e transparent transparent transparent;
-    -fx-border-width: 0 0 0 5px; /* Borda de 5px APENAS na esquerda */
-    -fx-border-style: solid;    /* Garante que a borda sólida seja aplicada */
-
-    /* Opcional: para um efeito de cartão mais pronunciado */
-    /* -fx-background-radius: 3px; */
-    /* -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 5, 0.1, 0, 1); */
 }
 
 .list-view .list-cell.item-film-cell:hover {
@@ -121,13 +66,6 @@
     -fx-border-color: #3F51B5 transparent transparent transparent; /* Borda esquerda azul mais claro no hover */
 }
 
-/* --- CÉLULA SELECIONADA --- */
-.list-view .list-cell.item-film-cell:filled:selected {
-    -fx-background-color: #20385e;  /* SUA COR PRINCIPAL para o fundo da seleção */
-    -fx-border-color: #FFBF00 transparent transparent transparent; /* Borda esquerda DOURADA/AMARELA na seleção para destaque */
-    -fx-border-width: 0 0 0 5px;
-    -fx-border-style: solid;
-}
 
 /* --- TEXTOS E CONTROLES DENTRO DA CÉLULA PADRÃO --- */
 .item-film-cell .item-title {
@@ -144,66 +82,29 @@
     -fx-font-size: 13px;
     -fx-font-weight: bold;
 }
-.item-film-cell .item-action-link {
-    -fx-text-fill: #0066CC; /* Azul para links */
+
+/* Estilo para o CheckBox "Assistido" na célula (estado padrão) */
+.item-action-checkbox {
     -fx-font-size: 13px;
 }
-.item-film-cell .item-action-checkbox .text {
-    -fx-fill: #333333; /* Texto do checkbox */
-    -fx-font-size: 13px;
+
+.item-action-checkbox .text { /* Texto do CheckBox */
+    -fx-fill: #333333; /* Cor padrão do texto */
 }
-.item-film-cell .item-action-button { /* Botão "Detalhes" */
-    -fx-font-size: 11px;
-    -fx-background-color: #607D8B;
-    -fx-text-fill: white;
+
+.item-action-checkbox .box { /* A caixinha do CheckBox */
+    -fx-background-color: white;
+    -fx-border-color: #B0B0B0; /* Cor da borda da caixinha não selecionada */
+    -fx-border-radius: 3px;
     -fx-background-radius: 3px;
-    -fx-padding: 4px 8px;
-}
-.item-film-cell .item-action-button:hover {
-    -fx-background-color: #455A64;
 }
 
-
-/* --- TEXTOS E CONTROLES DENTRO DA CÉLULA SELECIONADA (fundo #20385e) --- */
-.list-view .list-cell.item-film-cell:filled:selected .label,
-.list-view .list-cell.item-film-cell:filled:selected .item-title,
-.list-view .list-cell.item-film-cell:filled:selected .item-detail {
-    -fx-text-fill: white;
-    -fx-fill: white; /* Para casos onde .label é um nó interno */
+.item-action-checkbox:selected .box { /* Caixinha QUANDO o CheckBox está SELECIONADO */
+    -fx-background-color: #20385e; /* Sua cor principal para o fundo da caixinha selecionada */
+    -fx-border-color: #1A2B4A;    /* Borda um pouco mais escura para a caixinha selecionada */
 }
 
-.list-view .list-cell.item-film-cell:filled:selected .item-rating {
-    -fx-text-fill: #FFEB3B; /* Amarelo para a nota na seleção (contrasta bem com azul escuro) */
-    -fx-fill: #FFEB3B;
+.item-action-checkbox:selected .mark { /* A marca "✓" QUANDO o CheckBox está SELECIONADO */
+    -fx-background-color: white;     /* Cor da marca de seleção (branca sobre fundo azul) */
 }
 
-.list-view .list-cell.item-film-cell:filled:selected .item-action-link,
-.list-view .list-cell.item-film-cell:filled:selected .item-action-link .label {
-    -fx-text-fill: #ADD8E6; /* Azul bem claro para o link na seleção */
-    -fx-fill: #ADD8E6;
-}
-.list-view .list-cell.item-film-cell:filled:selected .item-action-link:hover {
-    -fx-text-fill: #FFFFFF;
-    -fx-fill: #FFFFFF;
-}
-
-.list-view .list-cell.item-film-cell:filled:selected .item-action-checkbox .text {
-    -fx-text-fill: white; /* Texto do CheckBox branco */
-    -fx-fill: white;
-}
-.list-view .list-cell.item-film-cell:filled:selected .item-action-checkbox .box {
-    -fx-border-color: white;
-    -fx-background-color: transparent; /* Fundo da caixinha */
-}
-.list-view .list-cell.item-film-cell:filled:selected .item-action-checkbox:selected .mark {
-    -fx-background-color: white; /* Cor do "check" (✓) */
-}
-
-.list-view .list-cell.item-film-cell:filled:selected .item-action-button {
-    -fx-background-color: rgba(255,255,255,0.25); /* Botão "Detalhes" semi-transparente branco */
-    -fx-text-fill: white;
-    -fx-border-color: rgba(255,255,255,0.6);
-}
-.list-view .list-cell.item-film-cell:filled:selected .item-action-button:hover {
-    -fx-background-color: rgba(255,255,255,0.35);
-}

@@ -1,4 +1,4 @@
-package view; // Ou o pacote correto
+package view.viewFilme; // Ou o pacote correto
 
 import controller.DiarioCultural;
 import model.Filme;

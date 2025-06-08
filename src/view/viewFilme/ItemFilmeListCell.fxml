@@ -27,10 +27,20 @@
         </VBox>
       <VBox alignment="CENTER_RIGHT" prefHeight="138.0" prefWidth="338.0">
          <children>
-            <Button fx:id="infoButton" onAction="#handleInfo" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #607D8B; -fx-background-radius: 12;" text="Detalhes" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
+            <HBox alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="206.0">
+               <children>
+                   <Button fx:id="historicoButton" maxWidth="Infinity" onAction="#handleHistorico" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #9d32a8; -fx-background-radius: 12;" styleClass="cell-action-button-info" text="Avaliações" textFill="WHITE">
+                       <cursor>
+                           <Cursor fx:constant="HAND" />
+                       </cursor>
+                  </Button>
+                  <Button fx:id="infoButton" onAction="#handleInfo" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #607D8B; -fx-background-radius: 12;" text="Detalhes" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
             <VBox prefHeight="6.0" prefWidth="206.0" />
             <HBox alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="219.0">
                <children>

@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        // Carrega o FXML (ex: cadastro.fxml)
+        // Carrega o FXML
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/TelaInicial.fxml")));
 
         // Configura e exibe a janela

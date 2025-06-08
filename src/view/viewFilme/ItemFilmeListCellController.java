@@ -2,7 +2,6 @@ package view.viewFilme;
 
 import controller.DiarioCultural;
 import model.Filme;
-import model.Review;
 import persistence.PersistenciaJson;
 
 import javafx.fxml.FXML;
@@ -23,15 +22,14 @@ public class ItemFilmeListCellController {
 
     @FXML private CheckBox assistidoCheck;
     @FXML private Button infoButton;
-
-    // Novos botões
     @FXML private Button avaliarButton;
     @FXML private Button editarButton;
     @FXML private Button excluirButton;
+    @FXML private Button historicoButton;
 
     private Filme filme;
     private DiarioCultural dc;
-    private FilmeViewController filmeViewCtrl; // Referência ao controller principal da tela de filmes
+    private FilmeViewController filmeViewCtrl;
 
 
     public void setDadosDoFilme(Filme filme, DiarioCultural dc, FilmeViewController filmeViewCtrl) {
@@ -66,7 +64,6 @@ public class ItemFilmeListCellController {
             return String.format("%dm", mins);
         }
     }
-
 
     @FXML
     private void handleAvaliar() {
@@ -122,6 +119,15 @@ public class ItemFilmeListCellController {
                     erro.showAndWait();
                 }
             }
+        }
+    }
+
+    @FXML
+    private void handleHistorico() {
+        if (filme != null && filmeViewCtrl != null) {
+            System.out.println("Solicitando histórico de avaliações para: " + filme.getTitulo());
+            // Chama um novo método no controller principal que abrirá o diálogo de histórico
+            filmeViewCtrl.abrirDialogoHistoricoAvaliacoes(filme);
         }
     }
 

@@ -34,6 +34,7 @@ public class TelaInicialController {
     private void handleShowLivroView() {
         loadView("/view/viewLivro/LivroView.fxml");
     }
+    
     // Método utilitário para carregar as views no contentAreaPane
     private void loadView(String fxmlPath) {
         try {

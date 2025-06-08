@@ -360,7 +360,33 @@ public class LivroViewController {
             exibirAlertaSimples("Erro Inesperado", "Ocorreu um erro inesperado.", "Detalhes: " + e.getMessage());
         }
     }
+    public void abrirDialogoHistoricoAvaliacoes(Livro livro) {
+        if (livro == null || livro.getAvaliacoes().isEmpty()) {
+            Alert info = new Alert(Alert.AlertType.INFORMATION, "Este livro ainda não possui nenhuma avaliação.");
+            info.setHeaderText("Histórico Vazio");
+            info.showAndWait();
+            return;
+        }
 
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/viewLivro/HistoricoAvaliacoesLivro.fxml"));
+            Parent root = loader.load();
+
+            HistoricoLivroController controller = loader.getController();
+            controller.setAvaliacoes(livro.getTitulo(), livro.getAvaliacoes()); // Passa o título e a lista de reviews
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Histórico de Avaliações");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(livrosListView.getScene().getWindow());
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            exibirAlertaSimples("Erro", "Não foi possível abrir o histórico de avaliações.", e.getMessage());
+        }
+    }
     private void exibirAlertaSimples(String titulo, String cabecalho, String conteudo) {
         Alert alert = new Alert(Alert.AlertType.ERROR); // Ou outro tipo de alerta
         alert.setTitle(titulo);

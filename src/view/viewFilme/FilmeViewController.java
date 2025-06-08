@@ -118,7 +118,6 @@ public class FilmeViewController {
 
         // Usar o método de busca de filmes do DiarioCultural
         List<Filme> filmesFiltrados = dc.buscarFilmes(tituloParaBusca, diretorParaBusca, atorParaBusca, generoParaBusca, anoParaBusca);
-
         String tipoOrdem = ordenarFilmeComboBox.getValue();
         if (tipoOrdem != null && filmesFiltrados != null) {
             switch (tipoOrdem) {
@@ -128,10 +127,10 @@ public class FilmeViewController {
                 case "Título (Z-A)":
                     filmesFiltrados.sort(Comparator.comparing(Filme::getTitulo, String.CASE_INSENSITIVE_ORDER).reversed());
                     break;
-                case "Melhor Avaliados":
+                case "Melhores Avaliados":
                     filmesFiltrados.sort(Comparator.comparingDouble(Filme::getMediaAvaliacoes).reversed());
                     break;
-                case "Pior Avaliados":
+                case "Piores Avaliados":
                     filmesFiltrados.sort(Comparator.comparingDouble(Filme::getMediaAvaliacoes));
                     break;
                 case "Mais Recentes":
@@ -219,7 +218,6 @@ public class FilmeViewController {
         alert.setTitle("Detalhes do Filme");
         alert.setHeaderText(filme.getTitulo()); // Título do filme como cabeçalho do alerta
 
-        // Monta uma string com todos os detalhes
         StringBuilder detalhes = new StringBuilder();
         detalhes.append("Ano de Lançamento: ").append(filme.getAno_lancamento()).append("\n");
         detalhes.append("Duração: ").append(formatarDuracao(filme.getDuracao())).append("\n"); // Você precisaria de um método formatarDuracao
@@ -232,21 +230,13 @@ public class FilmeViewController {
         double media = calcularMediaAvaliacoes(filme); // Você precisaria de um método calcularMediaAvaliacoes
         detalhes.append("Nota Média: ").append(media > 0 ? String.format("%.1f ★", media) : "Não avaliado").append("\n");
 
-        // Se tiver uma lista de reviews, você poderia listá-las aqui também (de forma simplificada)
-        // if (filme.getAvaliacoes() != null && !filme.getAvaliacoes().isEmpty()) {
-        //     detalhes.append("\nAvaliações:\n");
-        //     for (Review review : filme.getAvaliacoes()) {
-        //         detalhes.append("  - Nota: ").append(review.getNota()).append(", Comentário: ").append(review.getComentario()).append("\n");
-        //     }
-        // }
-
         alert.setContentText(detalhes.toString());
 
-        // Para permitir que o conteúdo seja maior e com scroll, se necessário
         alert.getDialogPane().setMinHeight(javafx.scene.layout.Region.USE_PREF_SIZE);
         alert.setResizable(true); // Permite redimensionar o diálogo
         alert.showAndWait();
     }
+
     private String formatarDuracao(int minutos) {
         if (minutos <= 0) return "N/A";
         int horas = minutos / 60;
@@ -268,7 +258,6 @@ public class FilmeViewController {
         }
         return soma / filme.getAvaliacoes().size();
     }
-
 
 
     public void abrirDialogoEdicaoFilme(Filme filmeParaEditar) {
@@ -365,6 +354,34 @@ public class FilmeViewController {
         alert.setHeaderText(cabecalho);
         alert.setContentText(conteudo);
         alert.showAndWait();
+    }
+
+    public void abrirDialogoHistoricoAvaliacoes(Filme filme) {
+        if (filme == null || filme.getAvaliacoes().isEmpty()) {
+            Alert info = new Alert(Alert.AlertType.INFORMATION, "Este filme ainda não possui nenhuma avaliação.");
+            info.setHeaderText("Histórico Vazio");
+            info.showAndWait();
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/viewFilme/HistoricoAvaliacoesFilme.fxml"));
+            Parent root = loader.load();
+
+            HistoricoFilmeController controller = loader.getController();
+            controller.setAvaliacoes(filme.getTitulo(), filme.getAvaliacoes()); // Passa o título e a lista de reviews
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Histórico de Avaliações");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(filmesListView.getScene().getWindow());
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            exibirAlertaSimples("Erro", "Não foi possível abrir o histórico de avaliações.", e.getMessage());
+        }
     }
 
 }

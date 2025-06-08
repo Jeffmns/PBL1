@@ -90,6 +90,25 @@ public class Serie {
         this.genero = genero;
     }
 
+    public String getStatusAssistido() {
+        if (getTemporadas() == null || getTemporadas().isEmpty()) {
+            return "Não assistida"; //
+        }
+
+        long totalTemporadas = getTemporadas().size();
+        long temporadasAssistidas = getTemporadas().stream()
+                .filter(Temporada::isAssistido)
+                .count();
+
+        if (temporadasAssistidas == 0) {
+            return "Não assistida";
+        } else if (temporadasAssistidas < totalTemporadas) {
+            return String.format("Em andamento (%d/%d)", temporadasAssistidas, totalTemporadas);
+        } else {
+            return "Assistida";
+        }
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

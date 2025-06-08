@@ -44,7 +44,7 @@ class DiarioCulturalTest {
         dc.cadastrarLivro(l3);
 
         List<Livro> esperado = Arrays.asList(l1, l3);
-        Assertions.assertEquals(esperado, dc.buscarLivros(null, null, null, 2013, null));
+        Assertions.assertEquals(esperado, dc.buscarLivros(null, null, null, null, 2013, null));
     }
     @Test
     void listarlivros(){
@@ -119,7 +119,7 @@ class DiarioCulturalTest {
         dc.cadastrarSerie(s3);
 
         List<Serie> esperado = Arrays.asList(s1, s3);
-        Assertions.assertEquals(esperado, dc.buscarSeries(null, "Ficção", null));
+        Assertions.assertEquals(esperado, dc.buscarSeries(null, "Ficção", null, null));
     }
 
     @Test
@@ -303,80 +303,144 @@ class DiarioCulturalTest {
 
     @Test
     void removerLivro(){
+        // 1. Arrange (Preparar)
         DiarioCultural dc = new DiarioCultural();
-        Livro l1 = new Livro("Christine", "Stephen King", "Objetiva",
-                "978-85-60280-87-2", 2013, "Terror", true);
+        Livro livroParaRemover = new Livro("Christine", "Stephen King", "Objetiva", "978-85-60280-87-2", 2013, "Terror", true);
+        dc.cadastrarLivro(livroParaRemover);
 
-        dc.cadastrarLivro(l1);
-        dc.removerLivro("Christine", new Scanner(System.in));
-        String output = outputStream.toString().trim();
-        Assertions.assertTrue(output.contains("Livro removido com sucesso!"), "Mensagem de erro esperada não foi impressa");
+        // Garante que o livro foi adicionado antes de tentar remover
+        Assertions.assertEquals(1, dc.getLivros().size(), "O livro deveria ter sido adicionado antes do teste de remoção.");
+
+        // 2. Act (Agir)
+        // Chama o NOVO método removerFilme, passando o objeto Livro diretamente.
+        boolean foiRemovido = dc.removerLivro(livroParaRemover);
+
+        // 3. Assert (Verificar)
+        // Verifica se o método retornou 'true', indicando que a remoção foi bem-sucedida.
+        Assertions.assertTrue(foiRemovido, "O método removerFilme deveria retornar true.");
+
+        // A verificação mais importante: confirma que a lista de livros agora está vazia.
+        Assertions.assertEquals(0, dc.getLivros().size(), "A lista de livros deveria estar vazia após a remoção.");
 
     }
 
     @Test
     void removerLivroNaoEncontrado(){
+        // 1. Arrange
         DiarioCultural dc = new DiarioCultural();
-        Livro l1 = new Livro("Christine", "Stephen King", "Objetiva",
-                "978-85-60280-87-2", 2013, "Terror", true);
+        Livro livroExistente = new Livro("Christine", "Stephen King", "Objetiva", "978-85-60280-87-2", 2013, "Terror", true);
+        Livro livroNaoExistente = new Livro("Outro Livro", "Outro Autor", "Outra Editora", "123-45", 2020, "Ficção", false);
 
-        dc.cadastrarLivro(l1);
-        dc.removerLivro("Joyland", new Scanner(System.in));
-        String output = outputStream.toString().trim();
-        Assertions.assertTrue(output.contains("Nenhum livro encontrado com esse título."), "Mensagem de erro esperada não foi impressa");
+        dc.cadastrarLivro(livroExistente);
+        Assertions.assertEquals(1, dc.getLivros().size(), "A lista deveria ter um livro no início do teste.");
+
+        // 2. Act
+        // Tenta remover um livro que NUNCA foi adicionado à lista.
+        boolean foiRemovido = dc.removerLivro(livroNaoExistente);
+
+        // 3. Assert
+        // Verifica se o método retornou 'false', como esperado.
+        Assertions.assertFalse(foiRemovido, "O método removerFilme deveria retornar false para um livro não existente.");
+
+        // Verifica se a lista ainda contém o livro original (não foi alterada).
+        Assertions.assertEquals(1, dc.getLivros().size(), "A lista não deveria ter sido alterada.");
+        Assertions.assertTrue(dc.getLivros().contains(livroExistente), "O livro original ainda deveria estar na lista.");
 
     }
     @Test
     void removerFilme(){
+        // 1. Arrange (Preparar)
         DiarioCultural dc = new DiarioCultural();
-
-        Filme f1 = new Filme("Interestelar", "Ficção Científica", 2013,
+        Filme filmeParaRemover = new Filme("Interestelar", "Ficção Científica", 2013,
                 150, "Cristopher Nolan", "xxx", "Netflix");
+        dc.cadastrarFilme(filmeParaRemover);
 
-        dc.cadastrarFilme(f1);
-        dc.removerFilme("Interestelar", new Scanner(System.in));
-        String output = outputStream.toString().trim();
-        Assertions.assertTrue(output.contains("Filme removido com sucesso!"), "Mensagem de erro esperada não foi impressa");
+        // Garante que o livro foi adicionado antes de tentar remover
+        Assertions.assertEquals(1, dc.getFilmes().size(), "O livro deveria ter sido adicionado antes do teste de remoção.");
 
+        // 2. Act (Agir)
+        // Chama o NOVO método removerFilme, passando o objeto Livro diretamente.
+        boolean foiRemovido = dc.removerFilme(filmeParaRemover);
+
+        // 3. Assert (Verificar)
+        // Verifica se o método retornou 'true', indicando que a remoção foi bem-sucedida.
+        Assertions.assertTrue(foiRemovido, "O método removerFilme deveria retornar true.");
+
+        // A verificação mais importante: confirma que a lista de livros agora está vazia.
+        Assertions.assertEquals(0, dc.getFilmes().size(), "A lista de filmes deveria estar vazia após a remoção.");
     }
 
     @Test
     void removerFilmeNaoEncontrado(){
+        // 1. Arrange
         DiarioCultural dc = new DiarioCultural();
-
-        Filme f1 = new Filme("Interestelar", "Ficção Científica", 2013,
+        Filme filmeExistente = new Filme("Interestelar", "Ficção Científica", 2013,
                 150, "Cristopher Nolan", "xxx", "Netflix");
+        Filme filmeNaoExistente = new Filme("Outro Filme", "Outro Gênero", 2010, 123, "Outro Diretor", "Outro Elenco", "Outro Lugar");
 
-        dc.cadastrarFilme(f1);
-        dc.removerFilme("Zathura", new Scanner(System.in));
-        String output = outputStream.toString().trim();
-        Assertions.assertTrue(output.contains("Nenhum filme encontrado com esse título."), "Mensagem de erro esperada não foi impressa");
+        dc.cadastrarFilme(filmeExistente);
+        Assertions.assertEquals(1, dc.getFilmes().size(), "A lista deveria ter um filme no início do teste.");
 
+        // 2. Act
+        // Tenta remover um livro que NUNCA foi adicionado à lista.
+        boolean foiRemovido = dc.removerFilme(filmeNaoExistente);
+
+        // 3. Assert
+        // Verifica se o método retornou 'false', como esperado.
+        Assertions.assertFalse(foiRemovido, "O método removerFilme deveria retornar false para um filme não existente.");
+
+        // Verifica se a lista ainda contém o livro original (não foi alterada).
+        Assertions.assertEquals(1, dc.getFilmes().size(), "A lista não deveria ter sido alterada.");
+        Assertions.assertTrue(dc.getFilmes().contains(filmeExistente), "O filme original ainda deveria estar na lista.");
     }
-
 
 
     @Test
     void removerSerie(){
+        // 1. Arrange (Preparar)
         DiarioCultural dc = new DiarioCultural();
-        Serie s1 = new Serie("Stranger Things", "Ficção", 2016, "Sadie Sink",
+        Serie serieParaRemover = new Serie("Stranger Things", "Ficção", 2016, "Sadie Sink",
                 "Netflix");
-        dc.cadastrarSerie(s1);
-        dc.removerSerie("Stranger Things", new Scanner(System.in));
-        String output = outputStream.toString().trim();
-        Assertions.assertTrue(output.contains("Série removida com sucesso!"), "Mensagem de erro esperada não foi impressa");
+        dc.cadastrarSerie(serieParaRemover);
+
+        // Garante que o livro foi adicionado antes de tentar remover
+        Assertions.assertEquals(1, dc.getSeries().size(), "A série deveria ter sido adicionado antes do teste de remoção.");
+
+        // 2. Act (Agir)
+        // Chama o NOVO método removerFilme, passando o objeto Livro diretamente.
+        boolean foiRemovido = dc.removerSerie(serieParaRemover);
+
+        // 3. Assert (Verificar)
+        // Verifica se o método retornou 'true', indicando que a remoção foi bem-sucedida.
+        Assertions.assertTrue(foiRemovido, "O método removerSerie deveria retornar true.");
+
+        // A verificação mais importante: confirma que a lista de livros agora está vazia.
+        Assertions.assertEquals(0, dc.getSeries().size(), "A lista de séries deveria estar vazia após a remoção.");
 
     }
 
     @Test
     void removerSerieNaoEncontrada(){
+        // 1. Arrange
         DiarioCultural dc = new DiarioCultural();
-        Serie s1 = new Serie("Stranger Things", "Ficção", 2016, "Sadie Sink",
+        Serie serieExistente = new Serie("Stranger Things", "Ficção", 2016, "Sadie Sink",
                 "Netflix");
-        dc.cadastrarSerie(s1);
-        dc.removerSerie("Dark", new Scanner(System.in));
-        String output = outputStream.toString().trim();
-        Assertions.assertTrue(output.contains("Nenhuma série encontrada com esse título."), "Mensagem de erro esperada não foi impressa");
+        Serie serieNaoExistente = new Serie("Outra", "Outro", 2010, "Outro", "Outro");
+
+        dc.cadastrarSerie(serieExistente);
+        Assertions.assertEquals(1, dc.getSeries().size(), "A lista deveria ter uma série no início do teste.");
+
+        // 2. Act
+        // Tenta remover um livro que NUNCA foi adicionado à lista.
+        boolean foiRemovido = dc.removerSerie(serieNaoExistente);
+
+        // 3. Assert
+        // Verifica se o método retornou 'false', como esperado.
+        Assertions.assertFalse(foiRemovido, "O método removerSerie deveria retornar false para um filme não existente.");
+
+        // Verifica se a lista ainda contém o livro original (não foi alterada).
+        Assertions.assertEquals(1, dc.getSeries().size(), "A lista não deveria ter sido alterada.");
+        Assertions.assertTrue(dc.getSeries().contains(serieExistente), "A série original ainda deveria estar na lista.");
 
     }
 }

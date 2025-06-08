@@ -11,6 +11,13 @@ public class Temporada {
     private boolean assistido;
     private List<Review> avaliacoes = new ArrayList<>();
 
+    public Temporada(int numero) {
+        this.numero = numero;
+        this.ano_lancamento = 0; // Valor padrão
+        this.qtd_episodios = 0;  // Valor padrão
+        this.assistido = false;
+        this.avaliacoes = new ArrayList<>();
+    }
     public Temporada(int numero, int ano_lancamento, int qtd_episodios) {
         this.numero = numero;
         this.ano_lancamento = ano_lancamento;

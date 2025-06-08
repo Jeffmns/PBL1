@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="750.0" prefWidth="1006.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TelaInicialController">
+
+
+   <AnchorPane prefHeight="750.0" prefWidth="236.0" style="-fx-background-color: #20385e;">
+      <children>
+
+         <VBox layoutX="14.0" layoutY="14.0" spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+         <Button layoutX="11.0" layoutY="246.0" onAction="#handleFilmeView" prefWidth="216.0" styleClass="sidebar-button" text="🎬 Filmes" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="System" size="14.0" />
+            </font>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor></Button>
+         <Button layoutX="11.0" layoutY="206.0" onAction="#handleShowOutraTelaView" prefWidth="216.0" styleClass="sidebar-button" text="🏠 Início" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="System" size="14.0" />
+            </font>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor></Button>
+         <ImageView fitHeight="138.0" fitWidth="141.0" layoutX="50.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../resources/Logo Diario Cultural.png" />
+            </image>
+         </ImageView>
+         <Button layoutX="11.0" layoutY="286.0" onAction="#handleShowLivroView" prefWidth="216.0" styleClass="sidebar-button" text="📚 Livros" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="System" size="14.0" />
+            </font>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+         </Button>
+         <Button layoutX="11.0" layoutY="326.0" onAction="#handleSerieView" prefWidth="216.0" styleClass="sidebar-button" text="📺 Séries" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="System" size="14.0" />
+            </font>
+         </Button>
+         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="155.0" prefHeight="38.0" prefWidth="189.0" text="Diário Cultural" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="26.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+
+            
+               <AnchorPane fx:id="contentAreaPane" layoutX="236.0" layoutY="0.0" prefHeight="532.0" prefWidth="468.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+   </AnchorPane>
+</AnchorPane>

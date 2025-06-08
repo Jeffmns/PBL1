@@ -1,0 +1,29 @@
+{
+  "livros": [],
+  "filmes": [],
+  "series": [
+    {
+      "titulo": "Dark",
+      "genero": "Ficcao",
+      "ano_lancamento": 2017,
+      "elenco": "Elenco B",
+      "onde_assistir": "Netflix",
+      "temporadas": [
+        {
+          "numero": 1,
+          "ano_lancamento": 2017,
+          "qtd_episodios": 10,
+          "assistido": true,
+          "avaliacoes": [
+            {
+              "avaliacao": 5,
+              "data": "Jun 8, 2025, 9:48:21 AM",
+              "comentario": "Muito boa"
+            }
+          ]
+        }
+      ],
+      "avaliacoes": []
+    }
+  ]
+}

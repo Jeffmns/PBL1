@@ -1,0 +1,110 @@
+/* Base para os botões da sidebar */
+.sidebar-button {
+    -fx-background-color: F0F0F0;
+    -fx-text-fill:#20385e;
+
+
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+
+    -fx-border-color: white;         /* <-- Borda branca */
+    -fx-border-width: 1px;           /* <-- Espessura da borda (1px é fino) */
+    -fx-border-style: solid;         /* Garante que a borda seja sólida */
+
+    -fx-background-radius: 6px;      /* Cantos arredondados para o fundo (mesmo transparente, é bom ter) */
+    -fx-border-radius: 6px;          /* Cantos arredondados para a borda */
+
+    -fx-padding: 6px 15px;
+    -fx-alignment: CENTER;
+
+}
+
+/* Efeito ao passar o mouse por cima do botão (Hover) */
+.sidebar-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1); /* Um leve preenchimento branco translúcido */
+    -fx-border-color: #E0E0E0; /* Pode clarear um pouco mais a borda ou mantê-la branca */
+    -fx-text-fill: white; /* Mantém o texto branco */
+}
+
+/* Estilo para quando o botão está pressionado */
+.sidebar-button:pressed, .sidebar-button.active:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.3); /* Mais opaco ainda ao pressionar */
+
+}
+.livro-button {
+    -fx-cursor: hand;
+}
+.table-view .table-row-cell:filled {
+    -fx-cursor: hand;
+}
+/* Em estilos.css */
+
+/* Fundo da ListView inteira */
+.list-view {
+    -fx-background-color: #F4F6F8; /* Um cinza bem claro, quase branco azulado */
+}
+
+/* Célula individual do filme */
+.item-film-cell {
+    -fx-background-color: #FFFFFF; /* Fundo branco para cada "cartão" */
+    -fx-padding: 15px;             /* Bom espaçamento interno */
+
+    /* Borda sutil para dar um efeito de cartão levemente separado */
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1px;
+    -fx-background-radius: 4px; /* Cantos levemente arredondados para o fundo do cartão */
+    -fx-border-radius: 4px;   /* Cantos levemente arredondados para a borda do cartão */
+
+    /* Sombra para destacar o cartão (pode ajustar ou remover se não gostar) */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0.2, 0, 2);
+
+}
+}
+
+.list-view .list-cell.item-film-cell:hover {
+    -fx-background-color: #E9EFF5;
+    -fx-border-color: #3F51B5 transparent transparent transparent; /* Borda esquerda azul mais claro no hover */
+}
+
+
+/* --- TEXTOS E CONTROLES DENTRO DA CÉLULA PADRÃO --- */
+.item-film-cell .item-title {
+    -fx-text-fill: #20385e; /* Sua cor principal */
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.item-film-cell .item-detail {
+    -fx-text-fill: #4A5568; /* Cinza escuro azulado */
+    -fx-font-size: 12px;
+}
+.item-film-cell .item-rating {
+    -fx-text-fill: #D35400; /* Laranja para a nota */
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+/* Estilo para o CheckBox "Assistido" na célula (estado padrão) */
+.item-action-checkbox {
+    -fx-font-size: 13px;
+}
+
+.item-action-checkbox .text { /* Texto do CheckBox */
+    -fx-fill: #333333; /* Cor padrão do texto */
+}
+
+.item-action-checkbox .box { /* A caixinha do CheckBox */
+    -fx-background-color: white;
+    -fx-border-color: #B0B0B0; /* Cor da borda da caixinha não selecionada */
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+.item-action-checkbox:selected .box { /* Caixinha QUANDO o CheckBox está SELECIONADO */
+    -fx-background-color: #20385e; /* Sua cor principal para o fundo da caixinha selecionada */
+    -fx-border-color: #1A2B4A;    /* Borda um pouco mais escura para a caixinha selecionada */
+}
+
+.item-action-checkbox:selected .mark { /* A marca "✓" QUANDO o CheckBox está SELECIONADO */
+    -fx-background-color: white;     /* Cor da marca de seleção (branca sobre fundo azul) */
+}
+

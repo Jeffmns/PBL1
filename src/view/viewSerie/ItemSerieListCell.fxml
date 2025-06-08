@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="cellLayoutRoot" alignment="CENTER_LEFT" prefHeight="138.0" prefWidth="248.0" spacing="15.0" styleClass="item-film-cell" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.viewSerie.ItemSerieListCellController">
+    <padding>
+        <Insets bottom="12.0" left="15.0" right="15.0" top="12.0" />
+    </padding>
+    <children>
+        <!-- VBox para Informações Principais da Série (à esquerda) -->
+        <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+            <children>
+                <Label fx:id="tituloLabel" styleClass="item-title" wrapText="true" />
+                <Label fx:id="detalhesLinha1Label" styleClass="item-detail" />
+                <Label fx:id="progressoLabel" styleClass="item-detail" />
+                <Label fx:id="notaMediaLabel" styleClass="item-rating" />
+            </children>
+        </VBox>
+
+        <!-- VBox para os Controles de Ação (à direita) -->
+        <VBox alignment="CENTER_RIGHT" prefHeight="138.0" prefWidth="338.0">
+            <children>
+                <HBox alignment="TOP_RIGHT" prefHeight="14.0" prefWidth="206.0">
+                    <children>
+                        <Button fx:id="historicoButton" maxWidth="Infinity" onAction="#handleHistorico" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #9d32a8; -fx-background-radius: 12;" styleClass="cell-action-button-info" text="Avaliações" textFill="WHITE">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                        <Button fx:id="infoButton" onAction="#handleInfo" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #607D8B; -fx-background-radius: 12;" text="Detalhes" textFill="WHITE">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                    </children>
+                </HBox>
+                <VBox prefHeight="6.0" prefWidth="206.0" />
+                <HBox alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="219.0">
+                    <children>
+                        <Button fx:id="editarButton" onAction="#handleEditar" prefHeight="30.0" prefWidth="58.0" style="-fx-background-color: #20385e; -fx-background-radius: 12;" text="Editar" textFill="WHITE">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                        <Button fx:id="avaliarButton" onAction="#handleAvaliar" prefHeight="26.0" prefWidth="93.0" style="-fx-background-color: #cf8d0a; -fx-background-radius: 12;" text="⭐ Avaliar" textFill="WHITE">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                        <Button fx:id="excluirButton" onAction="#handleExcluir" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: #d32f2f; -fx-background-radius: 12;" text="Excluir" textFill="WHITE">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</HBox>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefWidth="400.0" spacing="15.0" style="-fx-background-color: #F9F9F9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.viewFilme.AvaliacaoFilmeController">
+    <padding>
+        <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
+    </padding>
+    <children>
+        <Label fx:id="tituloDialogoLabel" text="Avaliar filme:" textFill="#20385e" VBox.vgrow="NEVER">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+        </Label>
+        <Label fx:id="nomeFilmeLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="[Nome do Filme]" textFill="#20385e">
+            <VBox.margin>
+                <Insets bottom="15.0" />
+            </VBox.margin>
+        </Label>
+
+        <GridPane hgap="10.0" vgap="8.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label style="-fx-font-size: 13px;" text="Nota (0-5):" textFill="#20385e" GridPane.rowIndex="0" />
+                <TextField fx:id="notaField" promptText="Ex: 4" style="-fx-font-size: 13px; -fx-background-color: #ffff; -fx-border-color: #20385e; -fx-border-radius: 12;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            </children>
+        </GridPane>
+
+        <Label style="-fx-font-size: 13px; -fx-font-weight: normal; -fx-padding: 10 0 0 0;" text="Seu Comentário:" textFill="#20385e" />
+        <TextArea fx:id="comentarioTextArea" prefHeight="100.0" prefRowCount="4" style="-fx-font-size: 13px; -fx-background-color: #ffff; -fx-border-color: #20385e;" wrapText="true" />
+
+        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+            <children>
+                <Button fx:id="salvarButton" mnemonicParsing="false" onAction="#handleSalvarAvaliacao" style="-fx-background-color: #009688; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 12;" text="Salvar Avaliação" />
+                <Button fx:id="cancelarButton" mnemonicParsing="false" onAction="#handleCancelar" style="-fx-font-size: 13px; -fx-background-color: #C0392B; -fx-border-radius: 12; -fx-background-radius: 12;" text="Cancelar" textFill="WHITE" />
+            </children>
+            <VBox.margin>
+                <Insets top="20.0" />
+            </VBox.margin>
+        </HBox>
+    </children>
+</VBox>

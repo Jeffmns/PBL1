@@ -39,7 +39,7 @@ public class PersistenciaJson {
             return new DiarioCultural();
         }
     }
-    // Método usado nos testes, permite escolher o caminho    // Método usado nos testes, permite escolher o caminho
+    // Método usado nos testes, permite escolher o caminho
     public static DiarioCultural carregar(String caminhoArquivo) {
         try (FileReader reader = new FileReader(caminhoArquivo)) {
             return gson.fromJson(reader, DiarioCultural.class);

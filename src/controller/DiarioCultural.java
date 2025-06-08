@@ -16,7 +16,7 @@ public class DiarioCultural {
 
     // Método para remover acentos de uma string
     private String removerAcentos(String str) {
-        if (str == null) return null;
+        if (str == null) return "";
         String normalized = Normalizer.normalize(str, Normalizer.Form.NFD);
         return normalized.replaceAll("\\p{M}", ""); // Remove os acentos
     }
@@ -38,7 +38,7 @@ public class DiarioCultural {
      * @param ISBN ISBN do livro.
      * @return Lista de livros que correspondem aos critérios de busca.
      */
-    public List<Livro> buscarLivros(String titulo, String autor, String genero, Integer ano, String ISBN) {
+    public List<Livro> buscarLivros(String titulo, String autor, String genero, String editora,  Integer ano, String ISBN) {
         List<Livro> resultado = new ArrayList<>();
         for (Livro livro : livros) {
             boolean matches = true;
@@ -46,8 +46,16 @@ public class DiarioCultural {
             if (titulo != null && !removerAcentos(livro.getTitulo()).toLowerCase().contains(removerAcentos(titulo).toLowerCase())) matches = false;
             if (autor != null && !removerAcentos(livro.getAutor()).toLowerCase().contains(removerAcentos(autor).toLowerCase())) matches = false;
             if (genero != null && !removerAcentos(livro.getGenero()).toLowerCase().contains(removerAcentos(genero).toLowerCase())) matches = false;
+            if (editora != null && !removerAcentos(livro.getEditora()).toLowerCase().contains(removerAcentos(editora).toLowerCase())) matches = false;
             if (ano != null && livro.getAno_lancamento() != ano) matches = false;
-            if (ISBN != null && !livro.getISBN().equalsIgnoreCase(ISBN)) matches = false;
+            if (matches && ISBN != null) {
+                String isbnArmazenado = livro.getISBN();
+                // Normaliza ambos (o armazenado e o digitado) removendo hifens e espaços
+                if (isbnArmazenado == null || !isbnArmazenado.replaceAll("[-\\s]", "").contains(ISBN.replaceAll("[-\\s]", ""))) {
+                    matches = false;
+                }
+            }
+
             if (matches) resultado.add(livro);
         }
         return resultado;
@@ -93,13 +101,14 @@ public class DiarioCultural {
      * @param ano Ano de lançamento da série.
      * @return Lista de séries que correspondem aos critérios de busca.
      */
-    public List<Serie> buscarSeries(String titulo, String genero, Integer ano) {
+    public List<Serie> buscarSeries(String titulo, String genero, String elenco, Integer ano) {
         List<Serie> resultado = new ArrayList<>();
         for (Serie serie : series) {
             boolean matches = true;
 
             if (titulo != null && !removerAcentos(serie.getTitulo()).toLowerCase().contains(removerAcentos(titulo).toLowerCase())) matches = false;
             if (genero != null && !removerAcentos(serie.getGenero()).toLowerCase().contains(removerAcentos(genero).toLowerCase())) matches = false;
+            if (elenco != null && !removerAcentos(serie.getElenco()).toLowerCase().contains(removerAcentos(elenco).toLowerCase())) matches = false;
             if (ano != null && serie.getAnoLancamento() != ano) matches = false;
             if (matches) resultado.add(serie);
         }
@@ -320,133 +329,52 @@ public class DiarioCultural {
      * Se houver mais de um livro com o mesmo título, exibe as opções para o usuário
      * escolher qual deseja remover.
      *
-     * @param titulo Título do livro a ser removido.
+     * @param livro Título do livro a ser removido.
      */
-    public void removerLivro(String titulo, Scanner scanner) {
-        List<Livro> encontrados = new ArrayList<>();
-        for (Livro livro : livros) {
-            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
-                encontrados.add(livro);
-            }
+    public boolean removerLivro(Livro livro) {
+        if (livro == null) {
+            return false;
         }
-
-        if (encontrados.isEmpty()) {
-            System.out.println("Nenhum livro encontrado com esse título.");
-            return;
+        boolean removido = this.livros.remove(livro);
+        if (removido) {
+            PersistenciaJson.salvar(this); // Salva o estado atualizado após a remoção
+            System.out.println("DiarioCultural: Livro '" + livro.getTitulo() + "' removido.");
         }
-
-        if (encontrados.size() == 1) {
-            livros.remove(encontrados.get(0));
-            System.out.println("Livro removido com sucesso!");
-        } else {
-            System.out.println("\nLivros encontrados:");
-            for (int i = 0; i < encontrados.size(); i++) {
-                Livro l = encontrados.get(i);
-                System.out.println((i + 1) + " - " + l.getTitulo() + " (" +l.getAno_lancamento() + ") - Autor: " + l.getAutor() + " - Editora: " + l.getEditora() + " - ISBN: " + l.getISBN());
-            }
-
-            System.out.print("Digite o número do livro que deseja remover: ");
-            try {
-                int escolha = Integer.parseInt(scanner.nextLine());
-                if (escolha >= 1 && escolha <= encontrados.size()) {
-                    livros.remove(encontrados.get(escolha - 1));
-                    System.out.println("Livro removido com sucesso!");
-                } else {
-                    System.out.println("Número inválido.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida.");
-            }
-        }
+        return removido;
     }
-
     /**
-     * Remove um filme da lista de filmes cadastrados com base no título informado.
-     * Se houver mais de um filme com o mesmo título, exibe as opções para o usuário
-     * escolher qual deseja remover.
+     * Remove um filme da lista de filmes cadastradas.
      *
-     * @param titulo Título do filme a ser removido.
+     * @param filme Filme a ser removido.
      */
-    public void removerFilme(String titulo, Scanner scanner) {
-        List<Filme> encontrados = new ArrayList<>();
-        for (Filme filme : filmes) {
-            if (filme.getTitulo().equalsIgnoreCase(titulo)) {
-                encontrados.add(filme);
-            }
+    public boolean removerFilme(Filme filme) {
+        if (filme == null) {
+            return false;
         }
-
-        if (encontrados.isEmpty()) {
-            System.out.println("Nenhum filme encontrado com esse título.");
-            return;
+        boolean removido = this.filmes.remove(filme);
+        if (removido) {
+            PersistenciaJson.salvar(this); // Salva o estado atualizado após a remoção
+            System.out.println("DiarioCultural: Filme '" + filme.getTitulo() + "' removido.");
         }
-
-        if (encontrados.size() == 1) {
-            filmes.remove(encontrados.get(0));
-            System.out.println("Filme removido com sucesso!");
-        } else {
-            System.out.println("\nFilmes encontrados:");
-            for (int i = 0; i < encontrados.size(); i++) {
-                Filme f = encontrados.get(i);
-                System.out.println((i + 1) + " - " + f.getTitulo() + " (" + f.getAno_lancamento() + ") - Direção: " + f.getDirecao() + " - Plataforma: " + f.getOnde_assistir());
-            }
-
-            System.out.print("Digite o número do filme que deseja remover: ");
-            try {
-                int escolha = Integer.parseInt(scanner.nextLine());
-                if (escolha >= 1 && escolha <= encontrados.size()) {
-                    filmes.remove(encontrados.get(escolha - 1));
-                    System.out.println("Filme removido com sucesso!");
-                } else {
-                    System.out.println("Número inválido.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida.");
-            }
-        }
+        return removido;
     }
     /**
      * Remove uma série da lista de séries cadastradas com base no título informado.
      * Se houver mais de uma série com o mesmo título, exibe as opções para o usuário
      * escolher qual deseja remover.
      *
-     * @param titulo Título da série a ser removido.
+     * @param serie Título da série a ser removido.
      */
-    public void removerSerie(String titulo, Scanner scanner) {
-        List<Serie> encontrados = new ArrayList<>();
-        for (Serie serie : series) {
-            if (serie.getTitulo().equalsIgnoreCase(titulo)) {
-                encontrados.add(serie);
-            }
+    public boolean removerSerie(Serie serie) {
+        if (serie == null) {
+            return false;
         }
-
-        if (encontrados.isEmpty()) {
-            System.out.println("Nenhuma série encontrada com esse título.");
-            return;
+        boolean removido = this.series.remove(serie);
+        if (removido) {
+            PersistenciaJson.salvar(this); // Salva o estado atualizado após a remoção
+            System.out.println("DiarioCultural: Série '" + serie.getTitulo() + "' removida.");
         }
-
-        if (encontrados.size() == 1) {
-            series.remove(encontrados.get(0));
-            System.out.println("Série removida com sucesso!");
-        } else {
-            System.out.println("\nSéries encontradas:");
-            for (int i = 0; i < encontrados.size(); i++) {
-                Serie s = encontrados.get(i);
-                System.out.println((i + 1) + " - " + s.getTitulo() + " (" + s.getAnoLancamento() + ") - Elenco: " + s.getElenco() + " - Plataforma: " + s.getOnde_assistir());
-            }
-
-            System.out.print("Digite o número da série que deseja remover: ");
-            try {
-                int escolha = Integer.parseInt(scanner.nextLine());
-                if (escolha >= 1 && escolha <= encontrados.size()) {
-                    series.remove(encontrados.get(escolha - 1));
-                    System.out.println("Série removida com sucesso!");
-                } else {
-                    System.out.println("Número inválido.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida.");
-            }
-        }
+        return removido;
     }
 
     public List<Livro> listarlivros(){

@@ -8,7 +8,13 @@
       "ano_lancamento": 2013,
       "genero": "Terror",
       "lido": false,
-      "avaliacoes": []
+      "avaliacoes": [
+        {
+          "avaliacao": 5,
+          "data": "May 18, 2025, 7:50:00 AM",
+          "comentario": "Visual incrível!"
+        }
+      ]
     },
     {
       "titulo": "Joyland",
@@ -27,8 +33,14 @@
       "ISBN": "978-85-60280-87-2",
       "ano_lancamento": 2013,
       "genero": "Romance",
-      "lido": false,
-      "avaliacoes": []
+      "lido": true,
+      "avaliacoes": [
+        {
+          "avaliacao": 4,
+          "data": "Jun 7, 2025, 6:25:23 PM",
+          "comentario": "o cara morre, é foda"
+        }
+      ]
     },
     {
       "titulo": "O Iluminado",
@@ -129,6 +141,72 @@
       "genero": "Distopia",
       "lido": true,
       "avaliacoes": []
+    },
+    {
+      "titulo": "Sombras da Noite",
+      "autor": "Stephen King",
+      "editora": "Suma",
+      "ISBN": "978-85-508-0353-1",
+      "ano_lancamento": 2015,
+      "genero": "Terror",
+      "lido": false,
+      "avaliacoes": []
+    },
+    {
+      "titulo": "Nas Sombras do Medo",
+      "autor": "Carlos Ruiz Zafón",
+      "editora": "Objetiva",
+      "ISBN": "978-85-60280-90-2",
+      "ano_lancamento": 2016,
+      "genero": "Suspense",
+      "lido": false,
+      "avaliacoes": []
+    },
+    {
+      "titulo": "A Herança",
+      "autor": "Christopher Paolini",
+      "editora": "Rocco",
+      "ISBN": "978-85-325-2990-4",
+      "ano_lancamento": 2012,
+      "genero": "Fantasia",
+      "lido": false,
+      "avaliacoes": []
+    },
+    {
+      "titulo": "A Herança",
+      "autor": "John Grisham",
+      "editora": "Arqueiro",
+      "ISBN": "978-85-8041-569-6",
+      "ano_lancamento": 2015,
+      "genero": "Suspense Jurídico",
+      "lido": false,
+      "avaliacoes": []
+    },
+    {
+      "titulo": "A Seleção",
+      "autor": "Kiera Cass",
+      "editora": "Seguinte",
+      "ISBN": "9780007466695",
+      "ano_lancamento": 2012,
+      "genero": "Romance",
+      "lido": false,
+      "avaliacoes": []
+    },
+    {
+      "titulo": "Extraordinário",
+      "autor": "R. J. Palacio",
+      "editora": "Intrínseca",
+      "ISBN": "978-8580573015",
+      "ano_lancamento": 2012,
+      "genero": "Romance",
+      "lido": true,
+      "avaliacoes": [
+        {
+          "avaliacao": 5,
+          "data": "Jun 6, 2025, 8:54:33 AM",
+          "comentario": "Ótimo!"
+        }
+      ]
     }
   ],
   "filmes": [
@@ -140,8 +218,14 @@
       "direcao": "Cristopher Nolan",
       "elenco": "xxx",
       "onde_assistir": "Netflix",
-      "assistido": false,
-      "avaliacoes": []
+      "assistido": true,
+      "avaliacoes": [
+        {
+          "avaliacao": 5,
+          "data": "Jun 8, 2025, 8:52:10 AM",
+          "comentario": "Bom"
+        }
+      ]
     },
     {
       "titulo": "Meninas Malvadas",
@@ -158,12 +242,23 @@
       "titulo": "Ainda estou aqui",
       "genero": "Drama",
       "ano_lancamento": 2024,
-      "duracao": 234,
+      "duracao": 135,
       "direcao": "Walter Salles",
       "elenco": "Fernanda Torres",
       "onde_assistir": "Globoplay",
-      "assistido": false,
-      "avaliacoes": []
+      "assistido": true,
+      "avaliacoes": [
+        {
+          "avaliacao": 5,
+          "data": "May 18, 2025, 7:50:00 AM",
+          "comentario": "Filme brasileiro incrível!"
+        },
+        {
+          "avaliacao": 5,
+          "data": "Jun 8, 2025, 8:44:29 AM",
+          "comentario": "Perfeito! Mereceu o Oscar."
+        }
+      ]
     },
     {
       "titulo": "Blade Runner 2049",
@@ -263,6 +358,33 @@
       "onde_assistir": "Amazon Prime Video",
       "assistido": true,
       "avaliacoes": []
+    },
+    {
+      "titulo": "Sombras da Noite",
+      "genero": "Terror",
+      "ano_lancamento": 2015,
+      "duracao": 0,
+      "assistido": false,
+      "avaliacoes": []
+    },
+    {
+      "titulo": "Nas Sombras do Medo",
+      "genero": "Suspense",
+      "ano_lancamento": 2016,
+      "duracao": 0,
+      "assistido": false,
+      "avaliacoes": []
+    },
+    {
+      "titulo": "Nosferatu",
+      "genero": "Terror",
+      "ano_lancamento": 2024,
+      "duracao": 132,
+      "direcao": "Robert Egger",
+      "elenco": "Lily-Rose Depp",
+      "onde_assistir": "Amazon Prime",
+      "assistido": false,
+      "avaliacoes": []
     }
   ],
   "series": [
@@ -283,6 +405,11 @@
               "avaliacao": 5,
               "data": "May 18, 2025, 7:00:00 AM",
               "comentario": "Incrível começo!"
+            },
+            {
+              "avaliacao": 4,
+              "data": "Jun 8, 2025, 9:43:30 AM",
+              "comentario": "Boa"
             }
           ]
         },

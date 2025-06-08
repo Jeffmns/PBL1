@@ -41,7 +41,7 @@ public class HistoricoFilmeController {
                     TextFlow textFlow = new TextFlow(cabecalho, new Text(data), comentario);
                     textFlow.setPadding(new javafx.geometry.Insets(5, 0, 5, 0));
 
-                    setGraphic(textFlow);
+                    setGraphic(textFlow); 
                     setText(null);
                     setStyle("-fx-border-color: transparent transparent #E0E0E0 transparent; -fx-padding: 5px;");
                 }
@@ -49,6 +49,9 @@ public class HistoricoFilmeController {
         });
     }
 
+    /**
+     * Recebe a lista de avaliações do controller principal e popula a ListView.
+     */
     public void setAvaliacoes(String nomeDaMidia, List<Review> avaliacoes) {
         tituloMediaLabel.setText(nomeDaMidia);
         historicoListView.getItems().setAll(avaliacoes);

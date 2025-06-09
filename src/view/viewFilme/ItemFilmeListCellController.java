@@ -7,11 +7,11 @@ import persistence.PersistenciaJson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType; // Importar ButtonType
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
-import java.util.Optional; // Importar Optional
+import java.util.Optional;
 
 public class ItemFilmeListCellController {
 
@@ -88,7 +88,7 @@ public class ItemFilmeListCellController {
     private void handleInfo() {
         if (filme != null && filmeViewCtrl != null) {
             System.out.println("Info sobre: " + filme.getTitulo());
-            filmeViewCtrl.mostrarDetalhesDoFilme(this.filme); // Chama método no controller pai
+            filmeViewCtrl.mostrarDetalhesDoFilme(this.filme);
         }
     }
 
@@ -96,29 +96,17 @@ public class ItemFilmeListCellController {
     private void handleEditar() {
         if (filme != null && filmeViewCtrl != null) {
             System.out.println("Editar filme: " + filme.getTitulo());
-            filmeViewCtrl.abrirDialogoEdicaoFilme(this.filme); // Chama método no controller pai
+            filmeViewCtrl.abrirDialogoEdicaoFilme(this.filme);
         }
     }
 
+
     @FXML
     private void handleExcluir() {
-        if (filme != null && dc != null && filmeViewCtrl != null) {
-            Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmacao.setTitle("Confirmar Exclusão");
-            confirmacao.setHeaderText("Excluir Filme: " + filme.getTitulo());
-            confirmacao.setContentText("Você tem certeza que deseja excluir este filme permanentemente?");
 
-            Optional<ButtonType> resultado = confirmacao.showAndWait();
-            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-                boolean removido = dc.removerFilme(this.filme); // Tenta remover o objeto filme
-                if (removido) {
-                    System.out.println("Filme removido: " + filme.getTitulo());
-                    filmeViewCtrl.refreshViewData(); // Pede para o controller principal atualizar a lista
-                } else {
-                    Alert erro = new Alert(Alert.AlertType.ERROR, "Não foi possível remover o filme da lista.");
-                    erro.showAndWait();
-                }
-            }
+        if (filme != null && filmeViewCtrl != null) {
+            System.out.println("Solicitando remoção do filme: " + filme.getTitulo());
+            filmeViewCtrl.abrirDialogoRemocaoFilme(this.filme);
         }
     }
 
@@ -126,7 +114,6 @@ public class ItemFilmeListCellController {
     private void handleHistorico() {
         if (filme != null && filmeViewCtrl != null) {
             System.out.println("Solicitando histórico de avaliações para: " + filme.getTitulo());
-            // Chama um novo método no controller principal que abrirá o diálogo de histórico
             filmeViewCtrl.abrirDialogoHistoricoAvaliacoes(filme);
         }
     }

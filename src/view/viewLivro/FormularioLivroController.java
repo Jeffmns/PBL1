@@ -109,9 +109,20 @@ public class FormularioLivroController {
 
             } else {
                 Livro novoLivro = new Livro(titulo, autor, editora, isbn, anoLancamento, genero, lido);
-                dc.cadastrarLivro(novoLivro); // Este método em DiarioCultural já deve chamar PersistenciaJson.salvar(dc)
-                System.out.println("Novo livro cadastrado: " + novoLivro.getTitulo());
-                exibirAlerta("Sucesso", "Livro '" + novoLivro.getTitulo() + "' cadastrado com sucesso!", Alert.AlertType.INFORMATION);
+
+                // 2. VERIFICA SE A SÉRIE JÁ EXISTE ANTES DE TENTAR CADASTRAR
+                if (dc.getLivros().contains(novoLivro)) {
+                    // Se já existe, mostra o alerta e NÃO fecha a janela
+                    exibirAlerta("Livro Duplicado",
+                            "Um livro com os mesmos dados já existe no seu diário.",
+                            Alert.AlertType.WARNING);
+                } else {
+                    // Se não existe, prossegue com o cadastro
+                    dc.cadastrarLivro(novoLivro); // Este método agora só adiciona e salva
+                    exibirAlerta("Sucesso", "Livro '" + novoLivro.getTitulo() + "' cadastrado com sucesso!", Alert.AlertType.INFORMATION);
+                    System.out.println("Novo livro cadastrado: " + novoLivro.getTitulo());
+                    fecharJanela(); // Fecha a janela apenas se o cadastro foi bem-sucedido
+                }
             }
             fecharJanela();
         } catch (Exception e) {

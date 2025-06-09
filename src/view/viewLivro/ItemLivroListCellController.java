@@ -17,10 +17,10 @@ import java.util.Optional; // Importar Optional
 public class ItemLivroListCellController {
 
     @FXML private Label tituloLabel;
-    @FXML private Label anoLabel; // Você precisará adicionar este fx:id ao FXML se quiser usá-lo aqui diretamente
+    @FXML private Label anoLabel;
     @FXML private Label editoraLabel;
     @FXML private Label generoLabel;  // ou combinar em detalhesLinha1Label
-    @FXML private Label detalhesLinha1Label; // Para "Ano | ISBN | Gênero"
+    @FXML private Label detalhesLinha1Label; // Para "Ano | Editora | Gênero"
     @FXML private Label autorLabel;
     @FXML private Label notaMediaLabel;
 
@@ -33,20 +33,20 @@ public class ItemLivroListCellController {
 
     private Livro livro;
     private DiarioCultural dc;
-    private LivroViewController livroViewCtrl; // Referência ao controller principal da tela de filmes
+    private LivroViewController livroViewCtrl;
 
 
     public void setDadosDoLivro(Livro livro, DiarioCultural dc, LivroViewController livroViewCtrl) {
         this.livro = livro;
         this.dc = dc;
-        this.livroViewCtrl = livroViewCtrl; // Guardar a referência
+        this.livroViewCtrl = livroViewCtrl;
 
         if (livro != null) {
             tituloLabel.setText(livro.getTitulo());
             detalhesLinha1Label.setText(
                     (livro.getAno_lancamento() > 0 ? livro.getAno_lancamento() : "S/A") +
-                            " | " + livro.getEditora() +
-                            (livro.getGenero() != null && !livro.getGenero().isEmpty() ? " | " + livro.getGenero() : "")
+                            (livro.getGenero() != null && !livro.getGenero().isEmpty() ? " | " + livro.getGenero() : "") +
+                            " | Editora: " + livro.getEditora()
             );
             autorLabel.setText("Autor: " + (livro.getAutor() != null ? livro.getAutor() : "N/A"));
 
@@ -86,7 +86,7 @@ public class ItemLivroListCellController {
     private void handleInfo() {
         if (livro != null && livroViewCtrl != null) {
             System.out.println("Info sobre: " + livro.getTitulo());
-            livroViewCtrl.mostrarDetalhesDoLivro(this.livro); // Chama método no controller pai
+            livroViewCtrl.mostrarDetalhesDoLivro(this.livro);
         }
     }
 
@@ -94,29 +94,15 @@ public class ItemLivroListCellController {
     private void handleEditar() {
         if (livro != null && livroViewCtrl != null) {
             System.out.println("Editar livro: " + livro.getTitulo());
-            livroViewCtrl.abrirDialogoEdicaoLivro(this.livro); // Chama método no controller pai
+            livroViewCtrl.abrirDialogoEdicaoLivro(this.livro);
         }
     }
 
     @FXML
     private void handleExcluir() {
-        if (livro != null && dc != null && livroViewCtrl != null) {
-            Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmacao.setTitle("Confirmar Exclusão");
-            confirmacao.setHeaderText("Excluir Livro: " + livro.getTitulo());
-            confirmacao.setContentText("Você tem certeza que deseja excluir este livro permanentemente?");
-
-            Optional<ButtonType> resultado = confirmacao.showAndWait();
-            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-                boolean removido = dc.removerLivro(this.livro);  // Tenta remover o objeto filme
-                if (removido) {
-                    System.out.println("Livro removido: " + livro.getTitulo());
-                    livroViewCtrl.refreshViewData(); // Pede para o controller principal atualizar a lista
-                } else {
-                    Alert erro = new Alert(Alert.AlertType.ERROR, "Não foi possível remover o livro da lista.");
-                    erro.showAndWait();
-                }
-            }
+        if (livro != null && livroViewCtrl != null) {
+            System.out.println("Solicitando remoção do livro: " + livro.getTitulo());
+            livroViewCtrl.abrirDialogoRemocaoLivro(this.livro);
         }
     }
 
@@ -124,7 +110,6 @@ public class ItemLivroListCellController {
     private void handleHistorico() {
         if (livro != null && livroViewCtrl != null) {
             System.out.println("Solicitando histórico de avaliações para: " + livro.getTitulo());
-            // Chama um novo método no controller principal que abrirá o diálogo de histórico
             livroViewCtrl.abrirDialogoHistoricoAvaliacoes(livro);
         }
     }

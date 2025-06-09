@@ -1,6 +1,8 @@
 package view.viewSerie; // Certifique-se de que este é o pacote correto
 
 import controller.DiarioCultural;
+import javafx.scene.control.*;
+import model.Filme;
 import model.Serie;  // Importa a classe Serie
 import persistence.PersistenciaJson;
 
@@ -10,18 +12,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class SerieViewController {
 
@@ -84,6 +81,10 @@ public class SerieViewController {
     }
 
     private void configurarListenersOuAcaoDoBotao() {
+        tituloSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        elencoSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        generoSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        anoSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
         ordenarSerieComboBox.valueProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
     }
 
@@ -134,7 +135,7 @@ public class SerieViewController {
                 case "Mais Recentes":
                     seriesFiltradas.sort(Comparator.comparing(Serie::getAnoLancamento, Comparator.nullsLast(Integer::compareTo)).reversed());
                     break;
-                case "Mais Antigos":
+                case "Mais Antigas":
                     seriesFiltradas.sort(Comparator.comparing(Serie::getAnoLancamento, Comparator.nullsLast(Integer::compareTo)));
                     break;
             }
@@ -149,6 +150,7 @@ public class SerieViewController {
         tituloSearchField.clear();
         generoSearchField.clear();
         anoSearchField.clear();
+        elencoSearchField.clear();
         ordenarSerieComboBox.setValue("Padrão (Entrada)");
         executarBuscaFiltragemOrdenacao();
     }
@@ -298,6 +300,36 @@ public class SerieViewController {
             e.printStackTrace();
             // Lidar com erros de carregamento do FXML
             exibirAlertaSimples("Erro", "Não foi possível abrir o histórico de avaliações.", e.getMessage());
+        }
+    }
+
+    /**
+     * Método chamado pela célula para solicitar a remoção de um filme.
+     * Ele usa a instância atualizada do DiarioCultural para garantir a consistência.
+     * @param serie O objeto Filme a ser removido.
+     */
+    public void abrirDialogoRemocaoSerie(Serie serie) {
+        if (serie == null || dc == null) return;
+
+        Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacao.setTitle("Confirmar Exclusão");
+        confirmacao.setHeaderText("Excluir Série: " + serie.getTitulo());
+        confirmacao.setContentText("Você tem certeza que deseja excluir esta série permanentemente?");
+
+        Optional<ButtonType> resultado = confirmacao.showAndWait();
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+
+            // Usa o método removerFilme do DiarioCultural, que já salva no JSON.
+            boolean removido = dc.removerSerie(serie);
+
+            if (removido) {
+                System.out.println("Série removida com sucesso: " + serie.getTitulo());
+                refreshViewData();
+            } else {
+
+                Alert erro = new Alert(Alert.AlertType.ERROR, "Não foi possível remover o filme.");
+                erro.showAndWait();
+            }
         }
     }
 

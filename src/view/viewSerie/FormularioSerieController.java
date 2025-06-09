@@ -119,8 +119,19 @@ public class FormularioSerieController {
                     novaSerie.getTemporadas().add(new Temporada(i));
                 }
 
-                dc.cadastrarSerie(novaSerie); // Seu método em DiarioCultural que adiciona e salva
-                System.out.println("Nova série cadastrada: " + novaSerie.getTitulo());
+                // 2. VERIFICA SE A SÉRIE JÁ EXISTE ANTES DE TENTAR CADASTRAR
+                if (dc.getSeries().contains(novaSerie)) {
+                    // Se já existe, mostra o alerta e NÃO fecha a janela
+                    exibirAlerta("Série Duplicada",
+                            "Uma série com os mesmos dados já existe no seu diário.",
+                            Alert.AlertType.WARNING);
+                } else {
+                    // Se não existe, prossegue com o cadastro
+                    dc.cadastrarSerie(novaSerie); // Este método agora só adiciona e salva
+                    System.out.println("Nova série cadastrada: " + novaSerie.getTitulo());
+                    fecharJanela(); // Fecha a janela apenas se o cadastro foi bem-sucedido
+                }
+
             }
 
             fecharJanela();

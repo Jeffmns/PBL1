@@ -130,9 +130,21 @@ public class FormularioFilmeController {
                 // Certifique-se que sua classe Filme tem um construtor que aceita estes parâmetros
                 // e inicializa a lista de avaliações internamente.
                 Filme novoFilme = new Filme(titulo, genero, anoLancamento, duracaoMin, direcao, elenco, ondeAssistir);
-                dc.cadastrarFilme(novoFilme); // Este método em DiarioCultural já deve chamar PersistenciaJson.salvar(dc)
-                System.out.println("Novo filme cadastrado: " + novoFilme.getTitulo());
-                exibirAlerta("Sucesso", "Filme '" + novoFilme.getTitulo() + "' cadastrado com sucesso!", Alert.AlertType.INFORMATION);
+
+                // 2. VERIFICA SE A SÉRIE JÁ EXISTE ANTES DE TENTAR CADASTRAR
+                if (dc.getFilmes().contains(novoFilme)) {
+                    // Se já existe, mostra o alerta e NÃO fecha a janela
+                    exibirAlerta("Filme Duplicado",
+                            "Um filme com os mesmos dados já existe no seu diário.",
+                            Alert.AlertType.WARNING);
+                } else {
+                    // Se não existe, prossegue com o cadastro
+                    dc.cadastrarFilme(novoFilme); // Este método agora só adiciona e salva
+                    exibirAlerta("Sucesso", "Filme '" + novoFilme.getTitulo() + "' cadastrado com sucesso!", Alert.AlertType.INFORMATION);
+                    System.out.println("Novo filme cadastrado: " + novoFilme.getTitulo());
+                    fecharJanela(); // Fecha a janela apenas se o cadastro foi bem-sucedido
+                }
+
             }
             fecharJanela();
         } catch (Exception e) {

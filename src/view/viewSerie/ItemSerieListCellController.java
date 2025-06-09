@@ -100,23 +100,9 @@ public class ItemSerieListCellController {
 
     @FXML
     private void handleExcluir() {
-        if (serie != null && dc != null && serieViewCtrl != null) {
-            Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmacao.setTitle("Confirmar Exclusão");
-            confirmacao.setHeaderText("Excluir Série: " + serie.getTitulo());
-            confirmacao.setContentText("Você tem certeza que deseja excluir esta série permanentemente?");
-
-            Optional<ButtonType> resultado = confirmacao.showAndWait();
-            if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-                boolean removido = dc.removerSerie(this.serie);
-                if (removido) {
-                    System.out.println("Série removida: " + serie.getTitulo());
-                    serieViewCtrl.refreshViewData(); // Pede para o controller principal atualizar a lista
-                } else {
-                    Alert erro = new Alert(Alert.AlertType.ERROR, "Não foi possível remover a série da lista.");
-                    erro.showAndWait();
-                }
-            }
+        if (serie != null && serieViewCtrl != null) {
+            System.out.println("Solicitando remoção da série: " + serie.getTitulo());
+            serieViewCtrl.abrirDialogoRemocaoSerie(this.serie);
         }
     }
 
@@ -124,7 +110,6 @@ public class ItemSerieListCellController {
     private void handleHistorico() {
         if (serie != null && serieViewCtrl != null) {
             System.out.println("Solicitando histórico de avaliações para: " + serie.getTitulo());
-            // Chama um novo método no controller principal que abrirá o diálogo de histórico
             serieViewCtrl.abrirDialogoHistoricoAvaliacoes(serie);
         }
     }

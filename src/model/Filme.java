@@ -113,21 +113,36 @@ public class Filme {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Filme filme = (Filme) obj;
-        return ano_lancamento == filme.ano_lancamento &&
-                duracao == filme.duracao &&
-                titulo.equalsIgnoreCase(filme.titulo) &&
-                genero.equalsIgnoreCase(filme.genero) &&
-                direcao.equalsIgnoreCase(filme.direcao) &&
-                elenco.equalsIgnoreCase(filme.elenco) &&
-                onde_assistir.equalsIgnoreCase(filme.onde_assistir);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Filme filme = (Filme) o;
+
+        // Compara os campos primitivos (int) diretamente
+        if (getAno_lancamento() != filme.getAno_lancamento()) return false;
+        if (getDuracao() != filme.getDuracao()) return false;
+
+        // Compara os campos String de forma segura (case-insensitive e à prova de nulos)
+        // Objects.equals() trata os nulos corretamente, e comparamos as versões em minúsculas.
+        return Objects.equals(getTitulo() != null ? getTitulo().toLowerCase() : null, filme.getTitulo() != null ? filme.getTitulo().toLowerCase() : null) &&
+                Objects.equals(getGenero() != null ? getGenero().toLowerCase() : null, filme.getGenero() != null ? filme.getGenero().toLowerCase() : null) &&
+                Objects.equals(getDirecao() != null ? getDirecao().toLowerCase() : null, filme.getDirecao() != null ? filme.getDirecao().toLowerCase() : null) &&
+                Objects.equals(getElenco() != null ? getElenco().toLowerCase() : null, filme.getElenco() != null ? filme.getElenco().toLowerCase() : null) &&
+                Objects.equals(getOnde_assistir() != null ? getOnde_assistir().toLowerCase() : null, filme.getOnde_assistir() != null ? filme.getOnde_assistir().toLowerCase() : null);
     }
+
     @Override
     public int hashCode() {
-        return Objects.hash(titulo.toLowerCase(), genero.toLowerCase(), ano_lancamento, duracao, direcao.toLowerCase(), elenco.toLowerCase(), onde_assistir.toLowerCase());
+        // Cria o código hash usando os mesmos campos e lógica do equals (minúsculas e à prova de nulos)
+        return Objects.hash(
+                getTitulo() != null ? getTitulo().toLowerCase() : null,
+                getGenero() != null ? getGenero().toLowerCase() : null,
+                getAno_lancamento(),
+                getDuracao(),
+                getDirecao() != null ? getDirecao().toLowerCase() : null,
+                getElenco() != null ? getElenco().toLowerCase() : null,
+                getOnde_assistir() != null ? getOnde_assistir().toLowerCase() : null
+        );
     }
 
 }

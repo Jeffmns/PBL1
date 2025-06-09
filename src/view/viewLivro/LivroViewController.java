@@ -1,6 +1,7 @@
 package view.viewLivro;
 
 import controller.DiarioCultural;
+import javafx.scene.control.*;
 import model.Livro;
 import persistence.PersistenciaJson;
 import model.Review;
@@ -11,20 +12,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView; // Alterado para ListView
-import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class LivroViewController {
 
@@ -86,6 +82,12 @@ public class LivroViewController {
     }
 
     private void configurarListenersOuAcaoDoBotao() {
+        tituloSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        isbnSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        autorSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        generoSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        editoraSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        anoSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
         ordenarLivroComboBox.valueProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
     }
 
@@ -221,7 +223,7 @@ public class LivroViewController {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION); // Define o tipo de alerta
         alert.setTitle("Detalhes do livro");
-        alert.setHeaderText(livro.getTitulo()); // Título do filme como cabeçalho do alerta
+        alert.setHeaderText(livro.getTitulo());
 
         // Monta uma string com todos os detalhes
         StringBuilder detalhes = new StringBuilder();
@@ -234,14 +236,6 @@ public class LivroViewController {
 
         double media = calcularMediaAvaliacoes(livro); // Você precisaria de um método calcularMediaAvaliacoes
         detalhes.append("Nota Média: ").append(media > 0 ? String.format("%.1f ★", media) : "Sem Avaliação").append("\n");
-
-        // Se tiver uma lista de reviews, você poderia listá-las aqui também (de forma simplificada)
-        // if (filme.getAvaliacoes() != null && !filme.getAvaliacoes().isEmpty()) {
-        //     detalhes.append("\nAvaliações:\n");
-        //     for (Review review : filme.getAvaliacoes()) {
-        //         detalhes.append("  - Nota: ").append(review.getNota()).append(", Comentário: ").append(review.getComentario()).append("\n");
-        //     }
-        // }
 
         alert.setContentText(detalhes.toString());
 
@@ -262,7 +256,6 @@ public class LivroViewController {
         return soma / livro.getAvaliacoes().size();
     }
 
-    // Dentro de FilmeViewController.java
 
     public void abrirDialogoEdicaoLivro(Livro livroParaEditar) {
         if (livroParaEditar == null) {
@@ -285,7 +278,7 @@ public class LivroViewController {
             dialogStage.setTitle("Editar Livro: " + livroParaEditar.getTitulo());
             dialogStage.initModality(Modality.APPLICATION_MODAL);
 
-            // CORREÇÃO AQUI: Usando filmesListView ou um botão da tela principal
+
             if (livrosListView != null && livrosListView.getScene() != null && livrosListView.getScene().getWindow() != null) {
                 dialogStage.initOwner(livrosListView.getScene().getWindow());
             } else if (adicionarLivroButton != null && adicionarLivroButton.getScene() != null && adicionarLivroButton.getScene().getWindow() != null) {
@@ -326,7 +319,7 @@ public class LivroViewController {
                 return;
             }
 
-            // 3. Passa o filme e a instância do DiarioCultural para o controller do diálogo
+            // 3. Passa o livro e a instância do DiarioCultural para o controller do diálogo
             avaliacaoController.setLivroEContexto(livroParaAvaliar, this.dc);
 
             // 4. Cria e configura o novo Stage (janela/diálogo)
@@ -347,7 +340,7 @@ public class LivroViewController {
             // 5. Mostra o diálogo e espera até que ele seja fechado
             dialogStage.showAndWait();
 
-            // 6. Após o diálogo ser fechado, atualiza a lista de filmes na tela principal
+            // 6. Após o diálogo ser fechado, atualiza a lista de livos na tela principal
             // (para refletir a nova nota média, por exemplo)
             System.out.println("Diálogo de avaliação de livro fechado. Atualizando dados...");
             refreshViewData();
@@ -387,6 +380,34 @@ public class LivroViewController {
             exibirAlertaSimples("Erro", "Não foi possível abrir o histórico de avaliações.", e.getMessage());
         }
     }
+    /**
+     * Método chamado pela célula para solicitar a remoção de um livro.
+     * Ele usa a instância atualizada do DiarioCultural para garantir a consistência.
+     * @param livro O objeto Livro a ser removido.
+     */
+    public void abrirDialogoRemocaoLivro(Livro livro) {
+        if (livro == null || dc == null) return;
+
+        Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacao.setTitle("Confirmar Exclusão");
+        confirmacao.setHeaderText("Excluir Livro: " + livro.getTitulo());
+        confirmacao.setContentText("Você tem certeza que deseja excluir este livro permanentemente?");
+
+        Optional<ButtonType> resultado = confirmacao.showAndWait();
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+
+            boolean removido = dc.removerLivro(livro);
+
+            if (removido) {
+                System.out.println("Livro removido com sucesso: " + livro.getTitulo());
+                refreshViewData();
+            } else {
+                Alert erro = new Alert(Alert.AlertType.ERROR, "Não foi possível remover o livro.");
+                erro.showAndWait();
+            }
+        }
+    }
+
     private void exibirAlertaSimples(String titulo, String cabecalho, String conteudo) {
         Alert alert = new Alert(Alert.AlertType.ERROR); // Ou outro tipo de alerta
         alert.setTitle(titulo);

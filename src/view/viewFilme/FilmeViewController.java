@@ -1,10 +1,11 @@
 package view.viewFilme;
 
 import controller.DiarioCultural;
-import model.Filme; // Importe Filme
+import model.Filme;
 import persistence.PersistenciaJson;
-import model.Review;
 
+import java.util.Optional;
+import javafx.scene.control.ButtonType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,7 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView; // Alterado para ListView
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -85,6 +86,11 @@ public class FilmeViewController {
     }
 
     private void configurarListenersOuAcaoDoBotao() {
+        tituloSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        diretorSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        atorSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        generoSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
+        anoSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
         ordenarFilmeComboBox.valueProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
     }
 
@@ -227,7 +233,7 @@ public class FilmeViewController {
         detalhes.append("Onde Assistir: ").append(filme.getOnde_assistir() != null ? filme.getOnde_assistir() : "N/A").append("\n");
         detalhes.append("Assistido: ").append(filme.isAssistido() ? "Sim" : "Não").append("\n");
 
-        double media = calcularMediaAvaliacoes(filme); // Você precisaria de um método calcularMediaAvaliacoes
+        double media = filme.getMediaAvaliacoes();
         detalhes.append("Nota Média: ").append(media > 0 ? String.format("%.1f ★", media) : "Não avaliado").append("\n");
 
         alert.setContentText(detalhes.toString());
@@ -248,16 +254,7 @@ public class FilmeViewController {
         }
     }
 
-    private double calcularMediaAvaliacoes(Filme filme) {
-        if (filme.getAvaliacoes() == null || filme.getAvaliacoes().isEmpty()) {
-            return 0.0;
-        }
-        double soma = 0;
-        for (Review review : filme.getAvaliacoes()) {
-            soma += review.getAvaliacao(); // Supondo que Review tem getNota()
-        }
-        return soma / filme.getAvaliacoes().size();
-    }
+
 
 
     public void abrirDialogoEdicaoFilme(Filme filmeParaEditar) {
@@ -383,5 +380,36 @@ public class FilmeViewController {
             exibirAlertaSimples("Erro", "Não foi possível abrir o histórico de avaliações.", e.getMessage());
         }
     }
+
+    /**
+     * Método chamado pela célula para solicitar a remoção de um filme.
+     * Ele usa a instância atualizada do DiarioCultural para garantir a consistência.
+     * @param filme O objeto Filme a ser removido.
+     */
+    public void abrirDialogoRemocaoFilme(Filme filme) {
+        if (filme == null || dc == null) return;
+
+        Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacao.setTitle("Confirmar Exclusão");
+        confirmacao.setHeaderText("Excluir Filme: " + filme.getTitulo());
+        confirmacao.setContentText("Você tem certeza que deseja excluir este filme permanentemente?");
+
+        Optional<ButtonType> resultado = confirmacao.showAndWait();
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+
+            // Usa o método removerFilme do DiarioCultural, que já salva no JSON.
+            boolean removido = dc.removerFilme(filme);
+
+            if (removido) {
+                System.out.println("Filme removido com sucesso: " + filme.getTitulo());
+                refreshViewData(); // Atualiza a UI para refletir a remoção.
+            } else {
+                // Este alerta agora é mais preciso, pois a falha ocorreu com os dados mais recentes.
+                Alert erro = new Alert(Alert.AlertType.ERROR, "Não foi possível remover o filme. Ele pode não estar na lista atual.");
+                erro.showAndWait();
+            }
+        }
+    }
+
 
 }

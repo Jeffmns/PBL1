@@ -8,18 +8,15 @@ import persistence.PersistenciaJson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType; // Importar ButtonType
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
-import java.util.Optional; // Importar Optional
+import java.util.Optional;
 
 public class ItemLivroListCellController {
 
     @FXML private Label tituloLabel;
-    @FXML private Label anoLabel;
-    @FXML private Label editoraLabel;
-    @FXML private Label generoLabel;  // ou combinar em detalhesLinha1Label
     @FXML private Label detalhesLinha1Label; // Para "Ano | Editora | Gênero"
     @FXML private Label autorLabel;
     @FXML private Label notaMediaLabel;

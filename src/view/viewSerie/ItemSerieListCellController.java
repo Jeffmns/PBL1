@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class ItemSerieListCellController {
 
-    // --- Campos FXML (correspondem ao ItemSerieListCell.fxml) ---
+
     @FXML private Label tituloLabel;
     @FXML private Label detalhesLinha1Label; // Para "Ano | Gênero | Onde Assistir"
     @FXML private Label progressoLabel;      // Para "X Temporadas | Status Assistido"

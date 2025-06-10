@@ -224,6 +224,11 @@
           "avaliacao": 5,
           "data": "Jun 8, 2025, 8:52:10 AM",
           "comentario": "Bom"
+        },
+        {
+          "avaliacao": 3,
+          "data": "Jun 9, 2025, 5:55:09 PM",
+          "comentario": "filme muito boooooom"
         }
       ]
     },
@@ -385,6 +390,23 @@
       "onde_assistir": "Amazon Prime",
       "assistido": false,
       "avaliacoes": []
+    },
+    {
+      "titulo": "projeto almanaque",
+      "genero": "ficção cientifíca",
+      "ano_lancamento": 2014,
+      "duracao": 120,
+      "direcao": "Dean Israelite",
+      "elenco": "Jonny Weston e Sofia Black D\u0027Elia",
+      "onde_assistir": "apple tv",
+      "assistido": true,
+      "avaliacoes": [
+        {
+          "avaliacao": 5,
+          "data": "Jun 9, 2025, 5:58:50 PM",
+          "comentario": "filme incrível, um grande plot twist"
+        }
+      ]
     }
   ],
   "series": [
@@ -727,6 +749,36 @@
               "comentario": "Fiel ao jogo e emocionante."
             }
           ]
+        }
+      ],
+      "avaliacoes": []
+    },
+    {
+      "titulo": "ruptura",
+      "genero": "ficção científica ",
+      "ano_lancamento": 2022,
+      "elenco": "Adam Scott, Zach Cherry, Britt Lower",
+      "onde_assistir": "apple tv",
+      "temporadas": [
+        {
+          "numero": 1,
+          "ano_lancamento": 0,
+          "qtd_episodios": 0,
+          "assistido": true,
+          "avaliacoes": [
+            {
+              "avaliacao": 5,
+              "data": "Jun 9, 2025, 6:05:06 PM",
+              "comentario": "série incrível "
+            }
+          ]
+        },
+        {
+          "numero": 2,
+          "ano_lancamento": 0,
+          "qtd_episodios": 0,
+          "assistido": false,
+          "avaliacoes": []
         }
       ],
       "avaliacoes": []

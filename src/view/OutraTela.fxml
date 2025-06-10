@@ -1,21 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.geometry.Insets?>
 
+<VBox xmlns:fx="http://javafx.com/fxml" alignment="CENTER" spacing="20" style="-fx-padding: 30; -fx-background-color: #F0F0F0;">
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-    <children>
-        <Label text="Bem-vindo ao Diário Cultural!">
-            <font>
-                <Font name="System Bold" size="24.0" />
-            </font>
-        </Label>
-        <Label text="Ainda tem que ver o que colocar aqui" wrapText="true" />
-    </children>
+    <!-- Título centralizado -->
+    <Label text="DIÁRIO CULTURAL: " style="-fx-font-size: 24px; -fx-font-weight: bold;">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+    </Label>
+
+    <!-- Grade com os quadrados -->
+    <GridPane fx:id="gridPane" hgap="60" vgap="50" alignment="CENTER">
+
+        <!-- Quadrado 1: Filmes -->
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" spacing="10" alignment="CENTER"
+              prefWidth="180" prefHeight="180"
+              style="-fx-background-color:  #FF8589; -fx-background-radius: 10; -fx-padding: 10;">
+            <ImageView fitHeight="138.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../resources/cinema.png"/>
+            </ImageView>
+            <Label text="Filmes" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        </VBox>
+
+        <!-- Quadrado 2: Livros -->
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="10" alignment="CENTER"
+              prefWidth="180" prefHeight="180"
+              style="-fx-background-color: #D0A0FF; -fx-background-radius: 10; -fx-padding: 10;">
+            <ImageView fitHeight="138.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../resources/book.png"/>
+            </ImageView>
+            <Label text="Livros" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        </VBox>
+
+        <!-- Quadrado 3: Séries -->
+        <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" spacing="10" alignment="CENTER"
+              prefWidth="180" prefHeight="180"
+              style="-fx-background-color: #A1C2E1; -fx-background-radius: 10; -fx-padding: 10;">
+            <ImageView fitHeight="138.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../resources/series.png"/>
+            </ImageView>
+            <Label text="Séries" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        </VBox>
+
+    </GridPane>
 </VBox>

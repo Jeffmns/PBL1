@@ -215,8 +215,8 @@
       "genero": "Ficção Científica",
       "ano_lancamento": 2013,
       "duracao": 150,
-      "direcao": "Cristopher Nolan",
-      "elenco": "xxx",
+      "direcao": "Christopher Nolan",
+      "elenco": "Matthew McConaughey",
       "onde_assistir": "Netflix",
       "assistido": true,
       "avaliacoes": [
@@ -224,11 +224,6 @@
           "avaliacao": 5,
           "data": "Jun 8, 2025, 8:52:10 AM",
           "comentario": "Bom"
-        },
-        {
-          "avaliacao": 3,
-          "data": "Jun 9, 2025, 5:55:09 PM",
-          "comentario": "filme muito boooooom"
         }
       ]
     },
@@ -240,8 +235,14 @@
       "direcao": "Mark Waters",
       "elenco": "Lindsay Lohan",
       "onde_assistir": "Netflix",
-      "assistido": false,
-      "avaliacoes": []
+      "assistido": true,
+      "avaliacoes": [
+        {
+          "avaliacao": 5,
+          "data": "Jun 9, 2025, 7:27:56 AM",
+          "comentario": "Todo mundo tem que assistir, um clássico"
+        }
+      ]
     },
     {
       "titulo": "Ainda estou aqui",
@@ -379,34 +380,6 @@
       "duracao": 0,
       "assistido": false,
       "avaliacoes": []
-    },
-    {
-      "titulo": "Nosferatu",
-      "genero": "Terror",
-      "ano_lancamento": 2024,
-      "duracao": 132,
-      "direcao": "Robert Egger",
-      "elenco": "Lily-Rose Depp",
-      "onde_assistir": "Amazon Prime",
-      "assistido": false,
-      "avaliacoes": []
-    },
-    {
-      "titulo": "projeto almanaque",
-      "genero": "ficção cientifíca",
-      "ano_lancamento": 2014,
-      "duracao": 120,
-      "direcao": "Dean Israelite",
-      "elenco": "Jonny Weston e Sofia Black D\u0027Elia",
-      "onde_assistir": "apple tv",
-      "assistido": true,
-      "avaliacoes": [
-        {
-          "avaliacao": 5,
-          "data": "Jun 9, 2025, 5:58:50 PM",
-          "comentario": "filme incrível, um grande plot twist"
-        }
-      ]
     }
   ],
   "series": [
@@ -456,7 +429,7 @@
       "genero": "Drama",
       "ano_lancamento": 2019,
       "elenco": "Antony Starr, Karl Urban",
-      "onde_assistir": "Prime",
+      "onde_assistir": "Prime Video",
       "temporadas": [
         {
           "numero": 1,
@@ -507,42 +480,6 @@
               "avaliacao": 5,
               "data": "May 17, 2025, 6:40:51 PM",
               "comentario": "Boa"
-            }
-          ]
-        }
-      ],
-      "avaliacoes": []
-    },
-    {
-      "titulo": "Breaking Bad",
-      "genero": "Drama",
-      "ano_lancamento": 2008,
-      "elenco": "Bryan Cranston, Aaron Paul",
-      "onde_assistir": "Netflix",
-      "temporadas": [
-        {
-          "numero": 1,
-          "ano_lancamento": 2008,
-          "qtd_episodios": 7,
-          "assistido": true,
-          "avaliacoes": [
-            {
-              "avaliacao": 5,
-              "data": "May 18, 2025, 7:10:00 AM",
-              "comentario": "Viciante!"
-            }
-          ]
-        },
-        {
-          "numero": 5,
-          "ano_lancamento": 2013,
-          "qtd_episodios": 16,
-          "assistido": true,
-          "avaliacoes": [
-            {
-              "avaliacao": 5,
-              "data": "May 18, 2025, 7:20:00 AM",
-              "comentario": "Final perfeito!"
             }
           ]
         }
@@ -754,11 +691,11 @@
       "avaliacoes": []
     },
     {
-      "titulo": "ruptura",
-      "genero": "ficção científica ",
-      "ano_lancamento": 2022,
-      "elenco": "Adam Scott, Zach Cherry, Britt Lower",
-      "onde_assistir": "apple tv",
+      "titulo": "Breaking Bad",
+      "genero": "Drama",
+      "ano_lancamento": 2008,
+      "elenco": "Bryan Cranston, Aaron Paul",
+      "onde_assistir": "Netflix",
       "temporadas": [
         {
           "numero": 1,
@@ -768,8 +705,8 @@
           "avaliacoes": [
             {
               "avaliacao": 5,
-              "data": "Jun 9, 2025, 6:05:06 PM",
-              "comentario": "série incrível "
+              "data": "Jun 9, 2025, 8:33:03 AM",
+              "comentario": "Boa"
             }
           ]
         },
@@ -777,8 +714,14 @@
           "numero": 2,
           "ano_lancamento": 0,
           "qtd_episodios": 0,
-          "assistido": false,
-          "avaliacoes": []
+          "assistido": true,
+          "avaliacoes": [
+            {
+              "avaliacao": 5,
+              "data": "Jun 9, 2025, 8:33:13 AM",
+              "comentario": "Otima"
+            }
+          ]
         }
       ],
       "avaliacoes": []

@@ -11,7 +11,6 @@
 
 <AnchorPane prefHeight="750.0" prefWidth="1006.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TelaInicialController">
 
-
    <AnchorPane prefHeight="750.0" prefWidth="236.0" style="-fx-background-color: #20385e;">
       <children>
 

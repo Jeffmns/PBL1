@@ -12,6 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * Controller para o formulário de Adicionar ou Editar uma Série.
+ * Esta classe é o "controller" da janela que abre para preencher os dados de uma série.
+ * Ela lida com a validação dos dados e com o salvamento das informações.
+ */
 public class FormularioSerieController {
 
     // --- Campos FXML ---
@@ -33,19 +38,21 @@ public class FormularioSerieController {
 
     @FXML
     public void initialize() {
-        // Nada necessário aqui por enquanto
     }
 
     /**
-     * Injeta a instância principal do DiarioCultural, vinda do controller principal.
+     * Recebe a instância principal do DiarioCultural a partir da tela que abriu este formulário.
+     * É assim que este controller ganha acesso à lista de séries para salvar os dados.
+     * @param dc A instância principal do DiarioCultural.
      */
     public void setDiarioCultural(DiarioCultural dc) {
         this.dc = dc;
     }
 
     /**
-     * Preenche o formulário com os dados de uma série existente para edição.
-     * @param serie A série a ser editada.
+     * Preenche os campos do formulário com os dados de uma série existente.
+     * Este método transforma o formulário do modo "Adicionar" para o modo "Editar".
+     * @param serie O objeto Serie cujos dados serão editados.
      */
     public void carregarDadosParaEdicao(Serie serie) {
         this.serieParaEditar = serie;
@@ -67,8 +74,8 @@ public class FormularioSerieController {
     }
 
     /**
-     * Ação do botão "Salvar". Valida os dados, cria uma nova série ou atualiza
-     * uma existente e fecha o diálogo.
+     * Ação executada quando o botão "Salvar" é clicado.
+     * Valida os dados inseridos e, se estiverem corretos, cria um novo livro ou atualiza um existente.
      */
     @FXML
     private void handleSalvar() {
@@ -144,16 +151,28 @@ public class FormularioSerieController {
         }
     }
 
+    /**
+     * Ação executada quando o botão "Cancelar" é clicado. Simplesmente fecha a janela.
+     */
     @FXML
     private void handleCancelar() {
         fecharJanela();
     }
 
+    /**
+     * Método auxiliar para fechar a janela (diálogo) atual.
+     */
     private void fecharJanela() {
         Stage stage = (Stage) salvarButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Método auxiliar para mostrar alertas de forma padronizada.
+     * @param titulo O título da janela de alerta.
+     * @param mensagem A mensagem principal a ser exibida no alerta.
+     * @param tipo O tipo de alerta (Erro, Aviso, Informação).
+     */
     private void exibirAlerta(String titulo, String mensagem, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);

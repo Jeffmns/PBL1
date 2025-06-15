@@ -9,8 +9,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
 /**
- * Controller para o ficheiro FXML de uma única célula da lista de filmes (ItemFilmeListCell.fxml).
- * Esta classe é responsável por pegar os dados de um objeto Filme e preencher os elementos
+ * Controller para o ficheiro FXML de uma única célula da lista de livros (ItemLivroListCell.fxml).
+ * Esta classe é responsável por pegar os dados de um objeto Livro e preencher os elementos
  * visuais da célula, além de lidar com as ações dos botões (Editar, Avaliar, etc.)
  * para aquele item específico.
  */

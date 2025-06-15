@@ -377,6 +377,10 @@ public class DiarioCultural {
         return removido;
     }
 
+    /**
+     * Lista os livros cadastrados
+     * @return Lista de livros
+     */
     public List<Livro> listarlivros(){
         List<Livro> todosLivros = this.getLivros();
         System.out.println("Livros cadastrados: ");
@@ -386,6 +390,11 @@ public class DiarioCultural {
 
         return todosLivros;
     }
+
+    /**
+     * Lista os filmes cadastrados
+     * @return Lista de filmes
+     */
     public List<Filme> listarfilmes(){
         List<Filme> todosFilmes = this.getFilmes();
         System.out.println("Filmes cadastrados: ");

@@ -20,6 +20,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller para a tela principal de Séries (SerieView.fxml).
+ * Esta classe é responsável por gerir toda a interatividade da tela de séries,
+ * como a busca, filtragem, ordenação e a abertura de diálogos para adicionar,
+ * editar, avaliar ou remover séries.
+ */
 public class SerieViewController {
 
     // --- Campos FXML (adaptados para os filtros de Série) ---
@@ -61,6 +67,10 @@ public class SerieViewController {
         atualizarStatusLabel();
     }
 
+    /**
+     * Carrega a instância principal do DiarioCultural a partir do ficheiro JSON.
+     * Se o ficheiro não existir, cria um objeto DiarioCultural vazio.
+     */
     private void carregarDiarioCultural() {
         dc = PersistenciaJson.carregar();
         if (dc == null) {
@@ -71,6 +81,9 @@ public class SerieViewController {
         }
     }
 
+    /**
+     * Adiciona as opções de texto (ex: "Título (A-Z)") ao ComboBox de ordenação.
+     */
     private void popularComboBoxDeOrdenacao() {
         ordenarSerieComboBox.setItems(FXCollections.observableArrayList(
                 "Padrão (Entrada)", "Título (A-Z)", "Título (Z-A)",
@@ -80,6 +93,10 @@ public class SerieViewController {
         ordenarSerieComboBox.setValue("Padrão (Entrada)");
     }
 
+    /**
+     * Adiciona "ouvintes" aos campos de filtro.
+     * Isto faz com que a busca seja reativa, acontecendo à medida que o usuário digita.
+     */
     private void configurarListenersOuAcaoDoBotao() {
         tituloSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
         elencoSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
@@ -88,6 +105,10 @@ public class SerieViewController {
         ordenarSerieComboBox.valueProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
     }
 
+    /**
+     * Este método é chamado sempre que uma busca,
+     * filtro ou ordenação precisa de ser executada.
+     */
     @FXML
     private void executarBuscaFiltragemOrdenacao() {
         if (dc == null) {
@@ -145,6 +166,10 @@ public class SerieViewController {
         atualizarStatusLabel();
     }
 
+    /**
+     * Ação do botão "Limpar Tudo". Limpa todos os campos de filtro e reexecuta a busca
+     * para mostrar todos os itens novamente.
+     */
     @FXML
     private void handleLimparFiltros() {
         tituloSearchField.clear();
@@ -155,6 +180,9 @@ public class SerieViewController {
         executarBuscaFiltragemOrdenacao();
     }
 
+    /**
+     * Atualiza o label no rodapé com a contagem de itens encontrados.
+     */
     private void atualizarStatusLabel() {
         if (seriesEmExibicao == null || seriesEmExibicao.isEmpty()) {
             boolean algumFiltroAtivo = (tituloSearchField.getText() != null && !tituloSearchField.getText().trim().isEmpty()) ||
@@ -171,11 +199,18 @@ public class SerieViewController {
         }
     }
 
+    /**
+     * Ação do botão "+ Adicionar Nova Série". Chama o método que abre o diálogo do formulário.
+     */
     @FXML
     private void handleAdicionarNovaSerie() {
         abrirDialogoEdicaoSerie(null); // Chama o método de edição com null para indicar "novo"
     }
 
+    /**
+     * Força uma recarga completa dos dados a partir do ficheiro JSON e atualiza a tela.
+     * Útil para ser chamado após adicionar ou editar um item em um diálogo separado.
+     */
     public void refreshViewData() {
         carregarDiarioCultural();
         if (dc.getSeries() != null) {
@@ -186,6 +221,10 @@ public class SerieViewController {
         executarBuscaFiltragemOrdenacao();
     }
 
+    /**
+     * Abre um diálogo de alerta para mostrar os detalhes completos de uma série.
+     * @param serie A série a ser detalhada.
+     */
     public void mostrarDetalhesDaSerie(Serie serie) {
         if (serie == null) return;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -211,6 +250,10 @@ public class SerieViewController {
         alert.showAndWait();
     }
 
+    /**
+     * Abre o diálogo do formulário para adicionar uma nova série ou editar uma existente.
+     * @param serieParaEditar A série a ser editada, ou 'null' se for para adicionar uma nova.
+     */
     public void abrirDialogoEdicaoSerie(Serie serieParaEditar) {
         String fxmlPath = "/view/viewSerie/FormularioCadastroSerie.fxml";
         String tituloJanela = serieParaEditar == null ? "Adicionar Nova Série" : "Editar Série";
@@ -239,6 +282,10 @@ public class SerieViewController {
         }
     }
 
+    /**
+     * Abre o diálogo para avaliar uma série.
+     * @param serieParaAvaliar A série a ser avaliada.
+     */
     public void abrirDialogoAvaliacaoSerie(Serie serieParaAvaliar) {
         String fxmlPath = "/view/viewSerie/AvaliacaoSerie.fxml";
         try {
@@ -261,6 +308,10 @@ public class SerieViewController {
         }
     }
 
+    /**
+     * Abre um diálogo para exibir o histórico de todas as avaliações de uma série.
+     * @param serie A série cujo histórico será mostrado.
+     */
     public void abrirDialogoHistoricoAvaliacoes(Serie serie) {
         if (serie == null) return;
 
@@ -304,9 +355,9 @@ public class SerieViewController {
     }
 
     /**
-     * Método chamado pela célula para solicitar a remoção de um filme.
+     * Método chamado pela célula para solicitar a remoção de uma série.
      * Ele usa a instância atualizada do DiarioCultural para garantir a consistência.
-     * @param serie O objeto Filme a ser removido.
+     * @param serie O objeto Serie a ser removido.
      */
     public void abrirDialogoRemocaoSerie(Serie serie) {
         if (serie == null || dc == null) return;
@@ -333,6 +384,9 @@ public class SerieViewController {
         }
     }
 
+    /**
+     * Método Auxiliar para exibir alerta simples
+     */
     private void exibirAlertaSimples(String titulo, String cabecalho, String conteudo) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titulo);

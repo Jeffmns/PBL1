@@ -12,6 +12,11 @@ import javafx.util.StringConverter;
 
 import java.util.Date;
 
+/**
+ * Controller para a janela (diálogo) de avaliação de uma Série.
+ * Esta classe é responsável por obter os dados que o usuário insere (nota e comentário)
+ * para uma temporada específica da série e enviá-los para serem guardados no sistema.
+ */
 public class AvaliacaoSerieController {
 
     // --- Campos FXML ---
@@ -49,8 +54,10 @@ public class AvaliacaoSerieController {
     }
 
     /**
-     * Injeta a série a ser avaliada e a instância do DiarioCultural.
+     * Recebe o objeto Serie e a instância do DiarioCultural a partir da tela principal.
      * Chamado pelo SerieViewController antes de mostrar o diálogo.
+     * @param serie O objeto Serie que terá as temporadas avaliadas.
+     * @param dc A instância principal do DiarioCultural.
      */
     public void setSerieEContexto(Serie serie, DiarioCultural dc) {
         this.serieParaAvaliar = serie;
@@ -63,6 +70,10 @@ public class AvaliacaoSerieController {
         }
     }
 
+    /**
+     * Ação executada quando o botão "Salvar Avaliação" é clicado.
+     * Ele valida os dados inseridos e, se estiverem corretos, salva a avaliação.
+     */
     @FXML
     private void handleSalvarAvaliacao() {
         // 1. Obter a temporada selecionada
@@ -107,16 +118,28 @@ public class AvaliacaoSerieController {
         fecharJanela();
     }
 
+    /**
+     * Ação executada quando o botão "Cancelar" é clicado. Simplesmente fecha a janela.
+     */
     @FXML
     private void handleCancelar() {
         fecharJanela();
     }
 
+    /**
+     * Método auxiliar para fechar a janela (diálogo) atual.
+     */
     private void fecharJanela() {
         Stage stage = (Stage) salvarButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Método auxiliar para mostrar alertas de forma padronizada.
+     * @param titulo O título da janela de alerta.
+     * @param mensagem A mensagem principal a ser exibida no alerta.
+     * @param tipo O tipo de alerta (Erro, Aviso, Informação).
+     */
     private void exibirAlerta(String titulo, String mensagem, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);

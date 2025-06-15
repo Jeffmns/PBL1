@@ -4,6 +4,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * Controller para a barra lateral.
+ * Esta classe é responsável por controlar as opções da barra lateral
+ */
 public class TelaSidebarController {
 
     @FXML
@@ -13,27 +17,43 @@ public class TelaSidebarController {
 
         handleTelaInicio();
     }
+
+    /**
+     * Direciona para a página inicial
+     */
     @FXML
     private void handleTelaInicio() {
         loadView("/view/viewInicio/TelaInicio.fxml");
     }
 
+    /**
+     * Direciona para a página de visualização de séries
+     */
     @FXML
     public void handleSerieView() {
         loadView("/view/viewSerie/SerieView.fxml");
     }
 
+    /**
+     * Direciona para a página de visualização de filmes
+     */
     @FXML
     public void handleFilmeView() {
         loadView("/view/viewFilme/FilmeView.fxml");
     }
 
+    /**
+     * Direciona para a página de visualização de livros
+     */
     @FXML
     public void handleShowLivroView() {
         loadView("/view/viewLivro/LivroView.fxml");
     }
 
-    // Método utilitário para carregar as views no contentAreaPane
+    /**
+     * Carrega as views no contentAreaPane
+     * @param fxmlPath
+     */
     private void loadView(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));

@@ -6,9 +6,11 @@ import persistence.PersistenciaJson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+/**
+ * Controller para a tela principal.
+ * Esta classe é responsável por controlar os direcionamentos para as outras telas
+ */
 public class TelaInicioController {
-
-
     @FXML private Label boasVindasLabel;
     @FXML private Label totalLivrosLabel;
     @FXML private Label totalFilmesLabel;
@@ -30,10 +32,16 @@ public class TelaInicioController {
         carregarEstatisticas();
     }
 
+    /**
+     * Define a mensagem de boas vindas
+     */
     private void definirMensagemDeBoasVindas() {
         boasVindasLabel.setText("Seja bem-vindo(a) ao Diário Cultural!");
     }
 
+    /**
+     * Carrega as estatísticas de quantidade de itens por categoria
+     */
     private void carregarEstatisticas() {
         this.dc = PersistenciaJson.carregar();
         if (this.dc == null) {
@@ -46,6 +54,9 @@ public class TelaInicioController {
     }
 
 
+    /**
+     * Direciona para a página de visualização de livros
+     */
     @FXML
     private void handleIrParaLivros() {
         if (telaSidebarCtrl != null) {
@@ -53,6 +64,9 @@ public class TelaInicioController {
         }
     }
 
+    /**
+     * Direciona para a página de visualização de filmes
+     */
     @FXML
     private void handleIrParaFilmes() {
         if (telaSidebarCtrl != null) {
@@ -60,6 +74,9 @@ public class TelaInicioController {
         }
     }
 
+    /**
+     * Direciona para a página de visualização de séries
+     */
     @FXML
     private void handleIrParaSeries() {
         if (telaSidebarCtrl != null) {

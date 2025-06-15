@@ -8,7 +8,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-
+/**
+ * Controller para o ficheiro FXML de uma única célula da lista de séries (ItemSerieListCell.fxml).
+ * Esta classe é responsável por pegar os dados de um objeto Serie e preencher os elementos
+ * visuais da célula, além de lidar com as ações dos botões (Editar, Avaliar, etc.)
+ * para aquele item específico.
+ */
 public class ItemSerieListCellController {
 
 
@@ -70,7 +75,10 @@ public class ItemSerieListCellController {
     }
 
     // --- Métodos de Ação dos Botões ---
-
+    /**
+     * Ação executada quando o botão "Avaliar" é clicado.
+     * Delega a tarefa de abrir o diálogo de avaliação para o controller principal.
+     */
     @FXML
     private void handleAvaliar() {
         if (serie != null && serieViewCtrl != null) {
@@ -79,6 +87,10 @@ public class ItemSerieListCellController {
         }
     }
 
+    /**
+     * Ação executada quando o botão "Detalhes" é clicado.
+     * Delega a tarefa de mostrar os detalhes para o controller principal.
+     */
     @FXML
     private void handleInfo() {
         if (serie != null && serieViewCtrl != null) {
@@ -87,6 +99,10 @@ public class ItemSerieListCellController {
         }
     }
 
+    /**
+     * Ação executada quando o botão "Editar" é clicado.
+     * Delega a tarefa de abrir o formulário de edição para o controller principal.
+     */
     @FXML
     private void handleEditar() {
         if (serie != null && serieViewCtrl != null) {
@@ -95,6 +111,10 @@ public class ItemSerieListCellController {
         }
     }
 
+    /**
+     * Ação executada quando o botão "Excluir" é clicado.
+     * Delega a tarefa de pedir a confirmação e remover o livro para o controller principal.
+     */
     @FXML
     private void handleExcluir() {
         if (serie != null && serieViewCtrl != null) {
@@ -103,6 +123,10 @@ public class ItemSerieListCellController {
         }
     }
 
+    /**
+     * Ação executada quando o botão "Avaliações" é clicado.
+     * Delega a tarefa de mostrar o histórico de avaliações para o controller principal.
+     */
     @FXML
     private void handleHistorico() {
         if (serie != null && serieViewCtrl != null) {

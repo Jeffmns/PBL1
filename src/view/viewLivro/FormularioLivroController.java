@@ -13,8 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Controller para o formulário de Adicionar ou Editar um Filme.
- * Esta classe é o "controller" da janela que abre para preencher os dados de um filme.
+ * Controller para o formulário de Adicionar ou Editar um Livro.
+ * Esta classe é o "controller" da janela que abre para preencher os dados de um livro.
  * Ela lida com a validação dos dados e com o salvamento das informações.
  */
 public class FormularioLivroController {
@@ -147,11 +147,11 @@ public class FormularioLivroController {
             e.printStackTrace();
             exibirAlerta("Erro Inesperado", "Ocorreu um erro ao salvar o livro: " + e.getMessage(), Alert.AlertType.ERROR);
         }
-    }
-
-    /**
+    }/**
      * Ação executada quando o botão "Cancelar" é clicado. Simplesmente fecha a janela.
      */
+
+
     @FXML
     private void handleCancelar() {
         fecharJanela();

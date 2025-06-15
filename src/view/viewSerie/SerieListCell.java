@@ -8,13 +8,24 @@ import model.Serie; // Alterado para importar a classe Serie
 
 import java.io.IOException;
 
+/**
+ * Representa uma célula customizada na ListView para exibir um objeto Serie.
+ * Esta classe é a "ponte" entre a ListView e o design visual de cada item,
+ * carregando um FXML para a sua aparência e utilizando um controller para gerir os dados.
+ */
 public class SerieListCell extends ListCell<Serie> { // Alterado para estender ListCell<Serie>
     private Node graphic;
     private ItemSerieListCellController controller; // O controller da célula de Série
     private DiarioCultural dc;
     private SerieViewController serieViewCtrl; // O controller principal da tela de Séries
 
-    // Construtor que recebe as instâncias necessárias para Séries
+    /**
+     * Construtor da célula de série.
+     * Este método é chamado pela ListView cada vez que uma nova célula precisa de ser criada.
+     * Ele carrega o ficheiro FXML que define a aparência da célula uma única vez.
+     * @param dc A instância principal do DiarioCultural.
+     * @param serieViewCtrl A referência ao controller da tela de séries, para callbacks.
+     */
     public SerieListCell(DiarioCultural dc, SerieViewController serieViewCtrl) {
         this.dc = dc;
         this.serieViewCtrl = serieViewCtrl;
@@ -31,6 +42,13 @@ public class SerieListCell extends ListCell<Serie> { // Alterado para estender L
         }
     }
 
+    /**
+     * Método chamado pelo JavaFX para atualizar o conteúdo da célula.
+     * Este método é executado sempre que uma célula precisa de mostrar uma nova série
+     * (por exemplo, ao rolar a lista ou ao filtrar).
+     * @param serie O objeto Serie a ser exibido nesta célula.
+     * @param empty true se a célula estiver vazia, false caso contrário.
+     */
     @Override
     protected void updateItem(Serie serie, boolean empty) { // O item agora é do tipo Serie
         super.updateItem(serie, empty);

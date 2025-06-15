@@ -3,3 +3,7 @@ controller
 model
 persistence
 test
+view.viewFilme
+view.viewInicio
+view.viewLivro
+view.viewSerie

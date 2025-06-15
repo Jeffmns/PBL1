@@ -9,7 +9,7 @@ import model.Livro;
 import java.io.IOException;
 
 /**
- * Representa uma célula customizada na ListView para exibir um objeto Filme.
+ * Representa uma célula customizada na ListView para exibir um objeto Livro.
  * Esta classe é a "ponte" entre a ListView e o design visual de cada item,
  * carregando um FXML para a sua aparência e utilizando um controller para gerir os dados.
  */
@@ -24,7 +24,7 @@ public class LivroListCell extends ListCell<Livro> {
      * Este método é chamado pela ListView cada vez que uma nova célula precisa de ser criada.
      * Ele carrega o ficheiro FXML que define a aparência da célula uma única vez.
      * @param dc A instância principal do DiarioCultural.
-     * @param livroViewCtrl A referência ao controller da tela de filmes, para callbacks.
+     * @param livroViewCtrl A referência ao controller da tela de livros, para callbacks.
      */
     public LivroListCell(DiarioCultural dc, LivroViewController livroViewCtrl) {
         this.dc = dc;

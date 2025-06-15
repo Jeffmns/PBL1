@@ -444,7 +444,9 @@ public class LivroViewController {
         }
     }
 
-    // Método Auxiliar
+    /**
+     * Método Auxiliar para exibir alerta simples
+     */
     private void exibirAlertaSimples(String titulo, String cabecalho, String conteudo) {
         Alert alert = new Alert(Alert.AlertType.ERROR); // Ou outro tipo de alerta
         alert.setTitle(titulo);
@@ -452,5 +454,4 @@ public class LivroViewController {
         alert.setContentText(conteudo);
         alert.showAndWait();
     }
-
 }

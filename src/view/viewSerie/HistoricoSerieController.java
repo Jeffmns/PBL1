@@ -17,6 +17,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller para a janela (diálogo) que exibe o histórico de avaliações de uma Série.
+ * Esta classe é responsável por receber uma lista de objetos Review e mostrá-la
+ * de forma formatada e legível para o utilizador.
+ */
 public class HistoricoSerieController {
 
     // Helper Record para juntar uma avaliação com o número da sua temporada
@@ -31,6 +36,11 @@ public class HistoricoSerieController {
         historicoListView.setCellFactory(lv -> new ListCell<>() {
             private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+            /**
+             * Este método é chamado para cada célula da lista, para atualizar o seu conteúdo.
+             * @param review O objeto Review a ser exibido nesta célula.
+             * @param empty true se a célula estiver vazia.
+             */
             @Override
             protected void updateItem(AvaliacaoTemporada item, boolean empty) {
                 super.updateItem(item, empty);
@@ -83,6 +93,9 @@ public class HistoricoSerieController {
         historicoListView.setItems(FXCollections.observableArrayList(todasAsAvaliacoes));
     }
 
+    /**
+     * Método auxiliar para fechar a janela (diálogo) atual.
+     */
     @FXML
     private void handleFechar() {
         Stage stage = (Stage) historicoListView.getScene().getWindow();

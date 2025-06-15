@@ -108,3 +108,58 @@
     -fx-background-color: white;     /* Cor da marca de seleção (branca sobre fundo azul) */
 }
 
+
+.header-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #20385e; /* Sua cor principal */
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4A5568; /* Cinza azulado */
+    -fx-padding: 0 0 5px 0;
+}
+
+/* Estilo para os cartões de estatísticas */
+.stat-card {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 15px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.3, 0, 2);
+    -fx-alignment: CENTER;
+    -fx-min-width: 220px; /* Largura mínima para cada cartão */
+}
+
+.stat-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #718096;
+    -fx-font-weight: bold;
+}
+
+.stat-value {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #20385e;
+    -fx-padding: 5px 0 0 0;
+}
+
+/* Estilo para os botões de navegação, para que pareçam cartões clicáveis */
+.main-nav-button {
+    -fx-background-color: transparent; /* Remove o fundo cinza padrão do botão */
+    -fx-padding: 0; /* Remove o padding padrão do botão */
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.4, 0, 3);
+    -fx-border-radius: 10px; /* Para que o foco acompanhe os cantos arredondados */
+}
+
+.main-nav-button:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0.5, 0, 5);
+    -fx-translate-y: -3px; /* Efeito de elevação sutil */
+}
+
+.main-nav-button:pressed {
+    -fx-translate-y: 0px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.2, 0, 1);
+}

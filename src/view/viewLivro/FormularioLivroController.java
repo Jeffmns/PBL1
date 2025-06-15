@@ -12,7 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-
+/**
+ * Controller para o formulário de Adicionar ou Editar um Filme.
+ * Esta classe é o "controller" da janela que abre para preencher os dados de um filme.
+ * Ela lida com a validação dos dados e com o salvamento das informações.
+ */
 public class FormularioLivroController {
 
     @FXML private Label tituloFormularioLabel;
@@ -34,15 +38,26 @@ public class FormularioLivroController {
 
     }
 
+    /**
+     * Recebe a instância principal do DiarioCultural a partir da tela que abriu este formulário.
+     * É assim que este controller ganha acesso à lista de livros para salvar os dados.
+     * @param dc A instância principal do DiarioCultural.
+     */
     public void setDiarioCultural(DiarioCultural dc) {
         this.dc = dc;
     }
 
+    /**
+     * Preenche os campos do formulário com os dados de um livro existente.
+     * Este método transforma o formulário do modo "Adicionar" para o modo "Editar".
+     * @param livro O objeto Livro cujos dados serão editados.
+     */
     public void carregarDadosParaEdicao(Livro livro) {
         this.livroParaEditar = livro;
-        this.modoEdicao = true;
+        this.modoEdicao = true;  // Liga a "bandeira" do modo de edição.
         this.tituloFormularioLabel.setText("Editar livro");
 
+        // Se o objeto livro não for nulo, preenchemos cada campo com os seus dados.
         if (livro != null) {
             tituloField.setText(livro.getTitulo());
             generoField.setText(livro.getGenero());
@@ -54,13 +69,17 @@ public class FormularioLivroController {
         }
     }
 
+    /**
+     * Ação executada quando o botão "Salvar" é clicado.
+     * Valida os dados inseridos e, se estiverem corretos, cria um novo livro ou atualiza um existente.
+     */
     @FXML
     private void handleSalvar() {
         if (dc == null) {
             exibirAlerta("Erro Crítico", "O sistema de dados (DiarioCultural) não foi inicializado.", Alert.AlertType.ERROR);
             return;
         }
-
+        // Pega o que o usuário digitou em cada campo.
         String titulo = tituloField.getText();
         String genero = generoField.getText();
         String anoStr = anoField.getText();
@@ -91,8 +110,7 @@ public class FormularioLivroController {
             }
         }
 
-
-        try {
+        try { // Se a "bandeira" de modo de edição estiver ligada...
             if (modoEdicao && livroParaEditar != null) {
                 livroParaEditar.setTitulo(titulo);
                 livroParaEditar.setGenero(genero);
@@ -106,11 +124,12 @@ public class FormularioLivroController {
                 PersistenciaJson.salvar(dc); // Salva o DiarioCultural com o filme modificado
                 System.out.println("Livro atualizado: " + livroParaEditar.getTitulo());
                 exibirAlerta("Sucesso", "Livro '" + livroParaEditar.getTitulo() + "' atualizado com sucesso!", Alert.AlertType.INFORMATION);
-
+                fecharJanela();
             } else {
+                // Se não estiver em modo de edição, criamos um novo livro.
                 Livro novoLivro = new Livro(titulo, autor, editora, isbn, anoLancamento, genero, lido);
 
-                // 2. VERIFICA SE A SÉRIE JÁ EXISTE ANTES DE TENTAR CADASTRAR
+                // Verifica se o livro já existe antes de cadastrar
                 if (dc.getLivros().contains(novoLivro)) {
                     // Se já existe, mostra o alerta e NÃO fecha a janela
                     exibirAlerta("Livro Duplicado",
@@ -124,23 +143,34 @@ public class FormularioLivroController {
                     fecharJanela(); // Fecha a janela apenas se o cadastro foi bem-sucedido
                 }
             }
-            fecharJanela();
         } catch (Exception e) {
             e.printStackTrace();
             exibirAlerta("Erro Inesperado", "Ocorreu um erro ao salvar o livro: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
+    /**
+     * Ação executada quando o botão "Cancelar" é clicado. Simplesmente fecha a janela.
+     */
     @FXML
     private void handleCancelar() {
         fecharJanela();
     }
 
+    /**
+     * Método auxiliar para fechar a janela (diálogo) atual.
+     */
     private void fecharJanela() {
         Stage stage = (Stage) salvarButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Método auxiliar para mostrar alertas de forma padronizada.
+     * @param titulo O título da janela de alerta.
+     * @param mensagem A mensagem principal a ser exibida no alerta.
+     * @param tipo O tipo de alerta (Erro, Aviso, Informação).
+     */
     private void exibirAlerta(String titulo, String mensagem, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);

@@ -101,7 +101,7 @@ public class FormularioSerieController {
                 // Salva o estado do DiarioCultural com a série modificada
                 PersistenciaJson.salvar(dc);
                 System.out.println("Série atualizada: " + serieParaEditar.getTitulo());
-
+                fecharJanela();
             } else {
                 // Modo Adicionar: Cria uma nova Série
                 int numTemporadas = Integer.parseInt(numTemporadasField.getText());

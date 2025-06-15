@@ -2,18 +2,18 @@ package view.viewLivro;
 
 import controller.DiarioCultural;
 import model.Livro;
-import model.Review;
 import persistence.PersistenciaJson;
-
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
-import java.util.Optional;
-
+/**
+ * Controller para o ficheiro FXML de uma única célula da lista de filmes (ItemFilmeListCell.fxml).
+ * Esta classe é responsável por pegar os dados de um objeto Filme e preencher os elementos
+ * visuais da célula, além de lidar com as ações dos botões (Editar, Avaliar, etc.)
+ * para aquele item específico.
+ */
 public class ItemLivroListCellController {
 
     @FXML private Label tituloLabel;
@@ -32,7 +32,13 @@ public class ItemLivroListCellController {
     private DiarioCultural dc;
     private LivroViewController livroViewCtrl;
 
-
+    /**
+     * Recebe os dados de um livro e as referências necessárias para preencher a célula.
+     * Este método é chamado pela classe LivroListCell sempre que a célula precisa de ser atualizada.
+     * @param livro O objeto Livro com os dados a serem exibidos.
+     * @param dc A instância principal do DiarioCultural para ações como salvar.
+     * @param livroViewCtrl A referência ao controller da tela de livros para delegar ações.
+     */
     public void setDadosDoLivro(Livro livro, DiarioCultural dc, LivroViewController livroViewCtrl) {
         this.livro = livro;
         this.dc = dc;
@@ -55,8 +61,10 @@ public class ItemLivroListCellController {
         }
     }
 
-
-
+    /**
+     * Ação executada quando o botão "Avaliar" é clicado.
+     * Delega a tarefa de abrir o diálogo de avaliação para o controller principal.
+     */
     @FXML
     private void handleAvaliar() {
         if (livro != null && livroViewCtrl != null) {
@@ -65,6 +73,10 @@ public class ItemLivroListCellController {
         }
     }
 
+    /**
+     * Ação executada quando o CheckBox "Lido" é clicado.
+     * Atualiza o status do livro e salva a alteração no ficheiro JSON.
+     */
     @FXML
     private void handleMarcarComoLido() {
         if (livro != null && dc != null && lidoCheck != null) {
@@ -72,13 +84,14 @@ public class ItemLivroListCellController {
             lidoCheck.setText(livro.isLido() ? "Lido" : "Marcar como lido");
             PersistenciaJson.salvar(dc);
             System.out.println("Livro '" + livro.getTitulo() + "' marcado como lido: " + livro.isLido());
-            if (livroViewCtrl != null) {
-                // Se a ordenação/filtragem depende do status 'assistido', pode ser necessário atualizar
-                // filmeViewCtrl.refreshViewData(); Ou apenas atualizar este item se a lista for inteligente.
-            }
+
         }
     }
 
+    /**
+     * Ação executada quando o botão "Detalhes" é clicado.
+     * Delega a tarefa de mostrar os detalhes para o controller principal.
+     */
     @FXML
     private void handleInfo() {
         if (livro != null && livroViewCtrl != null) {
@@ -87,6 +100,10 @@ public class ItemLivroListCellController {
         }
     }
 
+    /**
+     * Ação executada quando o botão "Editar" é clicado.
+     * Delega a tarefa de abrir o formulário de edição para o controller principal.
+     */
     @FXML
     private void handleEditar() {
         if (livro != null && livroViewCtrl != null) {
@@ -95,6 +112,10 @@ public class ItemLivroListCellController {
         }
     }
 
+    /**
+     * Ação executada quando o botão "Excluir" é clicado.
+     * Delega a tarefa de pedir a confirmação e remover o livro para o controller principal.
+     */
     @FXML
     private void handleExcluir() {
         if (livro != null && livroViewCtrl != null) {
@@ -103,6 +124,10 @@ public class ItemLivroListCellController {
         }
     }
 
+    /**
+     * Ação executada quando o botão "Avaliações" é clicado.
+     * Delega a tarefa de mostrar o histórico de avaliações para o controller principal.
+     */
     @FXML
     private void handleHistorico() {
         if (livro != null && livroViewCtrl != null) {
@@ -110,6 +135,4 @@ public class ItemLivroListCellController {
             livroViewCtrl.abrirDialogoHistoricoAvaliacoes(livro);
         }
     }
-
-
 }

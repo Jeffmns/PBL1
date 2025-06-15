@@ -4,7 +4,7 @@ import controller.DiarioCultural;
 import javafx.scene.control.*;
 import model.Livro;
 import persistence.PersistenciaJson;
-import model.Review;
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +22,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller para a tela principal de Livros (LivroView.fxml).
+ * Esta classe é responsável por gerir toda a interatividade da tela de livros,
+ * como a busca, filtragem, ordenação e a abertura de diálogos para adicionar,
+ * editar, avaliar ou remover livros.
+ */
 public class LivroViewController {
 
     @FXML private TextField tituloSearchField;
@@ -62,6 +68,10 @@ public class LivroViewController {
         atualizarStatusLabel();
     }
 
+    /**
+     * Carrega a instância principal do DiarioCultural a partir do ficheiro JSON.
+     * Se o ficheiro não existir, cria um objeto DiarioCultural vazio.
+     */
     private void carregarDiarioCultural() {
         dc = PersistenciaJson.carregar();
         if (dc == null) {
@@ -72,6 +82,9 @@ public class LivroViewController {
         }
     }
 
+    /**
+     * Adiciona as opções de texto (ex: "Título (A-Z)") ao ComboBox de ordenação.
+     */
     private void popularComboBoxDeOrdenacao() {
         ordenarLivroComboBox.setItems(FXCollections.observableArrayList(
                 "Padrão (Entrada)", "Título (A-Z)", "Título (Z-A)",
@@ -80,7 +93,10 @@ public class LivroViewController {
         ));
         ordenarLivroComboBox.setValue("Padrão (Entrada)");
     }
-
+    /**
+     * Adiciona "ouvintes" aos campos de filtro.
+     * Isto faz com que a busca seja reativa, acontecendo à medida que o usuário digita.
+     */
     private void configurarListenersOuAcaoDoBotao() {
         tituloSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
         isbnSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
@@ -90,7 +106,10 @@ public class LivroViewController {
         anoSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
         ordenarLivroComboBox.valueProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
     }
-
+    /**
+     * Este método é chamado sempre que uma busca,
+     * filtro ou ordenação precisa de ser executada.
+     */
     @FXML
     private void executarBuscaFiltragemOrdenacao() {
         if (dc == null) {
@@ -98,14 +117,14 @@ public class LivroViewController {
             atualizarStatusLabel();
             return;
         }
-
+        // Pega o texto de cada campo de filtro.
         String tituloQuery = tituloSearchField.getText();
         String autorQuery = autorSearchField.getText();
         String isbnQuery = isbnSearchField.getText(); // Para buscar no elenco
         String generoQuery = generoSearchField.getText();
         String editoraQuery = editoraSearchField.getText();
         String anoQueryStr = anoSearchField.getText();
-
+        // Converte texto vazio para 'null', para que o método de busca saiba que não deve filtrar por aquele campo.
         String tituloParaBusca = (tituloQuery != null && !tituloQuery.trim().isEmpty()) ? tituloQuery.trim() : null;
         String autorParaBusca = (autorQuery != null && !autorQuery.trim().isEmpty()) ? autorQuery.trim() : null;
         String editoraParaBusca = (editoraQuery != null && !editoraQuery.trim().isEmpty()) ? editoraQuery.trim() : null;
@@ -152,6 +171,10 @@ public class LivroViewController {
         atualizarStatusLabel();
     }
 
+    /**
+     * Ação do botão "Limpar Tudo". Limpa todos os campos de filtro e reexecuta a busca
+     * para mostrar todos os itens novamente.
+     */
     @FXML
     private void handleLimparFiltros() {
         tituloSearchField.clear();
@@ -164,8 +187,10 @@ public class LivroViewController {
         executarBuscaFiltragemOrdenacao();
     }
 
+    /**
+     * Atualiza o label no rodapé com a contagem de itens encontrados.
+     */
     private void atualizarStatusLabel() {
-        // ... (Lógica similar ao LivroViewController, adaptada para livros) ...
         if (livrosEmExibicao == null || livrosEmExibicao.isEmpty()) {
             boolean algumFiltroAtivo = //
                     (tituloSearchField.getText() != null && !tituloSearchField.getText().trim().isEmpty()) ||
@@ -183,7 +208,9 @@ public class LivroViewController {
             statusLabel.setText(livrosEmExibicao.size() + " livro(s) encontrado(s).");
         }
     }
-
+    /**
+     * Ação do botão "+ Adicionar Novo Livro". Chama o método que abre o diálogo do formulário.
+     */
     @FXML
     private void handleAdicionarNovoLivro() {
         System.out.println("Abrindo formulário para adicionar novo livro...");
@@ -206,7 +233,10 @@ public class LivroViewController {
             statusLabel.setText("Erro ao abrir formulário de cadastro de livro.");
         }
     }
-
+    /**
+     * Força uma recarga completa dos dados a partir do ficheiro JSON e atualiza a tela.
+     * Útil para ser chamado após adicionar ou editar um item em um diálogo separado.
+     */
     public void refreshViewData() {
         System.out.println("LivroViewController: Recarregando e atualizando dados.");
         carregarDiarioCultural();
@@ -218,6 +248,10 @@ public class LivroViewController {
         executarBuscaFiltragemOrdenacao();
     }
 
+    /**
+     * Abre um diálogo de alerta para mostrar os detalhes completos de um livro.
+     * @param livro O livro a ser detalhado.
+     */
     public void mostrarDetalhesDoLivro(Livro livro) {
         if (livro == null) return;
 
@@ -234,32 +268,24 @@ public class LivroViewController {
         detalhes.append("Editora: ").append(livro.getEditora() != null ? livro.getEditora() : "N/A").append("\n");
         detalhes.append("Lido: ").append(livro.isLido() ? "Sim" : "Não").append("\n");
 
-        double media = calcularMediaAvaliacoes(livro); // Você precisaria de um método calcularMediaAvaliacoes
+        double media = livro.getMediaAvaliacoes();
         detalhes.append("Nota Média: ").append(media > 0 ? String.format("%.1f ★", media) : "Sem Avaliação").append("\n");
 
         alert.setContentText(detalhes.toString());
 
-        // Para permitir que o conteúdo seja maior e com scroll, se necessário
+
         alert.getDialogPane().setMinHeight(javafx.scene.layout.Region.USE_PREF_SIZE);
-        alert.setResizable(true); // Permite redimensionar o diálogo
+        alert.setResizable(true);
         alert.showAndWait();
     }
 
-    private double calcularMediaAvaliacoes(Livro livro) {
-        if (livro.getAvaliacoes() == null || livro.getAvaliacoes().isEmpty()) {
-            return 0.0;
-        }
-        double soma = 0;
-        for (Review review : livro.getAvaliacoes()) {
-            soma += review.getAvaliacao(); // Supondo que Review tem getNota()
-        }
-        return soma / livro.getAvaliacoes().size();
-    }
 
-
+    /**
+     * Abre o diálogo do formulário para adicionar um novo livro ou editar um existente.
+     * @param livroParaEditar O livro a ser editado, ou 'null' se for para adicionar um novo.
+     */
     public void abrirDialogoEdicaoLivro(Livro livroParaEditar) {
         if (livroParaEditar == null) {
-            // ... (tratamento de erro) ...
             return;
         }
 
@@ -269,7 +295,7 @@ public class LivroViewController {
             Parent root = loader.load();
 
             FormularioLivroController formController = loader.getController();
-            // ... (formController.setDiarioCultural e carregarDadosParaEdicao) ...
+
             formController.setDiarioCultural(this.dc);
             formController.carregarDadosParaEdicao(livroParaEditar);
 
@@ -297,6 +323,11 @@ public class LivroViewController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Abre o diálogo para avaliar um livro.
+     * @param livroParaAvaliar O livro a ser avaliado.
+     */
     public void abrirDialogoAvaliacaoLivro(Livro livroParaAvaliar) {
         if (livroParaAvaliar == null) {
             System.err.println("Tentativa de avaliar um livro nulo.");
@@ -327,7 +358,7 @@ public class LivroViewController {
             dialogStage.setTitle("Avaliar Livro: " + livroParaAvaliar.getTitulo());
             dialogStage.initModality(Modality.APPLICATION_MODAL); // Bloqueia interação com outras janelas
 
-            // Define a janela "pai" (opcional, mas bom para comportamento modal)
+            // Define a janela "pai"
             if (livrosListView != null && livrosListView.getScene() != null && livrosListView.getScene().getWindow() != null) {
                 dialogStage.initOwner(livrosListView.getScene().getWindow());
             } else if (adicionarLivroButton != null && adicionarLivroButton.getScene() != null && adicionarLivroButton.getScene().getWindow() != null) {
@@ -353,6 +384,11 @@ public class LivroViewController {
             exibirAlertaSimples("Erro Inesperado", "Ocorreu um erro inesperado.", "Detalhes: " + e.getMessage());
         }
     }
+
+    /**
+     * Abre um diálogo para exibir o histórico de todas as avaliações de um livro.
+     * @param livro O livro cujo histórico será mostrado.
+     */
     public void abrirDialogoHistoricoAvaliacoes(Livro livro) {
         if (livro == null || livro.getAvaliacoes().isEmpty()) {
             Alert info = new Alert(Alert.AlertType.INFORMATION, "Este livro ainda não possui nenhuma avaliação.");
@@ -408,6 +444,7 @@ public class LivroViewController {
         }
     }
 
+    // Método Auxiliar
     private void exibirAlertaSimples(String titulo, String cabecalho, String conteudo) {
         Alert alert = new Alert(Alert.AlertType.ERROR); // Ou outro tipo de alerta
         alert.setTitle(titulo);

@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         // Carrega o FXML
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/TelaInicial.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/viewInicio/TelaSidebar.fxml")));
 
         // Configura e exibe a janela
         primaryStage.setResizable(false);

@@ -27,6 +27,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Controller para a tela principal de Filmes (FilmeView.fxml).
+ * Esta classe é responsável por gerir toda a interatividade da tela de filmes,
+ * como a busca, filtragem, ordenação e a abertura de diálogos para adicionar,
+ * editar ou avaliar filmes.
+ */
 public class FilmeViewController {
 
     @FXML private TextField tituloSearchField;
@@ -39,19 +45,20 @@ public class FilmeViewController {
     @FXML private Button buscarButton;
     @FXML private Button limparFiltrosButton;
     @FXML private Label statusLabel;
-    @FXML private ListView<Filme> filmesListView; // Alterado para ListView
+    @FXML private ListView<Filme> filmesListView;
 
     private DiarioCultural dc;
     private ObservableList<Filme> todosOsFilmesCache;
     private ObservableList<Filme> filmesEmExibicao;
 
+
     @FXML
     public void initialize() {
         carregarDiarioCultural();
         popularComboBoxDeOrdenacao();
-        configurarListenersOuAcaoDoBotao();
+        configurarListenersOuAcaoDoBotao(); //Listeners para fazer a busca reativa.
 
-        if (dc != null && dc.getFilmes() != null) { // Usar getFilmes()
+        if (dc != null && dc.getFilmes() != null) {
             todosOsFilmesCache = FXCollections.observableArrayList(dc.getFilmes());
         } else {
             todosOsFilmesCache = FXCollections.observableArrayList();
@@ -65,7 +72,10 @@ public class FilmeViewController {
         }
         atualizarStatusLabel();
     }
-
+    /**
+     * Carrega a instância principal do DiarioCultural a partir do ficheiro JSON.
+     * Se o ficheiro não existir, cria um novo objeto DiarioCultural vazio.
+     */
     private void carregarDiarioCultural() {
         dc = PersistenciaJson.carregar();
         if (dc == null) {
@@ -75,7 +85,9 @@ public class FilmeViewController {
             System.out.println("DiarioCultural carregado com " + (dc.getFilmes() != null ? dc.getFilmes().size() : 0) + " filmes.");
         }
     }
-
+    /**
+     * Adiciona as opções de texto (ex: "Melhores Avaliados") ao ComboBox de ordenação.
+     */
     private void popularComboBoxDeOrdenacao() {
         ordenarFilmeComboBox.setItems(FXCollections.observableArrayList(
                 "Padrão (Entrada)", "Título (A-Z)", "Título (Z-A)",
@@ -84,7 +96,10 @@ public class FilmeViewController {
         ));
         ordenarFilmeComboBox.setValue("Padrão (Entrada)");
     }
-
+    /**
+     * Adiciona "ouvintes" aos campos de filtro.
+     * Isto faz com que a busca seja reativa, acontecendo à medida que o usuário digita.
+     */
     private void configurarListenersOuAcaoDoBotao() {
         tituloSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
         diretorSearchField.textProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
@@ -94,6 +109,10 @@ public class FilmeViewController {
         ordenarFilmeComboBox.valueProperty().addListener((obs, oldV, newV) -> executarBuscaFiltragemOrdenacao());
     }
 
+    /**
+     * Este método é chamado sempre que uma busca,
+     * filtro ou ordenação precisa de ser executada.
+     */
     @FXML
     private void executarBuscaFiltragemOrdenacao() {
         if (dc == null) {
@@ -101,18 +120,18 @@ public class FilmeViewController {
             atualizarStatusLabel();
             return;
         }
-
+        // Pega o texto de cada campo de filtro.
         String tituloQuery = tituloSearchField.getText();
         String diretorQuery = diretorSearchField.getText();
         String atorQuery = atorSearchField.getText(); // Para buscar no elenco
         String generoQuery = generoSearchField.getText();
         String anoQueryStr = anoSearchField.getText();
-
+        // Converte texto vazio para 'null', para que o método de busca saiba que não deve filtrar por aquele campo.
         String tituloParaBusca = (tituloQuery != null && !tituloQuery.trim().isEmpty()) ? tituloQuery.trim() : null;
         String diretorParaBusca = (diretorQuery != null && !diretorQuery.trim().isEmpty()) ? diretorQuery.trim() : null;
         String atorParaBusca = (atorQuery != null && !atorQuery.trim().isEmpty()) ? atorQuery.trim() : null;
         String generoParaBusca = (generoQuery != null && !generoQuery.trim().isEmpty()) ? generoQuery.trim() : null;
-
+        // Converte o texto do ano para um número, tratando possíveis erros.
         Integer anoParaBusca = null;
         if (anoQueryStr != null && !anoQueryStr.trim().isEmpty()) {
             try {
@@ -124,6 +143,7 @@ public class FilmeViewController {
 
         // Usar o método de busca de filmes do DiarioCultural
         List<Filme> filmesFiltrados = dc.buscarFilmes(tituloParaBusca, diretorParaBusca, atorParaBusca, generoParaBusca, anoParaBusca);
+        // Pega a opção de ordenação selecionada e aplica à lista de resultados.
         String tipoOrdem = ordenarFilmeComboBox.getValue();
         if (tipoOrdem != null && filmesFiltrados != null) {
             switch (tipoOrdem) {
@@ -151,7 +171,10 @@ public class FilmeViewController {
         filmesEmExibicao.setAll(filmesFiltrados != null ? filmesFiltrados : new ArrayList<>());
         atualizarStatusLabel();
     }
-
+    /**
+     * Ação do botão "Limpar Tudo". Limpa todos os campos de filtro e reexecuta a busca
+     * para mostrar todos os itens novamente.
+     */
     @FXML
     private void handleLimparFiltros() {
         tituloSearchField.clear();
@@ -163,6 +186,9 @@ public class FilmeViewController {
         executarBuscaFiltragemOrdenacao();
     }
 
+    /**
+     * Atualiza o label no rodapé com a contagem de itens encontrados.
+     */
     private void atualizarStatusLabel() {
         // ... (Lógica similar ao LivroViewController, adaptada para filmes) ...
         if (filmesEmExibicao == null || filmesEmExibicao.isEmpty()) {
@@ -183,11 +209,13 @@ public class FilmeViewController {
         }
     }
 
+    /**
+     * Ação do botão "+ Adicionar Novo Filme". Chama o método que abre o diálogo do formulário.
+     */
     @FXML
     private void handleAdicionarNovoFilme() {
         System.out.println("Abrindo formulário para adicionar novo filme...");
         try {
-            // Você precisará criar um FormularioCadastroFilme.fxml e seu controller
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/viewFilme/FormularioCadastroFilme.fxml"));
             Parent root = loader.load();
 
@@ -206,6 +234,10 @@ public class FilmeViewController {
         }
     }
 
+    /**
+     * Força uma atualização completa dos dados a partir do ficheiro JSON e atualiza a tela.
+     * Chamado após adicionar ou editar um item em um diálogo separado.
+     */
     public void refreshViewData() {
         System.out.println("FilmeViewController: Recarregando e atualizando dados.");
         carregarDiarioCultural();
@@ -217,6 +249,10 @@ public class FilmeViewController {
         executarBuscaFiltragemOrdenacao();
     }
 
+    /**
+     * Abre um diálogo de alerta para mostrar os detalhes completos de um filme.
+     * @param filme O filme a ser detalhado.
+     */
     public void mostrarDetalhesDoFilme(Filme filme) {
         if (filme == null) return;
 
@@ -226,7 +262,7 @@ public class FilmeViewController {
 
         StringBuilder detalhes = new StringBuilder();
         detalhes.append("Ano de Lançamento: ").append(filme.getAno_lancamento()).append("\n");
-        detalhes.append("Duração: ").append(formatarDuracao(filme.getDuracao())).append("\n"); // Você precisaria de um método formatarDuracao
+        detalhes.append("Duração: ").append(formatarDuracao(filme.getDuracao())).append("\n");
         detalhes.append("Gênero: ").append(filme.getGenero() != null ? filme.getGenero() : "N/A").append("\n");
         detalhes.append("Direção: ").append(filme.getDirecao() != null ? filme.getDirecao() : "N/A").append("\n");
         detalhes.append("Elenco: ").append(filme.getElenco() != null ? filme.getElenco() : "N/A").append("\n");
@@ -243,20 +279,11 @@ public class FilmeViewController {
         alert.showAndWait();
     }
 
-    private String formatarDuracao(int minutos) {
-        if (minutos <= 0) return "N/A";
-        int horas = minutos / 60;
-        int mins = minutos % 60;
-        if (horas > 0) {
-            return String.format("%dh %02dm", horas, mins);
-        } else {
-            return String.format("%dm", mins);
-        }
-    }
 
-
-
-
+    /**
+     * Abre o diálogo do formulário para adicionar um novo filme ou editar um existente.
+     * @param filmeParaEditar O filme a ser editado, ou 'null' se for para adicionar um novo.
+     */
     public void abrirDialogoEdicaoFilme(Filme filmeParaEditar) {
         if (filmeParaEditar == null) {
             return;
@@ -268,20 +295,17 @@ public class FilmeViewController {
             Parent root = loader.load();
 
             FormularioFilmeController formController = loader.getController();
-            // ... (formController.setDiarioCultural e carregarDadosParaEdicao) ...
+
             formController.setDiarioCultural(this.dc);
             formController.carregarDadosParaEdicao(filmeParaEditar);
-
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Editar Filme: " + filmeParaEditar.getTitulo());
             dialogStage.initModality(Modality.APPLICATION_MODAL);
 
-            // CORREÇÃO AQUI: Usando filmesListView ou um botão da tela principal
             if (filmesListView != null && filmesListView.getScene() != null && filmesListView.getScene().getWindow() != null) {
                 dialogStage.initOwner(filmesListView.getScene().getWindow());
             } else if (adicionarFilmeButton != null && adicionarFilmeButton.getScene() != null && adicionarFilmeButton.getScene().getWindow() != null) {
-                // Fallback se a listView não estiver visível ou disponível no momento
                 dialogStage.initOwner(adicionarFilmeButton.getScene().getWindow());
             }
 
@@ -292,10 +316,14 @@ public class FilmeViewController {
             System.out.println("Formulário de edição de filme fechado. Atualizando dados...");
             refreshViewData();
 
-        } catch (Exception e) { // Captura mais genérica para cobrir IOException, NullPointerException do controller, etc.
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    /**
+     * Abre o diálogo para avaliar um filme.
+     * @param filmeParaAvaliar O filme a ser avaliado.
+     */
     public void abrirDialogoAvaliacaoFilme(Filme filmeParaAvaliar) {
         if (filmeParaAvaliar == null) {
             System.err.println("Tentativa de avaliar um filme nulo.");
@@ -329,7 +357,7 @@ public class FilmeViewController {
             }
 
             dialogStage.setScene(new Scene(root));
-            dialogStage.setResizable(false); // Opcional
+            dialogStage.setResizable(false);
 
             dialogStage.showAndWait();
 
@@ -345,14 +373,11 @@ public class FilmeViewController {
         }
     }
 
-    private void exibirAlertaSimples(String titulo, String cabecalho, String conteudo) {
-        Alert alert = new Alert(Alert.AlertType.ERROR); // Ou outro tipo de alerta
-        alert.setTitle(titulo);
-        alert.setHeaderText(cabecalho);
-        alert.setContentText(conteudo);
-        alert.showAndWait();
-    }
 
+    /**
+     * Abre um diálogo para exibir o histórico de todas as avaliações de um filme específico.
+     * @param filme O filme cujo histórico de avaliações será exibido.
+     */
     public void abrirDialogoHistoricoAvaliacoes(Filme filme) {
         if (filme == null || filme.getAvaliacoes().isEmpty()) {
             Alert info = new Alert(Alert.AlertType.INFORMATION, "Este filme ainda não possui nenhuma avaliação.");
@@ -409,6 +434,31 @@ public class FilmeViewController {
                 erro.showAndWait();
             }
         }
+    }
+
+    // --- Métodos Auxiliares ---
+
+    /**
+     * Formata a duração do filme que foi informado em minutos, para horas e minutos.
+     * @param minutos Duração do filme.
+     */
+    private String formatarDuracao(int minutos) {
+        if (minutos <= 0) return "N/A";
+        int horas = minutos / 60;
+        int mins = minutos % 60;
+        if (horas > 0) {
+            return String.format("%dh %02dm", horas, mins);
+        } else {
+            return String.format("%dm", mins);
+        }
+    }
+
+    private void exibirAlertaSimples(String titulo, String cabecalho, String conteudo) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titulo);
+        alert.setHeaderText(cabecalho);
+        alert.setContentText(conteudo);
+        alert.showAndWait();
     }
 
 

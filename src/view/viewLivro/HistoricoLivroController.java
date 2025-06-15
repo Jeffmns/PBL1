@@ -6,12 +6,16 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
 import model.Review;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * Controller para a janela (diálogo) que exibe o histórico de avaliações de um Livro.
+ * Esta classe é responsável por receber uma lista de objetos Review e mostrá-la
+ * de forma formatada e legível para o utilizador.
+ */
 public class HistoricoLivroController {
 
     @FXML private Label tituloMediaLabel;
@@ -23,6 +27,11 @@ public class HistoricoLivroController {
         historicoListView.setCellFactory(lv -> new ListCell<>() {
             private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+            /**
+             * Este método é chamado para cada célula da lista, para atualizar o seu conteúdo.
+             * @param review O objeto Review a ser exibido nesta célula.
+             * @param empty true se a célula estiver vazia.
+             */
             @Override
             protected void updateItem(Review review, boolean empty) {
                 super.updateItem(review, empty);
@@ -51,16 +60,14 @@ public class HistoricoLivroController {
     }
 
     /**
-     * Recebe a lista de avaliações do controller principal e popula a ListView.
+     * Recebe a lista de avaliações do controller principal (LivroViewController)
+     * e popula a ListView com esses dados.
+     * @param nomeDaMidia O título do livro, para ser exibido no topo da janela.
+     * @param avaliacoes A lista de objetos Review para mostrar.
      */
     public void setAvaliacoes(String nomeDaMidia, List<Review> avaliacoes) {
         tituloMediaLabel.setText(nomeDaMidia);
         historicoListView.getItems().setAll(avaliacoes);
     }
 
-    @FXML
-    private void handleFechar() {
-        Stage stage = (Stage) historicoListView.getScene().getWindow();
-        stage.close();
-    }
 }

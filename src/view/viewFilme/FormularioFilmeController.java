@@ -12,7 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-
+/**
+ * Controller para o formulário de Adicionar ou Editar um Filme.
+ * Esta classe é o "controller" da janela que abre para preencher os dados de um filme.
+ * Ela lida com a validação dos dados e com o salvamento das informações.
+ */
 public class FormularioFilmeController {
 
     @FXML private Label tituloFormularioLabel;
@@ -34,16 +38,26 @@ public class FormularioFilmeController {
     public void initialize() {
 
     }
-
+    /**
+     * Recebe a instância principal do DiarioCultural a partir da tela que abriu este formulário.
+     * É assim que este controller ganha acesso à lista de filmes para salvar os dados.
+     * @param dc A instância principal do DiarioCultural.
+     */
     public void setDiarioCultural(DiarioCultural dc) {
         this.dc = dc;
     }
 
+    /**
+     * Preenche os campos do formulário com os dados de um filme existente.
+     * Este método transforma o formulário do modo "Adicionar" para o modo "Editar".
+     * @param filme O objeto Filme cujos dados serão editados.
+     */
     public void carregarDadosParaEdicao(Filme filme) {
         this.filmeParaEditar = filme;
         this.modoEdicao = true;
         this.tituloFormularioLabel.setText("Editar filme");
 
+        // Se o objeto filme não for nulo, preenchemos cada campo com os seus dados.
         if (filme != null) {
             tituloField.setText(filme.getTitulo());
             generoField.setText(filme.getGenero());
@@ -56,13 +70,17 @@ public class FormularioFilmeController {
         }
     }
 
+    /**
+     * Ação executada quando o botão "Salvar" é clicado.
+     * Valida os dados inseridos e, se estiverem corretos, cria um novo filme ou atualiza um existente.
+     */
     @FXML
     private void handleSalvar() {
         if (dc == null) {
             exibirAlerta("Erro Crítico", "O sistema de dados (DiarioCultural) não foi inicializado.", Alert.AlertType.ERROR);
             return;
         }
-
+        // Pega o que o usuário digitou em cada campo.
         String titulo = tituloField.getText();
         String genero = generoField.getText();
         String anoStr = anoField.getText();
@@ -72,12 +90,13 @@ public class FormularioFilmeController {
         String ondeAssistir = ondeAssistirField.getText();
         boolean assistido = assistidoCheck.isSelected();
 
+        // Validação 1: O campo do título não pode estar vazio.
         if (titulo == null || titulo.trim().isEmpty()) {
             exibirAlerta("Campo Obrigatório", "O título do filme não pode estar vazio.", Alert.AlertType.WARNING);
             tituloField.requestFocus();
             return;
         }
-
+        // Validação 2: Converte e valida o ano.
         int anoLancamento = 0; // Valor padrão ou indicativo de não informado
         if (anoStr != null && !anoStr.trim().isEmpty()) {
             try {
@@ -93,7 +112,7 @@ public class FormularioFilmeController {
                 return;
             }
         }
-
+        // Validação 3: Converte e valida a duração.
         int duracaoMin = 0; // Valor padrão
         if (duracaoStr != null && !duracaoStr.trim().isEmpty()) {
             try {
@@ -111,7 +130,7 @@ public class FormularioFilmeController {
         }
 
         try {
-            if (modoEdicao && filmeParaEditar != null) {
+            if (modoEdicao && filmeParaEditar != null) { // Se a "bandeira" de modo de edição estiver ligada
                 filmeParaEditar.setTitulo(titulo);
                 filmeParaEditar.setGenero(genero);
                 filmeParaEditar.setAno_lancamento(anoLancamento);
@@ -120,20 +139,19 @@ public class FormularioFilmeController {
                 filmeParaEditar.setElenco(elenco);
                 filmeParaEditar.setOnde_assistir(ondeAssistir);
                 filmeParaEditar.setAssistido(assistido);
-                // As avaliações são mantidas, não são editadas aqui.
+
 
                 PersistenciaJson.salvar(dc); // Salva o DiarioCultural com o filme modificado
                 System.out.println("Filme atualizado: " + filmeParaEditar.getTitulo());
                 exibirAlerta("Sucesso", "Filme '" + filmeParaEditar.getTitulo() + "' atualizado com sucesso!", Alert.AlertType.INFORMATION);
-
+                fecharJanela();
             } else {
-                // Certifique-se que sua classe Filme tem um construtor que aceita estes parâmetros
-                // e inicializa a lista de avaliações internamente.
+                // Se não estiver em modo de edição, criamos um novo filme.
                 Filme novoFilme = new Filme(titulo, genero, anoLancamento, duracaoMin, direcao, elenco, ondeAssistir);
 
-                // 2. VERIFICA SE A SÉRIE JÁ EXISTE ANTES DE TENTAR CADASTRAR
+                // Verifica se o filme já existe antes de cadastrar
                 if (dc.getFilmes().contains(novoFilme)) {
-                    // Se já existe, mostra o alerta e NÃO fecha a janela
+                    // Se já existe, mostramos um aviso e não fechamos a janela.
                     exibirAlerta("Filme Duplicado",
                             "Um filme com os mesmos dados já existe no seu diário.",
                             Alert.AlertType.WARNING);
@@ -144,25 +162,35 @@ public class FormularioFilmeController {
                     System.out.println("Novo filme cadastrado: " + novoFilme.getTitulo());
                     fecharJanela(); // Fecha a janela apenas se o cadastro foi bem-sucedido
                 }
-
             }
-            fecharJanela();
         } catch (Exception e) {
             e.printStackTrace();
             exibirAlerta("Erro Inesperado", "Ocorreu um erro ao salvar o filme: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
+    /**
+     * Ação executada quando o botão "Cancelar" é clicado. Simplesmente fecha a janela.
+     */
     @FXML
     private void handleCancelar() {
         fecharJanela();
     }
 
+    /**
+     * Método auxiliar para fechar a janela (diálogo) atual.
+     */
     private void fecharJanela() {
         Stage stage = (Stage) salvarButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Método auxiliar para mostrar alertas de forma padronizada.
+     * @param titulo O título da janela de alerta.
+     * @param mensagem A mensagem principal a ser exibida no alerta.
+     * @param tipo O tipo de alerta (Erro, Aviso, Informação).
+     */
     private void exibirAlerta(String titulo, String mensagem, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);

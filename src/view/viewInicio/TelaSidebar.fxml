@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1006.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TelaInicialController">
+<AnchorPane prefHeight="750.0" prefWidth="1006.0" stylesheets="@../../resources/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.viewInicio.TelaSidebarController">
 
    <AnchorPane prefHeight="750.0" prefWidth="236.0" style="-fx-background-color: #20385e;">
       <children>
@@ -22,7 +22,7 @@
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>
-         <Button layoutX="11.0" layoutY="206.0" onAction="#handleShowOutraTelaView" prefWidth="216.0" styleClass="sidebar-button" text="🏠 Início" textAlignment="CENTER" textFill="WHITE">
+         <Button layoutX="11.0" layoutY="206.0" onAction="#handleTelaInicio" prefWidth="216.0" styleClass="sidebar-button" text="🏠 Início" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="System" size="14.0" />
             </font>
@@ -31,7 +31,7 @@
             </cursor></Button>
          <ImageView fitHeight="138.0" fitWidth="141.0" layoutX="50.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../resources/Logo Diario Cultural.png" />
+               <Image url="@../../resources/Logo Diario Cultural.png" />
             </image>
          </ImageView>
          <Button layoutX="11.0" layoutY="286.0" onAction="#handleShowLivroView" prefWidth="216.0" styleClass="sidebar-button" text="📚 Livros" textAlignment="CENTER" textFill="WHITE">
@@ -46,6 +46,9 @@
             <font>
                <Font name="System" size="14.0" />
             </font>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
          </Button>
          <Label alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="155.0" prefHeight="38.0" prefWidth="189.0" text="Diário Cultural" textFill="WHITE">
             <font>

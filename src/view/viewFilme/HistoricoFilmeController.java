@@ -6,11 +6,15 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
 import model.Review;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * Controller para a janela (diálogo) que exibe o histórico de avaliações de um filme.
+ * Esta classe é responsável por receber uma lista de avaliações e mostrá-la
+ * de forma formatada para o usuário.
+ */
 public class HistoricoFilmeController {
 
     @FXML private Label tituloMediaLabel;
@@ -20,11 +24,18 @@ public class HistoricoFilmeController {
     public void initialize() {
         // Configura como cada item (Review) será exibido na ListView
         historicoListView.setCellFactory(lv -> new ListCell<>() {
+            // Criamos um formatador para exibir a data de forma amigável (ex: 29/05/2025).
             private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+            /**
+             * Este método é chamado para cada célula da lista, para atualizar o seu conteúdo.
+             * @param review O objeto Review a ser exibido nesta célula.
+             * @param empty true se a célula estiver vazia.
+             */
             @Override
             protected void updateItem(Review review, boolean empty) {
                 super.updateItem(review, empty);
+                // Se a célula estiver vazia ou o 'review' for nulo, não mostra nada.
                 if (empty || review == null) {
                     setText(null);
                 } else {
@@ -50,16 +61,13 @@ public class HistoricoFilmeController {
     }
 
     /**
-     * Recebe a lista de avaliações do controller principal e popula a ListView.
+     * Recebe a lista de avaliações do controller principal (FilmeViewController)
+     * e popula a ListView com esses dados.
+     * @param nomeDaMidia O título do filme, para ser exibido no topo da janela.
+     * @param avaliacoes A lista de objetos Review para mostrar.
      */
     public void setAvaliacoes(String nomeDaMidia, List<Review> avaliacoes) {
         tituloMediaLabel.setText(nomeDaMidia);
         historicoListView.getItems().setAll(avaliacoes);
-    }
-
-    @FXML
-    private void handleFechar() {
-        Stage stage = (Stage) historicoListView.getScene().getWindow();
-        stage.close();
     }
 }

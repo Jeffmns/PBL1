@@ -1,7 +1,6 @@
 package view.viewSerie;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -38,7 +37,7 @@ public class HistoricoSerieController {
 
             /**
              * Este método é chamado para cada célula da lista, para atualizar o seu conteúdo.
-             * @param review O objeto Review a ser exibido nesta célula.
+             * @param item O objeto item a ser exibido nesta célula.
              * @param empty true se a célula estiver vazia.
              */
             @Override
@@ -93,12 +92,4 @@ public class HistoricoSerieController {
         historicoListView.setItems(FXCollections.observableArrayList(todasAsAvaliacoes));
     }
 
-    /**
-     * Método auxiliar para fechar a janela (diálogo) atual.
-     */
-    @FXML
-    private void handleFechar() {
-        Stage stage = (Stage) historicoListView.getScene().getWindow();
-        stage.close();
-    }
 }
